@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -13,13 +12,13 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 const ChurnCalculator = () => {
   const [totalCustomers, setTotalCustomers] = useState(1000);
   const [monthlyChurnRate, setMonthlyChurnRate] = useState(4);
-  const [churnReduction, setChurnReduction] = useState(50);
+  const [churnReduction] = useState(30);
   const [averageRevenue, setAverageRevenue] = useState(100);
   const [results, setResults] = useState<ChurnResults | null>(null);
 
   useEffect(() => {
     calculateAndUpdateResults();
-  }, [totalCustomers, monthlyChurnRate, churnReduction, averageRevenue]);
+  }, [totalCustomers, monthlyChurnRate, averageRevenue]);
 
   const calculateAndUpdateResults = () => {
     const calculatedResults = calculateChurn({
@@ -152,27 +151,18 @@ const ChurnCalculator = () => {
               <Label htmlFor="churn-reduction" className="calculator-label">
                 Estimated churn reduction (%)
               </Label>
-              <InfoTooltip content="The percentage by which churn could be reduced with better onboarding and in-app guidance (industry average: 30-70%)" />
+              <InfoTooltip content="Based on our customers' average reductions in churn" />
             </div>
             <div className="flex items-center gap-4">
-              <Slider
-                id="churn-reduction"
-                min={10}
-                max={70}
-                step={5}
-                value={[churnReduction]}
-                onValueChange={(value) => setChurnReduction(value[0])}
-                className="flex-1"
-              />
               <Input
                 type="number"
                 value={churnReduction}
-                onChange={(e) => handleInputChange(setChurnReduction, e.target.value, 10, 70)}
-                className="w-24"
+                readOnly
+                className="w-24 bg-gray-100 cursor-not-allowed"
               />
             </div>
             <span className="calculator-value-display">
-              {churnReduction}% reduction in churn
+              {churnReduction}% reduction (Fixed based on customer averages)
             </span>
           </div>
         </CardContent>

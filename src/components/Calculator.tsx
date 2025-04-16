@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -13,12 +12,12 @@ const Calculator = () => {
   const [ticketsPerMonth, setTicketsPerMonth] = useState(1000);
   const [timePerTicket, setTimePerTicket] = useState(30);
   const [hourlyRate, setHourlyRate] = useState(30);
-  const [ticketReduction, setTicketReduction] = useState(20);
+  const [ticketReduction] = useState(25);
   const [results, setResults] = useState<ROIResults | null>(null);
 
   useEffect(() => {
     calculateAndUpdateResults();
-  }, [ticketsPerMonth, timePerTicket, hourlyRate, ticketReduction]);
+  }, [ticketsPerMonth, timePerTicket, hourlyRate]);
 
   const calculateAndUpdateResults = () => {
     const calculatedResults = calculateROI({
@@ -150,27 +149,18 @@ const Calculator = () => {
               <Label htmlFor="ticket-reduction" className="calculator-label">
                 Estimated ticket reduction (%)
               </Label>
-              <InfoTooltip content="The percentage of tickets that could be eliminated with better in-app support (industry average: 20-35%)" />
+              <InfoTooltip content="Based on our customers' average reductions in support tickets" />
             </div>
             <div className="flex items-center gap-4">
-              <Slider
-                id="ticket-reduction"
-                min={5}
-                max={50}
-                step={1}
-                value={[ticketReduction]}
-                onValueChange={(value) => setTicketReduction(value[0])}
-                className="flex-1"
-              />
               <Input
                 type="number"
                 value={ticketReduction}
-                onChange={(e) => handleInputChange(setTicketReduction, e.target.value, 5, 50)}
-                className="w-24"
+                readOnly
+                className="w-24 bg-gray-100 cursor-not-allowed"
               />
             </div>
             <span className="calculator-value-display">
-              {ticketReduction}% reduction
+              {ticketReduction}% reduction (Fixed based on customer averages)
             </span>
           </div>
         </CardContent>
