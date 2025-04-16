@@ -26,7 +26,7 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				primary: {
-					DEFAULT: 'hsl(var(--primary))',
+					DEFAULT: '#FF751D',
 					foreground: 'hsl(var(--primary-foreground))'
 				},
 				secondary: {
@@ -64,6 +64,11 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				roi: {
+					orange: {
+						light: '#FF9352',
+						DEFAULT: '#FF751D',
+						dark: '#E05A00'
+					},
 					blue: {
 						light: '#60a5fa',
 						DEFAULT: '#3b82f6',

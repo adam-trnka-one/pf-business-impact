@@ -37,10 +37,10 @@ const Index = () => {
               </TabsList>
               
               <TabsContent value="support">
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-8 flex items-start">
-                  <Info className="text-blue-500 h-5 w-5 mr-3 mt-0.5 flex-shrink-0" />
+                <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-8 flex items-start">
+                  <Info className="text-primary h-5 w-5 mr-3 mt-0.5 flex-shrink-0" />
                   <div>
-                    <p className="text-sm text-blue-800">
+                    <p className="text-sm text-gray-800">
                       Based on industry data, companies typically see a <strong>20-35% reduction</strong> in 
                       support tickets after implementing comprehensive in-app support solutions.
                     </p>
@@ -51,10 +51,10 @@ const Index = () => {
               </TabsContent>
               
               <TabsContent value="churn">
-                <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 mb-8 flex items-start">
-                  <Info className="text-purple-500 h-5 w-5 mr-3 mt-0.5 flex-shrink-0" />
+                <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-8 flex items-start">
+                  <Info className="text-primary h-5 w-5 mr-3 mt-0.5 flex-shrink-0" />
                   <div>
-                    <p className="text-sm text-purple-800">
+                    <p className="text-sm text-gray-800">
                       Based on industry data, companies typically see a <strong>30-70% reduction</strong> in 
                       customer churn after implementing better onboarding and in-app guidance.
                     </p>
@@ -71,8 +71,8 @@ const Index = () => {
               <div className="grid md:grid-cols-3 gap-6">
                 <Card>
                   <CardContent className="pt-6">
-                    <div className="rounded-full bg-blue-100 w-12 h-12 flex items-center justify-center mb-4">
-                      <span className="text-blue-800 font-bold">1</span>
+                    <div className="rounded-full bg-green-100 w-12 h-12 flex items-center justify-center mb-4">
+                      <span className="text-primary font-bold">1</span>
                     </div>
                     <h4 className="text-lg font-medium mb-2">Enter Your Data</h4>
                     <p className="text-gray-600 text-sm">
@@ -83,8 +83,8 @@ const Index = () => {
                 
                 <Card>
                   <CardContent className="pt-6">
-                    <div className="rounded-full bg-blue-100 w-12 h-12 flex items-center justify-center mb-4">
-                      <span className="text-blue-800 font-bold">2</span>
+                    <div className="rounded-full bg-green-100 w-12 h-12 flex items-center justify-center mb-4">
+                      <span className="text-primary font-bold">2</span>
                     </div>
                     <h4 className="text-lg font-medium mb-2">Set Reduction Targets</h4>
                     <p className="text-gray-600 text-sm">
@@ -95,8 +95,8 @@ const Index = () => {
                 
                 <Card>
                   <CardContent className="pt-6">
-                    <div className="rounded-full bg-blue-100 w-12 h-12 flex items-center justify-center mb-4">
-                      <span className="text-blue-800 font-bold">3</span>
+                    <div className="rounded-full bg-green-100 w-12 h-12 flex items-center justify-center mb-4">
+                      <span className="text-primary font-bold">3</span>
                     </div>
                     <h4 className="text-lg font-medium mb-2">View Your Savings</h4>
                     <p className="text-gray-600 text-sm">
