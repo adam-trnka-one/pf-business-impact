@@ -136,7 +136,7 @@ const ConversionCalculator = () => {
               <InfoTooltip content="Based on our customers' average improvements in trial-to-paid conversion rates" />
             </div>
             <span className="calculator-value-display">
-              {conversionUplift}% uplift (Fixed based on customer averages)
+              {conversionUplift}%
             </span>
           </div>
 
