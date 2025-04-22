@@ -214,14 +214,12 @@ const ChurnCalculator = () => {
                 </div>
               </div>
               
-              <div className="pt-4">
-                <div className="flex justify-between items-center">
-                  <div className="space-y-1">
-                    <p className="text-sm text-gray-500">Net ARR increase</p>
-                    <p className="text-3xl font-bold text-green-600">
-                      {formatCurrency((results.monthlySavings - 299) * 12)}
-                    </p>
-                  </div>
+              <div className="pt-4 flex justify-center items-center">
+                <div className="text-center">
+                  <p className="text-sm text-gray-500">Net ARR increase</p>
+                  <p className="text-3xl font-bold text-green-600">
+                    {formatCurrency((results.monthlySavings - 299) * 12)}
+                  </p>
                 </div>
               </div>
             </div>
