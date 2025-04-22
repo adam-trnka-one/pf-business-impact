@@ -4,21 +4,18 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Calculator from "@/components/Calculator";
 import ChurnCalculator from "@/components/ChurnCalculator";
 import ConversionCalculator from "@/components/ConversionCalculator";
-import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { TrendingUp, Users, BarChart, Info } from "lucide-react";
 
 const Index = () => {
   return (
     <div className="min-h-screen flex flex-col">
-      <Header />
-      
       <main className="flex-1">
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                Calculate Your Product ROI
+                Calculate cost and churn reductions and revenue impact
               </h2>
               <p className="text-lg text-gray-600 max-w-3xl mx-auto">
                 Quantify the benefits of implementing in-app support solutions, reducing customer churn, and improving trial conversions.
@@ -83,48 +80,6 @@ const Index = () => {
                 <ConversionCalculator />
               </TabsContent>
             </Tabs>
-            
-            <div className="mt-16 space-y-8">
-              <h3 className="text-2xl font-bold text-gray-900">How It Works</h3>
-              
-              <div className="grid md:grid-cols-3 gap-6">
-                <Card>
-                  <CardContent className="pt-6">
-                    <div className="rounded-full bg-green-100 w-12 h-12 flex items-center justify-center mb-4">
-                      <span className="text-primary font-bold">1</span>
-                    </div>
-                    <h4 className="text-lg font-medium mb-2">Enter Your Data</h4>
-                    <p className="text-gray-600 text-sm">
-                      Input your current metrics including support costs or customer churn rates.
-                    </p>
-                  </CardContent>
-                </Card>
-                
-                <Card>
-                  <CardContent className="pt-6">
-                    <div className="rounded-full bg-green-100 w-12 h-12 flex items-center justify-center mb-4">
-                      <span className="text-primary font-bold">2</span>
-                    </div>
-                    <h4 className="text-lg font-medium mb-2">Set Reduction Targets</h4>
-                    <p className="text-gray-600 text-sm">
-                      Estimate the percentage of improvement you could achieve with better in-app experiences.
-                    </p>
-                  </CardContent>
-                </Card>
-                
-                <Card>
-                  <CardContent className="pt-6">
-                    <div className="rounded-full bg-green-100 w-12 h-12 flex items-center justify-center mb-4">
-                      <span className="text-primary font-bold">3</span>
-                    </div>
-                    <h4 className="text-lg font-medium mb-2">View Your Savings</h4>
-                    <p className="text-gray-600 text-sm">
-                      Instantly see your potential cost savings and revenue retention opportunities.
-                    </p>
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
           </div>
         </div>
       </main>
