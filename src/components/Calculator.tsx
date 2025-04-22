@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -168,7 +167,7 @@ const Calculator = () => {
               <div className="space-y-4">
                 <div className="flex justify-between items-center border-b pb-2">
                   <span className="text-sm text-gray-600">Potential monthly tickets reduction</span>
-                  <span className="font-medium">{formatNumber(results.potentialTicketsReduced)} tickets/month</span>
+                  <span className="font-medium">{formatNumber(results.potentialTicketsReduced)}</span>
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
                   <span className="text-sm text-gray-600">Support cost monthly savings</span>
