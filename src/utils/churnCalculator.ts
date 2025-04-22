@@ -1,46 +1,71 @@
-
 /**
- * Calculates the churn reduction metrics
+ * Calculates the ROI from reducing customer churn
  */
 export interface ChurnInputs {
-  totalCustomers: number;
-  monthlyChurnRate: number; // percentage (0-100)
-  churnReduction: number; // percentage (0-100)
-  averageRevenue: number; // $ per customer per month
+  customerCount: number;
+  averageRevenuePerCustomer: number;
+  currentChurnRate: number; // percentage (0-1)
+  potentialChurnReduction: number; // percentage (0-1)
 }
 
 export interface ChurnResults {
-  churnedCustomers: number;
-  revenueLost: number;
-  potentialCustomersSaved: number;
-  potentialRevenueSaved: {
-    monthly: number;
-    annual: number;
-  };
+  currentChurnRate: number;
+  reducedChurnRate: number;
+  monthlySavings: number;
+  annualSavings: number;
+  roi: number;
 }
 
-export const calculateChurn = (inputs: ChurnInputs): ChurnResults => {
-  const { totalCustomers, monthlyChurnRate, churnReduction, averageRevenue } = inputs;
-  
-  // Calculate churned customers per month
-  const churnedCustomers = Math.round(totalCustomers * (monthlyChurnRate / 100));
-  
-  // Calculate monthly revenue lost to churn
-  const revenueLost = churnedCustomers * averageRevenue;
-  
-  // Calculate potential customers saved with churn reduction
-  const potentialCustomersSaved = Math.round(churnedCustomers * (churnReduction / 100));
-  
-  // Calculate potential revenue saved
-  const monthlySavings = potentialCustomersSaved * averageRevenue;
-  
+export const calculateROI = (inputs: ChurnInputs): ChurnResults => {
+  const { customerCount, averageRevenuePerCustomer, currentChurnRate, potentialChurnReduction } = inputs;
+
+  // Calculate reduced churn rate
+  const reducedChurnRate = currentChurnRate * (1 - potentialChurnReduction);
+
+  // Calculate the number of customers retained due to churn reduction
+  const retainedCustomers = customerCount * (currentChurnRate - reducedChurnRate);
+
+  // Calculate monthly savings
+  const monthlySavings = retainedCustomers * averageRevenuePerCustomer;
+
+  // Calculate annual savings
+  const annualSavings = monthlySavings * 12;
+
+  // Calculate ROI (Return on Investment)
+  const roi = annualSavings / (customerCount * averageRevenuePerCustomer * currentChurnRate * 12);
+
   return {
-    churnedCustomers,
-    revenueLost,
-    potentialCustomersSaved,
-    potentialRevenueSaved: {
-      monthly: monthlySavings,
-      annual: monthlySavings * 12
-    }
+    currentChurnRate,
+    reducedChurnRate,
+    monthlySavings,
+    annualSavings,
+    roi
   };
+};
+
+/**
+ * Formats a number as a currency string
+ */
+export const formatCurrency = (value: number): string => {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(value);
+};
+
+/**
+ * Formats a number with commas
+ */
+export const formatNumber = (value: number): string => {
+  return new Intl.NumberFormat('en-US').format(Math.round(value));
+};
+
+export const formatPercent = (value: number): string => {
+  return new Intl.NumberFormat('en-US', {
+    style: 'percent',
+    minimumFractionDigits: 1,
+    maximumFractionDigits: 1,
+  }).format(value);
 };

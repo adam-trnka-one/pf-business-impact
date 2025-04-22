@@ -3,35 +3,44 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
-import { calculateChurn, ChurnResults } from "@/utils/churnCalculator";
-import { formatCurrency, formatNumber } from "@/utils/roiCalculator";
-import ChurnResultsChart from "@/components/ChurnResultsChart";
-import { HelpCircle, Info, Coins, Users, TrendingDown } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { calculateROI, formatCurrency, formatNumber, formatPercent } from "@/utils/churnCalculator";
+import { HelpCircle, Percent, DollarSign } from "lucide-react";
+import { Tooltip, TooltipProvider, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+
+interface ROIResults {
+  currentChurnRate: number;
+  reducedChurnRate: number;
+  monthlySavings: number;
+  annualSavings: number;
+  roi: number;
+}
 
 const ChurnCalculator = () => {
-  const [totalCustomers, setTotalCustomers] = useState(1000);
-  const [monthlyChurnRate, setMonthlyChurnRate] = useState(4);
-  const [churnReduction] = useState(30);
-  const [averageRevenue, setAverageRevenue] = useState(100);
-  const [results, setResults] = useState<ChurnResults | null>(null);
+  const [customerCount, setCustomerCount] = useState(1000);
+  const [averageRevenuePerCustomer, setAverageRevenuePerCustomer] = useState(50);
+  const [currentChurnRate, setCurrentChurnRate] = useState(0.05);
+  const [potentialChurnReduction, setPotentialChurnReduction] = useState(0.20);
+  const [results, setResults] = useState<ROIResults | null>(null);
+  const [showPercentage, setShowPercentage] = useState(false);
 
   useEffect(() => {
     calculateAndUpdateResults();
-  }, [totalCustomers, monthlyChurnRate, averageRevenue]);
+  }, [customerCount, averageRevenuePerCustomer, currentChurnRate, potentialChurnReduction]);
 
   const calculateAndUpdateResults = () => {
-    const calculatedResults = calculateChurn({
-      totalCustomers,
-      monthlyChurnRate,
-      churnReduction,
-      averageRevenue
+    const calculatedResults = calculateROI({
+      customerCount,
+      averageRevenuePerCustomer,
+      currentChurnRate,
+      potentialChurnReduction,
     });
     setResults(calculatedResults);
   };
 
   const handleInputChange = (setter: React.Dispatch<React.SetStateAction<number>>, value: string, min: number, max: number) => {
-    const numValue = parseInt(value) || min;
+    const numValue = parseFloat(value) || min;
     setter(Math.min(Math.max(numValue, min), max));
   };
 
@@ -52,117 +61,125 @@ const ChurnCalculator = () => {
     <div className="grid gap-6 md:grid-cols-2 lg:gap-8">
       <Card className="md:col-span-1">
         <CardHeader>
-          <CardTitle>Churn Reduction Calculator</CardTitle>
+          <CardTitle>Churn Reduction ROI Calculator</CardTitle>
           <CardDescription>
-            Estimate revenue retained by reducing customer churn
+            Estimate your savings from reducing customer churn.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="calculator-input">
             <div className="flex items-center justify-between">
-              <Label htmlFor="total-customers" className="calculator-label">
-                Total number of customers
+              <Label htmlFor="customer-count" className="calculator-label">
+                Number of Customers
               </Label>
-              <InfoTooltip content="The total number of active customers you currently have" />
+              <InfoTooltip content="The total number of customers." />
             </div>
             <div className="flex items-center gap-4">
               <Slider
-                id="total-customers"
+                id="customer-count"
                 min={100}
-                max={10000}
+                max={5000}
                 step={100}
-                value={[totalCustomers]}
-                onValueChange={(value) => setTotalCustomers(value[0])}
+                value={[customerCount]}
+                onValueChange={(value) => setCustomerCount(value[0])}
                 className="flex-1"
               />
               <Input
                 type="number"
-                value={totalCustomers}
-                onChange={(e) => handleInputChange(setTotalCustomers, e.target.value, 100, 10000)}
+                value={customerCount}
+                onChange={(e) => handleInputChange(setCustomerCount, e.target.value, 100, 5000)}
                 className="w-24"
               />
             </div>
             <span className="calculator-value-display">
-              {formatNumber(totalCustomers)} customers
-            </span>
-          </div>
-
-          <div className="calculator-input">
-            <div className="flex items-center justify-between">
-              <Label htmlFor="monthly-churn-rate" className="calculator-label">
-                Monthly churn rate (%)
-              </Label>
-              <InfoTooltip content="The percentage of customers who cancel each month" />
-            </div>
-            <div className="flex items-center gap-4">
-              <Slider
-                id="monthly-churn-rate"
-                min={0.5}
-                max={15}
-                step={0.5}
-                value={[monthlyChurnRate]}
-                onValueChange={(value) => setMonthlyChurnRate(value[0])}
-                className="flex-1"
-              />
-              <Input
-                type="number"
-                value={monthlyChurnRate}
-                onChange={(e) => handleInputChange(setMonthlyChurnRate, e.target.value, 0.5, 15)}
-                className="w-24"
-                step="0.5"
-              />
-            </div>
-            <span className="calculator-value-display">
-              {monthlyChurnRate}% churn monthly
+              {formatNumber(customerCount)} customers
             </span>
           </div>
 
           <div className="calculator-input">
             <div className="flex items-center justify-between">
               <Label htmlFor="average-revenue" className="calculator-label">
-                Average monthly revenue per customer (USD)
+                Average Revenue per Customer (USD/month)
               </Label>
-              <InfoTooltip content="The average monthly revenue generated per customer (ARPA)" />
+              <InfoTooltip content="The average monthly revenue generated by each customer." />
             </div>
             <div className="flex items-center gap-4">
               <Slider
                 id="average-revenue"
                 min={10}
-                max={1000}
-                step={10}
-                value={[averageRevenue]}
-                onValueChange={(value) => setAverageRevenue(value[0])}
+                max={200}
+                step={1}
+                value={[averageRevenuePerCustomer]}
+                onValueChange={(value) => setAverageRevenuePerCustomer(value[0])}
                 className="flex-1"
               />
               <Input
                 type="number"
-                value={averageRevenue}
-                onChange={(e) => handleInputChange(setAverageRevenue, e.target.value, 10, 1000)}
+                value={averageRevenuePerCustomer}
+                onChange={(e) => handleInputChange(setAverageRevenuePerCustomer, e.target.value, 10, 200)}
                 className="w-24"
               />
             </div>
             <span className="calculator-value-display">
-              ${averageRevenue}/month per customer
+              {formatCurrency(averageRevenuePerCustomer)}/month
+            </span>
+          </div>
+
+          <div className="calculator-input">
+            <div className="flex items-center justify-between">
+              <Label htmlFor="current-churn" className="calculator-label">
+                Current Churn Rate
+              </Label>
+              <InfoTooltip content="Your current customer churn rate (as a decimal, e.g., 0.05 for 5%)." />
+            </div>
+            <div className="flex items-center gap-4">
+              <Slider
+                id="current-churn"
+                min={0.01}
+                max={0.20}
+                step={0.01}
+                value={[currentChurnRate]}
+                onValueChange={(value) => setCurrentChurnRate(value[0])}
+                className="flex-1"
+              />
+              <Input
+                type="number"
+                value={currentChurnRate}
+                onChange={(e) => handleInputChange(setCurrentChurnRate, e.target.value, 0.01, 0.20)}
+                className="w-24"
+              />
+            </div>
+            <span className="calculator-value-display">
+              {formatPercent(currentChurnRate)}
             </span>
           </div>
 
           <div className="calculator-input">
             <div className="flex items-center justify-between">
               <Label htmlFor="churn-reduction" className="calculator-label">
-                Estimated churn reduction (%)
+                Potential Churn Reduction
               </Label>
-              <InfoTooltip content="Based on our customers' average reductions in churn" />
+              <InfoTooltip content="The percentage reduction in churn rate you expect to achieve (as a decimal, e.g., 0.20 for 20%)." />
             </div>
             <div className="flex items-center gap-4">
+              <Slider
+                id="churn-reduction"
+                min={0.05}
+                max={0.70}
+                step={0.05}
+                value={[potentialChurnReduction]}
+                onValueChange={(value) => setPotentialChurnReduction(value[0])}
+                className="flex-1"
+              />
               <Input
                 type="number"
-                value={churnReduction}
-                readOnly
-                className="w-24 bg-gray-100 cursor-not-allowed"
+                value={potentialChurnReduction}
+                onChange={(e) => handleInputChange(setPotentialChurnReduction, e.target.value, 0.05, 0.70)}
+                className="w-24"
               />
             </div>
             <span className="calculator-value-display">
-              {churnReduction}% reduction (Fixed based on customer averages)
+              {formatPercent(potentialChurnReduction)}
             </span>
           </div>
         </CardContent>
@@ -170,66 +187,51 @@ const ChurnCalculator = () => {
 
       <Card className="md:col-span-1">
         <CardHeader>
-          <CardTitle>Your Potential Revenue Retention</CardTitle>
+          <CardTitle>Return on Investment</CardTitle>
           <CardDescription>
-            Based on your inputs, here's what you could save
+            Based on your inputs, here's your potential ROI
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           {results && (
             <div className="space-y-6 animate-fade-in">
-              <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4 flex items-start">
-                <TrendingDown className="text-red-500 h-5 w-5 mr-3 mt-0.5 flex-shrink-0" />
-                <div>
-                  <p className="text-sm text-red-800">
-                    You are losing <strong>{results.churnedCustomers} customers</strong> every month at this moment.
+              <div className="flex justify-between items-center">
+                <div className="space-y-1">
+                  <p className="text-sm text-gray-500">ROI</p>
+                  <p className="text-3xl font-bold text-primary">
+                    {showPercentage 
+                      ? formatPercent(results.roi)
+                      : formatCurrency(results.annualSavings)
+                    }
                   </p>
                 </div>
-              </div>
-              
-              <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4 flex items-start">
-                <Info className="text-green-500 h-5 w-5 mr-3 mt-0.5 flex-shrink-0" />
-                <div>
-                  <p className="text-sm text-green-800">
-                    Better onboarding and in-app guidance can help you save up to <strong>{churnReduction}%</strong> of your churning customers. 
-                    That's <strong>{results.potentialCustomersSaved} customers saved</strong> each month, which equals <strong>{formatCurrency(results.potentialRevenueSaved.annual)}</strong> per year in retained revenue!
-                  </p>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-slate-50 p-4 rounded-lg">
-                  <p className="text-sm text-gray-500">Monthly Retention</p>
-                  <p className="text-2xl font-bold text-green-600">{formatCurrency(results.potentialRevenueSaved.monthly)}</p>
-                </div>
-                <div className="bg-slate-50 p-4 rounded-lg">
-                  <p className="text-sm text-gray-500">Annual Retention</p>
-                  <p className="text-2xl font-bold text-green-700">{formatCurrency(results.potentialRevenueSaved.annual)}</p>
-                </div>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => setShowPercentage(!showPercentage)}
+                  className="h-8 w-8"
+                >
+                  {showPercentage ? <DollarSign className="h-4 w-4" /> : <Percent className="h-4 w-4" />}
+                </Button>
               </div>
 
               <div className="space-y-4">
                 <div className="flex justify-between items-center border-b pb-2">
-                  <span className="text-sm text-gray-600">Churned customers (monthly)</span>
-                  <span className="font-medium">{formatNumber(results.churnedCustomers)} customers</span>
+                  <span className="text-sm text-gray-600">Current monthly churn</span>
+                  <span className="font-medium">{formatPercent(results.currentChurnRate)}</span>
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
-                  <span className="text-sm text-gray-600">Revenue lost to churn</span>
-                  <span className="font-medium">{formatCurrency(results.revenueLost)}/month</span>
+                  <span className="text-sm text-gray-600">Potential reduced churn</span>
+                  <span className="font-medium">{formatPercent(results.reducedChurnRate)}</span>
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
-                  <span className="text-sm text-gray-600">Potential customers saved</span>
-                  <span className="font-medium">{formatNumber(results.potentialCustomersSaved)}/month</span>
+                  <span className="text-sm text-gray-600">Monthly retained revenue</span>
+                  <span className="font-medium">{formatCurrency(results.monthlySavings)}</span>
                 </div>
-              </div>
-
-              <div className="pt-4">
-                <h4 className="text-sm font-medium mb-2">Retention Visualization</h4>
-                <ChurnResultsChart 
-                  currentLost={results.revenueLost}
-                  potentialSaved={results.potentialRevenueSaved.monthly}
-                  stillLost={results.revenueLost - results.potentialRevenueSaved.monthly}
-                />
+                <div className="flex justify-between items-center border-b pb-2">
+                  <span className="text-sm text-gray-600">Annual retained revenue</span>
+                  <span className="font-medium">{formatCurrency(results.annualSavings)}</span>
+                </div>
               </div>
             </div>
           )}
