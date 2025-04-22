@@ -17,6 +17,27 @@ function getProductFruitsPlanPrice(userCount: number) {
   return 439;
 }
 
+// Define discrete trial/signup steps, inspired by Calculator.tsx (Support tickets per month)
+const TRIAL_STEPS = [
+  ...Array.from({ length: (1500 - 50) / 50 + 1 }, (_, i) => 50 + i * 50),      // 50 to 1500, step 50
+  ...Array.from({ length: (3000 - 1500) / 100 }, (_, i) => 1500 + (i + 1) * 100), // 1600 to 3000, step 100
+  ...Array.from({ length: (5000 - 3000) / 250 }, (_, i) => 3000 + (i + 1) * 250), // 3250 to 5000, step 250
+  6000, 8000, 10000
+];
+
+function snapToNearestStep(value: number) {
+  let closest = TRIAL_STEPS[0];
+  let minDiff = Math.abs(value - closest);
+  for (const step of TRIAL_STEPS) {
+    const diff = Math.abs(step - value);
+    if (diff < minDiff) {
+      minDiff = diff;
+      closest = step;
+    }
+  }
+  return closest;
+}
+
 type ConversionResults = {
   additionalConversions: number;
   originalConversions: number;
@@ -39,15 +60,33 @@ const InfoTooltip = ({ content }: { content: string }) => (
 );
 
 const ConversionCalculator = () => {
-  const [monthlyTrials, setMonthlyTrials] = useState(320);
+  // The index inside TRIAL_STEPS instead of direct monthlyTrials
+  const [trialStepIndex, setTrialStepIndex] = useState(6); // default to step index 6 (i.e., ~350)
   const [currentConversion, setCurrentConversion] = useState(14);
   const conversionUplift = 30;
   const [monthlyArpu, setMonthlyArpu] = useState(100);
   const [results, setResults] = useState<ConversionResults | null>(null);
 
+  // Get the current trial signups value and update index if needed
+  const monthlyTrials = TRIAL_STEPS[trialStepIndex];
+
   // Product Fruits plan price based on monthlyTrials (userCount)
   const productFruitsPlanPrice = getProductFruitsPlanPrice(monthlyTrials);
 
+  // For handling slider changes (by index)
+  const handleTrialSlider = (index: number) => {
+    setTrialStepIndex(index);
+  };
+
+  // For handling input changes (snap to nearest)
+  const handleTrialInput = (value: string) => {
+    const parsedValue = parseInt(value) || TRIAL_STEPS[0];
+    const snapped = snapToNearestStep(parsedValue);
+    const index = TRIAL_STEPS.findIndex((v) => v === snapped);
+    setTrialStepIndex(index !== -1 ? index : 0);
+  };
+
+  // All other sliders/input changes
   const handleInputChange = (setter: React.Dispatch<React.SetStateAction<number>>, value: string, min: number, max: number) => {
     const numValue = parseInt(value) || min;
     setter(Math.min(Math.max(numValue, min), max));
@@ -56,7 +95,7 @@ const ConversionCalculator = () => {
   useEffect(() => {
     calculateResults();
     // eslint-disable-next-line
-  }, [monthlyTrials, currentConversion, conversionUplift, monthlyArpu]);
+  }, [trialStepIndex, currentConversion, conversionUplift, monthlyArpu]);
 
   const calculateResults = () => {
     const originalConversions = (monthlyTrials * currentConversion) / 100;
@@ -94,17 +133,19 @@ const ConversionCalculator = () => {
             <div className="flex items-center gap-4">
               <Slider
                 id="monthly-trials"
-                min={50}
-                max={1000}
-                step={10}
-                value={[monthlyTrials]}
-                onValueChange={(value) => setMonthlyTrials(value[0])}
+                min={0}
+                max={TRIAL_STEPS.length - 1}
+                step={1}
+                value={[trialStepIndex]}
+                onValueChange={([idx]) => handleTrialSlider(idx)}
                 className="flex-1"
               />
               <Input
                 type="number"
                 value={monthlyTrials}
-                onChange={(e) => handleInputChange(setMonthlyTrials, e.target.value, 50, 1000)}
+                min={TRIAL_STEPS[0]}
+                max={TRIAL_STEPS[TRIAL_STEPS.length - 1]}
+                onChange={(e) => handleTrialInput(e.target.value)}
                 className="w-24"
               />
             </div>
@@ -231,4 +272,3 @@ const ConversionCalculator = () => {
 };
 
 export default ConversionCalculator;
-
