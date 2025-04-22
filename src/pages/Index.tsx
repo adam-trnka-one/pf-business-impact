@@ -1,3 +1,4 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Calculator from "@/components/Calculator";
@@ -28,7 +29,7 @@ const Index = () => {
               <TabsList className="grid w-full grid-cols-3 mb-8">
                 <TabsTrigger value="support" className="flex items-center gap-2">
                   <BarChart className="h-4 w-4" />
-                  <span>Support ROI</span>
+                  <span>Support Cost Reduction</span>
                 </TabsTrigger>
                 <TabsTrigger value="churn" className="flex items-center gap-2">
                   <Users className="h-4 w-4" />
