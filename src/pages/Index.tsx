@@ -36,7 +36,7 @@ const Index = () => {
                 </TabsTrigger>
                 <TabsTrigger value="conversion" className="flex items-center gap-2">
                   <TrendingUp className="h-4 w-4" />
-                  <span>Conversion Rate</span>
+                  <span>Revenue Impact</span>
                 </TabsTrigger>
               </TabsList>
               
