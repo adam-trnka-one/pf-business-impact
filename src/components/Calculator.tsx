@@ -167,7 +167,9 @@ const Calculator = () => {
               <div className="space-y-4">
                 <div className="flex justify-between items-center border-b pb-2">
                   <span className="text-sm text-gray-600">Potential monthly tickets reduction</span>
-                  <span className="font-medium">{formatNumber(results.potentialTicketsReduced)}</span>
+                  <span className="font-medium">
+                    {formatNumber(Math.round(ticketsPerMonth * ticketReduction / 100))}
+                  </span>
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
                   <span className="text-sm text-gray-600">Support cost monthly savings</span>
@@ -181,7 +183,7 @@ const Calculator = () => {
                   <span className="text-sm text-gray-600">Net monthly savings</span>
                   <span className="font-medium">{formatCurrency(results.netSavings.monthly)}</span>
                 </div>
-                
+
                 <div className="pt-4 flex justify-center items-center">
                   <div className="text-center">
                     <p className="text-sm text-gray-600">Net annual savings</p>
