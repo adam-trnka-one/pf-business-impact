@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -181,7 +182,7 @@ const ConversionCalculator = () => {
 
       <Card className="md:col-span-1">
         <CardHeader>
-          <CardTitle>Potential Revenue Impact</CardTitle>
+          <CardTitle>Potential Revenue Uplift</CardTitle>
           <CardDescription>
             Based on your inputs, here's your potential additional revenue
           </CardDescription>
