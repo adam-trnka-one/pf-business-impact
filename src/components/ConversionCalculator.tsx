@@ -130,18 +130,6 @@ const ConversionCalculator = () => {
 
           <div className="calculator-input">
             <div className="flex items-center justify-between">
-              <Label htmlFor="conversion-uplift" className="calculator-label">
-                Expected conversion uplift (%)
-              </Label>
-              <InfoTooltip content="Based on our customers' average improvements in trial-to-paid conversion rates" />
-            </div>
-            <span className="calculator-value-display">
-              {conversionUplift}%
-            </span>
-          </div>
-
-          <div className="calculator-input">
-            <div className="flex items-center justify-between">
               <Label htmlFor="monthly-arpu" className="calculator-label">
                 Average monthly revenue per customer (USD)
               </Label>
@@ -166,6 +154,18 @@ const ConversionCalculator = () => {
             </div>
             <span className="calculator-value-display">
               ${monthlyArpu}/customer/month
+            </span>
+          </div>
+
+          <div className="calculator-input">
+            <div className="flex items-center justify-between">
+              <Label htmlFor="conversion-uplift" className="calculator-label">
+                Expected conversion uplift (%)
+              </Label>
+              <InfoTooltip content="Based on our customers' average improvements in trial-to-paid conversion rates" />
+            </div>
+            <span className="calculator-value-display">
+              {conversionUplift}%
             </span>
           </div>
         </CardContent>
