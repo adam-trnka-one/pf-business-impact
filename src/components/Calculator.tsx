@@ -16,6 +16,27 @@ function getProductFruitsPlanPrice(ticketsPerMonth: number) {
   return 599;
 }
 
+const TICKET_STEPS = [
+  ...Array.from({ length: (1500 - 100) / 100 + 1 }, (_, i) => 100 + i * 100),
+  ...Array.from({ length: (3000 - 1500) / 500 }, (_, i) => 1500 + (i + 1) * 500),
+  ...Array.from({ length: (5000 - 3000) / 1000 }, (_, i) => 3000 + (i + 1) * 1000),
+  7500, 10000,
+  15000, 20000, 30000, 50000
+];
+
+function snapToNearestStep(value: number) {
+  let closest = TICKET_STEPS[0];
+  let minDiff = Math.abs(value - closest);
+  for (const step of TICKET_STEPS) {
+    const diff = Math.abs(step - value);
+    if (diff < minDiff) {
+      minDiff = diff;
+      closest = step;
+    }
+  }
+  return closest;
+}
+
 const Calculator = () => {
   const [ticketsPerMonth, setTicketsPerMonth] = useState(1000);
   const [timePerTicket, setTimePerTicket] = useState(30);
@@ -29,7 +50,7 @@ const Calculator = () => {
 
   useEffect(() => {
     calculateAndUpdateResults();
-  }, [ticketsPerMonth, timePerTicket, hourlyRate, userCount, monthlyPaymentTier]);
+  }, [ticketsPerMonth, timePerTicket, hourlyRate]);
 
   const calculateAndUpdateResults = () => {
     const calculatedResults = calculateROI({
@@ -37,15 +58,24 @@ const Calculator = () => {
       timePerTicket,
       hourlyRate,
       ticketReduction,
-      userCount,
-      monthlyPaymentTier: productFruitsPlanPrice
+      userCount: ticketsPerMonth,
+      monthlyPaymentTier: productFruitsPlanPrice,
     });
     setResults(calculatedResults);
   };
 
-  const handleInputChange = (setter: React.Dispatch<React.SetStateAction<number>>, value: string, min: number, max: number) => {
-    const numValue = parseInt(value) || min;
-    setter(Math.min(Math.max(numValue, min), max));
+  const handleInputChange = (
+    setter: React.Dispatch<React.SetStateAction<number>>,
+    value: string
+  ) => {
+    let numValue = parseInt(value) || TICKET_STEPS[0];
+    numValue = Math.min(Math.max(numValue, TICKET_STEPS[0]), TICKET_STEPS[TICKET_STEPS.length - 1]);
+    setter(snapToNearestStep(numValue));
+  };
+
+  const sliderIndex = TICKET_STEPS.findIndex((v) => v === ticketsPerMonth);
+  const setSliderByIndex = (index: number) => {
+    setTicketsPerMonth(TICKET_STEPS[index]);
   };
 
   const InfoTooltip = ({ content }: { content: string }) => (
@@ -83,17 +113,19 @@ const Calculator = () => {
             <div className="flex items-center gap-4">
               <Slider
                 id="tickets-per-month"
-                min={100}
-                max={50000}
-                step={100}
-                value={[ticketsPerMonth]}
-                onValueChange={(value) => setTicketsPerMonth(value[0])}
+                min={0}
+                max={TICKET_STEPS.length - 1}
+                step={1}
+                value={[sliderIndex]}
+                onValueChange={([idx]) => setSliderByIndex(idx)}
                 className="flex-1"
               />
               <Input
                 type="number"
                 value={ticketsPerMonth}
-                onChange={(e) => handleInputChange(setTicketsPerMonth, e.target.value, 100, 50000)}
+                min={TICKET_STEPS[0]}
+                max={TICKET_STEPS[TICKET_STEPS.length - 1]}
+                onChange={(e) => handleInputChange(setTicketsPerMonth, e.target.value)}
                 className="w-24"
               />
             </div>
@@ -119,7 +151,10 @@ const Calculator = () => {
               <Input
                 type="number"
                 value={timePerTicket}
-                onChange={(e) => handleInputChange(setTimePerTicket, e.target.value, 5, 120)}
+                onChange={(e) => {
+                  let val = Math.max(5, Math.min(120, parseInt(e.target.value) || 5));
+                  setTimePerTicket(val);
+                }}
                 className="w-24"
               />
             </div>
@@ -145,7 +180,10 @@ const Calculator = () => {
               <Input
                 type="number"
                 value={hourlyRate}
-                onChange={(e) => handleInputChange(setHourlyRate, e.target.value, 15, 100)}
+                onChange={(e) => {
+                  let val = Math.max(15, Math.min(100, parseInt(e.target.value) || 15));
+                  setHourlyRate(val);
+                }}
                 className="w-24"
               />
             </div>
