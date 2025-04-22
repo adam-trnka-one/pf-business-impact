@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -203,7 +204,7 @@ const ConversionCalculator = () => {
               <div className="pt-4 flex justify-center items-center">
                 <div className="text-center">
                   <p className="text-sm text-gray-500">Net yearly revenue increase</p>
-                  <p className="text-[23px] font-bold text-green-600">
+                  <p className="text-[23pt] font-bold text-green-600">
                     {formatCurrency((results.monthlyRevenue - 299) * 12)}
                   </p>
                 </div>
