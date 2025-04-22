@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -23,6 +24,7 @@ const ConversionCalculator = () => {
     potentialMonthlyRevenue,
     monthlyRevenueIncrease,
     netYearlyRevenueIncrease,
+    additionalConversionsPerMonth,
   } = revenueImpact;
 
   return (
@@ -90,6 +92,12 @@ const ConversionCalculator = () => {
               <TableCell className="font-medium">Potential monthly revenue</TableCell>
               <TableCell className="text-right">
                 {formatCurrency(potentialMonthlyRevenue)}
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell className="font-medium">Additional conversions per month</TableCell>
+              <TableCell className="text-right">
+                {Math.round(additionalConversionsPerMonth)}
               </TableCell>
             </TableRow>
             <TableRow>
