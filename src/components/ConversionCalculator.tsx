@@ -1,120 +1,231 @@
-import React, { useState } from 'react';
-import { Card, CardContent } from "@/components/ui/card";
+
+import { useState, useEffect } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { formatCurrency, calculateRevenueImpact } from "@/utils/conversionCalculator";
-import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
+import { Slider } from "@/components/ui/slider";
+import { HelpCircle } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { formatCurrency, formatNumber } from "@/utils/roiCalculator";
+
+type ConversionResults = {
+  additionalConversions: number;
+  originalConversions: number;
+  newConversions: number;
+  monthlyRevenue: number;
+  annualRevenue: number;
+};
+
+const InfoTooltip = ({ content }: { content: string }) => (
+  <TooltipProvider>
+    <Tooltip>
+      <TooltipTrigger className="cursor-help">
+        <HelpCircle className="h-4 w-4 text-gray-400" />
+      </TooltipTrigger>
+      <TooltipContent side="right" align="start" className="max-w-[250px]">
+        <p>{content}</p>
+      </TooltipContent>
+    </Tooltip>
+  </TooltipProvider>
+);
 
 const ConversionCalculator = () => {
-  const [trialUsersPerMonth, setTrialUsersPerMonth] = useState<number>(500);
-  const [trialConversionRate, setTrialConversionRate] = useState<number>(0.1);
-  const [averageRevenuePerUser, setAverageRevenuePerUser] = useState<number>(50);
-  const [conversionRateUplift, setConversionRateUplift] = useState<number>(0.25);
+  const [monthlyTrials, setMonthlyTrials] = useState(320);
+  const [currentConversion, setCurrentConversion] = useState(14);
+  const [conversionUplift] = useState(30);
+  const [monthlyArpu, setMonthlyArpu] = useState(100);
+  const [results, setResults] = useState<ConversionResults | null>(null);
 
-  const revenueImpact = calculateRevenueImpact({
-    trialUsersPerMonth,
-    trialConversionRate,
-    averageRevenuePerUser,
-    conversionRateUplift,
-  });
+  const handleInputChange = (setter: React.Dispatch<React.SetStateAction<number>>, value: string, min: number, max: number) => {
+    const numValue = parseInt(value) || min;
+    setter(Math.min(Math.max(numValue, min), max));
+  };
 
-  const {
-    currentMonthlyRevenue,
-    potentialMonthlyRevenue,
-    monthlyRevenueIncrease,
-    netYearlyRevenueIncrease,
-  } = revenueImpact;
+  useEffect(() => {
+    calculateResults();
+  }, [monthlyTrials, currentConversion, conversionUplift, monthlyArpu]);
+
+  const calculateResults = () => {
+    const originalConversions = (monthlyTrials * currentConversion) / 100;
+    const newConversions = monthlyTrials * (currentConversion / 100) * (1 + conversionUplift / 100);
+    const additionalConversions = newConversions - originalConversions;
+    const monthlyRevenue = additionalConversions * monthlyArpu;
+    const annualRevenue = monthlyRevenue * 12;
+
+    setResults({
+      originalConversions,
+      newConversions,
+      additionalConversions,
+      monthlyRevenue,
+      annualRevenue,
+    });
+  };
 
   return (
-    <Card>
-      <CardContent>
-        <div className="grid gap-4">
+    <div className="grid gap-6 md:grid-cols-2 lg:gap-8">
+      <Card className="md:col-span-1">
+        <CardHeader>
+          <CardTitle>Conversion Rate Calculator</CardTitle>
+          <CardDescription>
+            Estimate additional revenue from improved trial-to-paid conversion rates
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
           <div className="calculator-input">
-            <Label htmlFor="trialUsersPerMonth" className="calculator-label">
-              Trial users per month
-            </Label>
-            <Input
-              type="number"
-              id="trialUsersPerMonth"
-              value={trialUsersPerMonth}
-              onChange={(e) => setTrialUsersPerMonth(Number(e.target.value))}
-            />
+            <div className="flex items-center justify-between">
+              <Label htmlFor="monthly-trials" className="calculator-label">
+                Monthly trial signups
+              </Label>
+              <InfoTooltip content="The average number of new trial users you get each month" />
+            </div>
+            <div className="flex items-center gap-4">
+              <Slider
+                id="monthly-trials"
+                min={50}
+                max={1000}
+                step={10}
+                value={[monthlyTrials]}
+                onValueChange={(value) => setMonthlyTrials(value[0])}
+                className="flex-1"
+              />
+              <Input
+                type="number"
+                value={monthlyTrials}
+                onChange={(e) => handleInputChange(setMonthlyTrials, e.target.value, 50, 1000)}
+                className="w-24"
+              />
+            </div>
+            <span className="calculator-value-display">
+              {formatNumber(monthlyTrials)} trials/month
+            </span>
           </div>
 
           <div className="calculator-input">
-            <Label htmlFor="trialConversionRate" className="calculator-label">
-              Current trial conversion rate
-            </Label>
-            <Input
-              type="number"
-              id="trialConversionRate"
-              value={trialConversionRate}
-              onChange={(e) => setTrialConversionRate(Number(e.target.value))}
-            />
+            <div className="flex items-center justify-between">
+              <Label htmlFor="current-conversion" className="calculator-label">
+                Current conversion rate (%)
+              </Label>
+              <InfoTooltip content="Your current trial-to-paid conversion rate" />
+            </div>
+            <div className="flex items-center gap-4">
+              <Slider
+                id="current-conversion"
+                min={1}
+                max={50}
+                step={1}
+                value={[currentConversion]}
+                onValueChange={(value) => setCurrentConversion(value[0])}
+                className="flex-1"
+              />
+              <Input
+                type="number"
+                value={currentConversion}
+                onChange={(e) => handleInputChange(setCurrentConversion, e.target.value, 1, 50)}
+                className="w-24"
+              />
+            </div>
+            <span className="calculator-value-display">
+              {currentConversion}% conversion rate
+            </span>
           </div>
 
           <div className="calculator-input">
-            <Label htmlFor="averageRevenuePerUser" className="calculator-label">
-              Average revenue per user
-            </Label>
-            <Input
-              type="number"
-              id="averageRevenuePerUser"
-              value={averageRevenuePerUser}
-              onChange={(e) => setAverageRevenuePerUser(Number(e.target.value))}
-            />
+            <div className="flex items-center justify-between">
+              <Label htmlFor="conversion-uplift" className="calculator-label">
+                Expected conversion uplift (%)
+              </Label>
+              <InfoTooltip content="Based on our customers' average improvements in trial-to-paid conversion rates" />
+            </div>
+            <div className="flex items-center gap-4">
+              <Input
+                type="number"
+                value={conversionUplift}
+                readOnly
+                className="w-24 bg-gray-100 cursor-not-allowed"
+              />
+            </div>
+            <span className="calculator-value-display">
+              {conversionUplift}% uplift (Fixed based on customer averages)
+            </span>
           </div>
 
           <div className="calculator-input">
-            <Label htmlFor="conversionRateUplift" className="calculator-label">
-              Potential conversion rate uplift
-            </Label>
-            <Input
-              type="number"
-              id="conversionRateUplift"
-              value={conversionRateUplift}
-              onChange={(e) => setConversionRateUplift(Number(e.target.value))}
-            />
+            <div className="flex items-center justify-between">
+              <Label htmlFor="monthly-arpu" className="calculator-label">
+                Average monthly revenue per customer (USD)
+              </Label>
+              <InfoTooltip content="Average monthly revenue generated per customer" />
+            </div>
+            <div className="flex items-center gap-4">
+              <Slider
+                id="monthly-arpu"
+                min={10}
+                max={1000}
+                step={10}
+                value={[monthlyArpu]}
+                onValueChange={(value) => setMonthlyArpu(value[0])}
+                className="flex-1"
+              />
+              <Input
+                type="number"
+                value={monthlyArpu}
+                onChange={(e) => handleInputChange(setMonthlyArpu, e.target.value, 10, 1000)}
+                className="w-24"
+              />
+            </div>
+            <span className="calculator-value-display">
+              ${monthlyArpu}/customer/month
+            </span>
           </div>
-        </div>
+        </CardContent>
+      </Card>
 
-        <Table>
-          <TableBody>
-            <TableRow>
-              <TableCell className="font-medium">Current monthly revenue</TableCell>
-              <TableCell className="text-right">
-                {formatCurrency(currentMonthlyRevenue)}
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell className="font-medium">Potential monthly revenue</TableCell>
-              <TableCell className="text-right">
-                {formatCurrency(potentialMonthlyRevenue)}
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell className="font-medium">Monthly revenue increase</TableCell>
-              <TableCell className="text-right font-bold text-green-600">
-                {formatCurrency(monthlyRevenueIncrease)}
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell className="text-center font-medium">Net ARR increase</TableCell>
-              <TableCell className="text-right font-bold text-green-600">
-                {formatCurrency(netYearlyRevenueIncrease)}
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell className="text-center font-medium">Net yearly revenue increase</TableCell>
-              <TableCell className="text-right font-bold text-green-600">
-                {formatCurrency(netYearlyRevenueIncrease)}
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </CardContent>
-    </Card>
+      <Card className="md:col-span-1">
+        <CardHeader>
+          <CardTitle>Potential Revenue Uplift</CardTitle>
+          <CardDescription>
+            Based on your inputs, here's your potential additional revenue
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          {results && (
+            <div className="space-y-6 animate-fade-in">
+              <div className="space-y-4">
+                <div className="flex justify-between items-center border-b pb-2">
+                  <span className="text-sm text-gray-600">Additional conversions per month</span>
+                  <span className="font-medium">{formatNumber(results.additionalConversions)}</span>
+                </div>
+                <div className="flex justify-between items-center border-b pb-2">
+                  <span className="text-sm text-gray-600">MRR Increase</span>
+                  <span className="font-medium">{formatCurrency(results.monthlyRevenue)}</span>
+                </div>
+                <div className="flex justify-between items-center border-b pb-2">
+                  <span className="text-sm text-gray-600">Your Product Fruits plan</span>
+                  <span className="font-medium text-red-600">-{formatCurrency(299)}/month</span>
+                </div>
+                <div className="flex justify-between items-center border-b pb-2">
+                  <span className="text-sm text-gray-600">Net monthly revenue increase</span>
+                  <span className="font-medium">{formatCurrency(results.monthlyRevenue - 299)}</span>
+                </div>
+              </div>
+              
+              <div className="pt-4">
+                <div className="flex justify-between items-center">
+                  <div className="space-y-1">
+                    <p className="text-sm text-gray-500">Net yearly revenue increase</p>
+                    <p className="text-3xl font-bold text-green-600">
+                      {formatCurrency((results.monthlyRevenue - 299) * 12)}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </div>
   );
 };
 
 export default ConversionCalculator;
+
