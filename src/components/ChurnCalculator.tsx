@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -16,9 +17,10 @@ interface ROIResults {
 }
 
 const CUSTOMER_STEPS = [
-  ...Array.from({ length: (1500 - 100) / 100 + 1 }, (_, i) => 100 + i * 100),
-  ...Array.from({ length: (3000 - 1500) / 500 }, (_, i) => 1500 + (i + 1) * 500),
-  ...Array.from({ length: (5000 - 3000) / 1000 }, (_, i) => 3000 + (i + 1) * 1000),
+  ...Array.from({ length: (200 - 100) / 100 + 1 }, (_, i) => 200 + i * 100),
+  ...Array.from({ length: (1500 - 200) / 100 + 1 }, (_, i) => 200 + (i + 1) * 100),
+  ...Array.from({ length: (3000 - 1500) / 500 + 1 }, (_, i) => 1500 + (i + 1) * 500),
+  ...Array.from({ length: (5000 - 3000) / 1000 + 1 }, (_, i) => 3000 + (i + 1) * 1000),
   7500, 10000,
   15000, 20000, 30000, 50000
 ];
