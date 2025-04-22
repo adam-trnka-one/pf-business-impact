@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -17,8 +16,11 @@ function getProductFruitsPlanPrice(userCount: number) {
   return 439;
 }
 
-// Logarithmic steps for monthly trial signups: [15000, 20000, 25000, 30000, 35000, 40000, 45000, 50000]
-const TRIAL_STEPS = [15000, 20000, 25000, 30000, 35000, 40000, 45000, 50000];
+// Trial steps: 10, 50, 100, 250, 500, 1k, 2.5k, 5k, 7.5k, 10k, 15k, 20k, ..., 50k
+const TRIAL_STEPS = [
+  10, 50, 100, 250, 500, 1000, 2500, 5000, 7500,
+  10000, 15000, 20000, 25000, 30000, 35000, 40000, 45000, 50000
+];
 
 function snapToNearestStep(value: number) {
   let closest = TRIAL_STEPS[0];
@@ -55,14 +57,13 @@ const InfoTooltip = ({ content }: { content: string }) => (
 );
 
 const ConversionCalculator = () => {
-  // Default to step index 0 (i.e. 15,000)
   const [trialStepIndex, setTrialStepIndex] = useState(0);
   const [currentConversion, setCurrentConversion] = useState(14);
   const conversionUplift = 30;
   const [monthlyArpu, setMonthlyArpu] = useState(100);
   const [results, setResults] = useState<ConversionResults | null>(null);
 
-  // Reference value
+  // Use the updated TRIAL_STEPS for value
   const monthlyTrials = TRIAL_STEPS[trialStepIndex];
   const productFruitsPlanPrice = getProductFruitsPlanPrice(monthlyTrials);
 
@@ -70,7 +71,7 @@ const ConversionCalculator = () => {
     setTrialStepIndex(index);
   };
 
-  // Input is snapped to nearest step, matching slider
+  // Snap input to nearest defined step and update slider index
   const handleTrialInput = (value: string) => {
     const parsedValue = parseInt(value) || TRIAL_STEPS[0];
     const snapped = snapToNearestStep(parsedValue);
@@ -141,7 +142,7 @@ const ConversionCalculator = () => {
                 value={monthlyTrials}
                 min={TRIAL_STEPS[0]}
                 max={TRIAL_STEPS[TRIAL_STEPS.length - 1]}
-                step="1000"
+                step="10"
                 onChange={(e) => handleTrialInput(e.target.value)}
                 className="w-32"
               />
