@@ -1,11 +1,11 @@
+
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
-import { calculateROI, formatCurrency, formatNumber, formatHours, ROIResults } from "@/utils/roiCalculator";
-import ResultsChart from "@/components/ResultsChart";
-import { HelpCircle, Info } from "lucide-react";
+import { calculateROI, formatCurrency, formatNumber, ROIResults } from "@/utils/roiCalculator";
+import { HelpCircle } from "lucide-react";
 import { Tooltip, TooltipProvider, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 
 const Calculator = () => {
@@ -55,9 +55,9 @@ const Calculator = () => {
     <div className="grid gap-6 md:grid-cols-2 lg:gap-8">
       <Card className="md:col-span-1">
         <CardHeader>
-          <CardTitle>Support ROI Calculator</CardTitle>
+          <CardTitle>Support Cost Reduction</CardTitle>
           <CardDescription>
-            Estimate your savings from implementing in-app support solutions
+            Calculate potential savings from implementing in-app support
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
@@ -85,9 +85,6 @@ const Calculator = () => {
                 className="w-24"
               />
             </div>
-            <span className="calculator-value-display">
-              {formatNumber(ticketsPerMonth)} tickets/month
-            </span>
           </div>
 
           <div className="calculator-input">
@@ -114,9 +111,6 @@ const Calculator = () => {
                 className="w-24"
               />
             </div>
-            <span className="calculator-value-display">
-              {timePerTicket} minutes per ticket
-            </span>
           </div>
 
           <div className="calculator-input">
@@ -143,9 +137,6 @@ const Calculator = () => {
                 className="w-24"
               />
             </div>
-            <span className="calculator-value-display">
-              ${hourlyRate}/hour
-            </span>
           </div>
 
           <div className="calculator-input">
@@ -163,59 +154,6 @@ const Calculator = () => {
                 className="w-24 bg-gray-100 cursor-not-allowed"
               />
             </div>
-            <span className="calculator-value-display">
-              {ticketReduction}% reduction (Fixed based on customer averages)
-            </span>
-          </div>
-
-          <div className="calculator-input">
-            <div className="flex items-center justify-between">
-              <Label htmlFor="user-count" className="calculator-label">
-                Number of Users
-              </Label>
-              <InfoTooltip content="Total number of active users in your application" />
-            </div>
-            <div className="flex items-center gap-4">
-              <Slider
-                id="user-count"
-                min={100}
-                max={10000}
-                step={100}
-                value={[userCount]}
-                onValueChange={(value) => setUserCount(value[0])}
-                className="flex-1"
-              />
-              <Input
-                type="number"
-                value={userCount}
-                onChange={(e) => handleInputChange(setUserCount, e.target.value, 100, 10000)}
-                className="w-24"
-              />
-            </div>
-            <span className="calculator-value-display">
-              {formatNumber(userCount)} users
-            </span>
-          </div>
-
-          <div className="calculator-input">
-            <div className="flex items-center justify-between">
-              <Label htmlFor="monthly-payment" className="calculator-label">
-                Monthly Payment Tier (USD)
-              </Label>
-              <InfoTooltip content="Your selected monthly payment tier for the support solution" />
-            </div>
-            <div className="flex items-center gap-4">
-              <Input
-                id="monthly-payment"
-                type="number"
-                value={monthlyPaymentTier}
-                onChange={(e) => handleInputChange(setMonthlyPaymentTier, e.target.value, 0, 10000)}
-                className="w-full"
-              />
-            </div>
-            <span className="calculator-value-display">
-              {formatCurrency(monthlyPaymentTier)}/month
-            </span>
           </div>
         </CardContent>
       </Card>
@@ -227,50 +165,33 @@ const Calculator = () => {
             Based on your inputs, here's what you could save
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent>
           {results && (
-            <div className="space-y-6 animate-fade-in">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-slate-50 p-4 rounded-lg">
-                  <p className="text-sm text-gray-500">Net Monthly Savings</p>
-                  <p className="text-2xl font-bold text-roi-blue">{formatCurrency(results.netSavings.monthly)}</p>
-                </div>
-                <div className="bg-slate-50 p-4 rounded-lg">
-                  <p className="text-sm text-gray-500">Net Annual Savings</p>
-                  <p className="text-2xl font-bold text-roi-blue-dark">{formatCurrency(results.netSavings.annual)}</p>
-                </div>
-              </div>
-
+            <div className="space-y-6">
               <div className="space-y-4">
-                <div className="flex justify-between items-center border-b pb-2">
-                  <span className="text-sm text-gray-600">Tickets per user (monthly)</span>
-                  <span className="font-medium">0.5</span>
-                </div>
-                <div className="flex justify-between items-center border-b pb-2">
-                  <span className="text-sm text-gray-600">Total support time (monthly)</span>
-                  <span className="font-medium">{formatHours(results.totalTimeSpent)}</span>
-                </div>
-                <div className="flex justify-between items-center border-b pb-2">
-                  <span className="text-sm text-gray-600">Current monthly support cost</span>
-                  <span className="font-medium">{formatCurrency(results.totalCost)}</span>
-                </div>
                 <div className="flex justify-between items-center border-b pb-2">
                   <span className="text-sm text-gray-600">Potential tickets reduced</span>
                   <span className="font-medium">{formatNumber(results.potentialTicketsReduced)} tickets/month</span>
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
-                  <span className="text-sm text-gray-600">Monthly payment tier</span>
+                  <span className="text-sm text-gray-600">Support cost monthly savings</span>
+                  <span className="font-medium">{formatCurrency(results.estimatedSavings.monthly)}</span>
+                </div>
+                <div className="flex justify-between items-center border-b pb-2">
+                  <span className="text-sm text-gray-600">Your Product Fruits plan</span>
                   <span className="font-medium text-red-600">-{formatCurrency(monthlyPaymentTier)}</span>
                 </div>
-              </div>
-
-              <div className="pt-4">
-                <h4 className="text-sm font-medium mb-2">Savings Visualization</h4>
-                <ResultsChart 
-                  currentCost={results.totalCost}
-                  reducedCost={results.totalCost - results.estimatedSavings.monthly}
-                  savings={results.netSavings.monthly}
-                />
+                <div className="flex justify-between items-center border-b pb-2">
+                  <span className="text-sm text-gray-600">Net monthly savings</span>
+                  <span className="font-medium">{formatCurrency(results.netSavings.monthly)}</span>
+                </div>
+                
+                <div className="mt-8 text-center">
+                  <div className="text-sm text-gray-600 mb-2">Net annual savings</div>
+                  <div className="text-4xl font-bold text-green-600">
+                    {formatCurrency(results.netSavings.annual)}
+                  </div>
+                </div>
               </div>
             </div>
           )}
