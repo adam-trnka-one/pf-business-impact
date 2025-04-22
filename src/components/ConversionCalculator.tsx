@@ -189,7 +189,7 @@ const ConversionCalculator = () => {
         </CardHeader>
         <CardContent>
           {results && (
-            <div className="space-y-6 animate-fade-in">
+            <div className="space-y-6 animate-fade-in text-center">  {/* Added text-center here */}
               <div className="space-y-4">
                 <div className="flex justify-between items-center border-b pb-2">
                   <span className="text-sm text-gray-600">Additional conversions per month</span>
@@ -209,8 +209,8 @@ const ConversionCalculator = () => {
                 </div>
               </div>
               
-              <div className="pt-4">
-                <div className="flex justify-between items-center">
+              <div className="pt-4 text-center">  {/* Added text-center here */}
+                <div className="flex justify-center items-center">  {/* Changed from flex-between to justify-center */}
                   <div className="space-y-1">
                     <p className="text-sm text-gray-500">Net yearly revenue increase</p>
                     <p className="text-3xl font-bold text-green-600">
