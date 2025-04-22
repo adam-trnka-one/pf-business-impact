@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -191,7 +190,7 @@ const ChurnCalculator = () => {
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
                   <span className="text-sm text-gray-600">Product Fruits monthly plan</span>
-                  <span className="font-medium text-red-600">-{formatCurrency(299)}/month</span>
+                  <span className="font-medium text-red-600">-{formatCurrency(299)}</span>
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
                   <span className="text-sm text-gray-600">Net MRR increase</span>
@@ -216,4 +215,3 @@ const ChurnCalculator = () => {
 };
 
 export default ChurnCalculator;
-
