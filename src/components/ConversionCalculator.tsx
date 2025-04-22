@@ -187,36 +187,36 @@ const ConversionCalculator = () => {
             Based on your inputs, here's your potential additional revenue
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent>
           {results && (
             <div className="space-y-6 animate-fade-in">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-slate-50 p-4 rounded-lg">
-                  <p className="text-sm text-gray-500">Monthly Revenue Gain</p>
-                  <p className="text-2xl font-bold text-roi-blue">
-                    {formatCurrency(results.monthlyRevenue)}
-                  </p>
-                </div>
-                <div className="bg-slate-50 p-4 rounded-lg">
-                  <p className="text-sm text-gray-500">Annual Revenue Gain</p>
-                  <p className="text-2xl font-bold text-roi-blue-dark">
-                    {formatCurrency(results.annualRevenue)}
-                  </p>
-                </div>
-              </div>
-
               <div className="space-y-4">
                 <div className="flex justify-between items-center border-b pb-2">
-                  <span className="text-sm text-gray-600">Original monthly conversions</span>
-                  <span className="font-medium">{formatNumber(results.originalConversions)} users</span>
-                </div>
-                <div className="flex justify-between items-center border-b pb-2">
-                  <span className="text-sm text-gray-600">New monthly conversions</span>
-                  <span className="font-medium">{formatNumber(results.newConversions)} users</span>
-                </div>
-                <div className="flex justify-between items-center border-b pb-2">
                   <span className="text-sm text-gray-600">Additional conversions per month</span>
-                  <span className="font-medium">{formatNumber(results.additionalConversions)} users</span>
+                  <span className="font-medium">{formatNumber(results.additionalConversions)}</span>
+                </div>
+                <div className="flex justify-between items-center border-b pb-2">
+                  <span className="text-sm text-gray-600">MRR Increase</span>
+                  <span className="font-medium">{formatCurrency(results.monthlyRevenue)}</span>
+                </div>
+                <div className="flex justify-between items-center border-b pb-2">
+                  <span className="text-sm text-gray-600">Your Product Fruits plan</span>
+                  <span className="font-medium text-red-600">-{formatCurrency(299)}/month</span>
+                </div>
+                <div className="flex justify-between items-center border-b pb-2">
+                  <span className="text-sm text-gray-600">Net monthly revenue increase</span>
+                  <span className="font-medium">{formatCurrency(results.monthlyRevenue - 299)}</span>
+                </div>
+              </div>
+              
+              <div className="pt-4">
+                <div className="flex justify-between items-center">
+                  <div className="space-y-1">
+                    <p className="text-sm text-gray-500">Net yearly revenue increase</p>
+                    <p className="text-3xl font-bold text-green-600">
+                      {formatCurrency((results.monthlyRevenue - 299) * 12)}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -228,3 +228,4 @@ const ConversionCalculator = () => {
 };
 
 export default ConversionCalculator;
+
