@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -7,6 +8,7 @@ import { HelpCircle } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { formatCurrency, formatNumber } from "@/utils/roiCalculator";
 
+// Product Fruits pricing logic
 function getProductFruitsPlanPrice(userCount: number) {
   if (userCount <= 1500) return 139;
   if (userCount <= 3000) return 189;
@@ -15,13 +17,8 @@ function getProductFruitsPlanPrice(userCount: number) {
   return 439;
 }
 
-const TRIAL_STEPS = [
-  ...Array.from({ length: (1500 - 50) / 50 + 1 }, (_, i) => 50 + i * 50),
-  ...Array.from({ length: (3000 - 1500) / 100 }, (_, i) => 1500 + (i + 1) * 100),
-  ...Array.from({ length: (5000 - 3000) / 250 }, (_, i) => 3000 + (i + 1) * 250),
-  6000, 8000, 10000,
-  15000, 20000, 25000, 30000, 35000, 40000, 45000, 50000
-];
+// Logarithmic steps for monthly trial signups: [15000, 20000, 25000, 30000, 35000, 40000, 45000, 50000]
+const TRIAL_STEPS = [15000, 20000, 25000, 30000, 35000, 40000, 45000, 50000];
 
 function snapToNearestStep(value: number) {
   let closest = TRIAL_STEPS[0];
@@ -58,12 +55,14 @@ const InfoTooltip = ({ content }: { content: string }) => (
 );
 
 const ConversionCalculator = () => {
-  const [trialStepIndex, setTrialStepIndex] = useState(6);
+  // Default to step index 0 (i.e. 15,000)
+  const [trialStepIndex, setTrialStepIndex] = useState(0);
   const [currentConversion, setCurrentConversion] = useState(14);
   const conversionUplift = 30;
   const [monthlyArpu, setMonthlyArpu] = useState(100);
   const [results, setResults] = useState<ConversionResults | null>(null);
 
+  // Reference value
   const monthlyTrials = TRIAL_STEPS[trialStepIndex];
   const productFruitsPlanPrice = getProductFruitsPlanPrice(monthlyTrials);
 
@@ -71,6 +70,7 @@ const ConversionCalculator = () => {
     setTrialStepIndex(index);
   };
 
+  // Input is snapped to nearest step, matching slider
   const handleTrialInput = (value: string) => {
     const parsedValue = parseInt(value) || TRIAL_STEPS[0];
     const snapped = snapToNearestStep(parsedValue);
@@ -78,7 +78,12 @@ const ConversionCalculator = () => {
     setTrialStepIndex(index !== -1 ? index : 0);
   };
 
-  const handleInputChange = (setter: React.Dispatch<React.SetStateAction<number>>, value: string, min: number, max: number) => {
+  const handleInputChange = (
+    setter: React.Dispatch<React.SetStateAction<number>>,
+    value: string,
+    min: number,
+    max: number
+  ) => {
     const numValue = parseInt(value) || min;
     setter(Math.min(Math.max(numValue, min), max));
   };
@@ -89,7 +94,8 @@ const ConversionCalculator = () => {
 
   const calculateResults = () => {
     const originalConversions = (monthlyTrials * currentConversion) / 100;
-    const newConversions = monthlyTrials * (currentConversion / 100) * (1 + conversionUplift / 100);
+    const newConversions =
+      monthlyTrials * (currentConversion / 100) * (1 + conversionUplift / 100);
     const additionalConversions = newConversions - originalConversions;
     const monthlyRevenue = additionalConversions * monthlyArpu;
     const annualRevenue = monthlyRevenue * 12;
@@ -135,13 +141,11 @@ const ConversionCalculator = () => {
                 value={monthlyTrials}
                 min={TRIAL_STEPS[0]}
                 max={TRIAL_STEPS[TRIAL_STEPS.length - 1]}
+                step="1000"
                 onChange={(e) => handleTrialInput(e.target.value)}
-                className="w-24"
+                className="w-32"
               />
             </div>
-            <span className="calculator-value-display">
-              {formatNumber(monthlyTrials)} trials/month
-            </span>
           </div>
 
           <div className="calculator-input">
@@ -164,13 +168,12 @@ const ConversionCalculator = () => {
               <Input
                 type="number"
                 value={currentConversion}
+                min={1}
+                max={50}
                 onChange={(e) => handleInputChange(setCurrentConversion, e.target.value, 1, 50)}
                 className="w-24"
               />
             </div>
-            <span className="calculator-value-display">
-              {currentConversion}% conversion rate
-            </span>
           </div>
 
           <div className="calculator-input">
@@ -193,13 +196,13 @@ const ConversionCalculator = () => {
               <Input
                 type="number"
                 value={monthlyArpu}
+                min={10}
+                max={1000}
+                step="10"
                 onChange={(e) => handleInputChange(setMonthlyArpu, e.target.value, 10, 1000)}
                 className="w-24"
               />
             </div>
-            <span className="calculator-value-display">
-              ${monthlyArpu}/customer/month
-            </span>
           </div>
 
           <div className="calculator-input">
@@ -209,9 +212,9 @@ const ConversionCalculator = () => {
               </Label>
               <InfoTooltip content="Based on our customers' average improvements in trial-to-paid conversion rates" />
             </div>
-            <span className="calculator-value-display">
-              {conversionUplift}%
-            </span>
+            <div className="flex items-center gap-4">
+              <span className="">{conversionUplift}%</span>
+            </div>
           </div>
         </CardContent>
       </Card>
