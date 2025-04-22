@@ -185,26 +185,26 @@ const ConversionCalculator = () => {
               <div className="space-y-4">
                 <div className="flex justify-between items-center border-b pb-2">
                   <span className="text-sm text-gray-600">Additional conversions per month</span>
-                  <span className="font-medium text-[28pt]">{formatNumber(results.additionalConversions)}</span>
+                  <span className="font-medium">{formatNumber(results.additionalConversions)}</span>
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
                   <span className="text-sm text-gray-600">MRR Increase</span>
-                  <span className="font-medium text-[28pt]">{formatCurrency(results.monthlyRevenue)}</span>
+                  <span className="font-medium">{formatCurrency(results.monthlyRevenue)}</span>
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
                   <span className="text-sm text-gray-600">Your Product Fruits plan</span>
-                  <span className="font-medium text-red-600 text-[28pt]">-{formatCurrency(299)}/month</span>
+                  <span className="font-medium text-red-600">-{formatCurrency(299)}/month</span>
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
                   <span className="text-sm text-gray-600">Net monthly revenue increase</span>
-                  <span className="font-medium text-[28pt]">{formatCurrency(results.monthlyRevenue - 299)}</span>
+                  <span className="font-medium">{formatCurrency(results.monthlyRevenue - 299)}</span>
                 </div>
               </div>
               
               <div className="pt-4 flex justify-center items-center">
                 <div className="text-center">
                   <p className="text-sm text-gray-500">Net yearly revenue increase</p>
-                  <p className="text-[28pt] font-bold text-green-600">
+                  <p className="text-[23pt] font-bold text-green-600">
                     {formatCurrency((results.monthlyRevenue - 299) * 12)}
                   </p>
                 </div>
