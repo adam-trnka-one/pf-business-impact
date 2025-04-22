@@ -184,7 +184,7 @@ const ConversionCalculator = () => {
             <div className="space-y-6 animate-fade-in">
               <div className="space-y-4">
                 <div className="flex justify-between items-center border-b pb-2">
-                  <span className="text-sm text-gray-600">Additional conversions per month</span>
+                  <span className="text-sm text-gray-600">Monthly additional conversions</span>
                   <span className="font-medium">{formatNumber(results.additionalConversions)}</span>
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
@@ -192,7 +192,7 @@ const ConversionCalculator = () => {
                   <span className="font-medium">{formatCurrency(results.monthlyRevenue)}</span>
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
-                  <span className="text-sm text-gray-600">Your Product Fruits plan</span>
+                  <span className="text-sm text-gray-600">Product Fruits monthly plan</span>
                   <span className="font-medium text-red-600">-{formatCurrency(299)}/month</span>
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
