@@ -31,7 +31,7 @@ const InfoTooltip = ({ content }: { content: string }) => (
 const ConversionCalculator = () => {
   const [monthlyTrials, setMonthlyTrials] = useState(320);
   const [currentConversion, setCurrentConversion] = useState(14);
-  const [conversionUplift] = useState(30);
+  const conversionUplift = 30;
   const [monthlyArpu, setMonthlyArpu] = useState(100);
   const [results, setResults] = useState<ConversionResults | null>(null);
 
@@ -134,14 +134,6 @@ const ConversionCalculator = () => {
                 Expected conversion uplift (%)
               </Label>
               <InfoTooltip content="Based on our customers' average improvements in trial-to-paid conversion rates" />
-            </div>
-            <div className="flex items-center gap-4">
-              <Input
-                type="number"
-                value={conversionUplift}
-                readOnly
-                className="w-24 bg-gray-100 cursor-not-allowed"
-              />
             </div>
             <span className="calculator-value-display">
               {conversionUplift}% uplift (Fixed based on customer averages)
