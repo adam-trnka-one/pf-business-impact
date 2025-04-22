@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -8,7 +7,6 @@ import { HelpCircle } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { formatCurrency, formatNumber } from "@/utils/roiCalculator";
 
-// Use the pricing tiers according to user request and churn calculator rules
 function getProductFruitsPlanPrice(userCount: number) {
   if (userCount <= 1500) return 139;
   if (userCount <= 3000) return 189;
@@ -17,12 +15,12 @@ function getProductFruitsPlanPrice(userCount: number) {
   return 439;
 }
 
-// Define discrete trial/signup steps, inspired by Calculator.tsx (Support tickets per month)
 const TRIAL_STEPS = [
-  ...Array.from({ length: (1500 - 50) / 50 + 1 }, (_, i) => 50 + i * 50),      // 50 to 1500, step 50
-  ...Array.from({ length: (3000 - 1500) / 100 }, (_, i) => 1500 + (i + 1) * 100), // 1600 to 3000, step 100
-  ...Array.from({ length: (5000 - 3000) / 250 }, (_, i) => 3000 + (i + 1) * 250), // 3250 to 5000, step 250
-  6000, 8000, 10000
+  ...Array.from({ length: (1500 - 50) / 50 + 1 }, (_, i) => 50 + i * 50),
+  ...Array.from({ length: (3000 - 1500) / 100 }, (_, i) => 1500 + (i + 1) * 100),
+  ...Array.from({ length: (5000 - 3000) / 250 }, (_, i) => 3000 + (i + 1) * 250),
+  6000, 8000, 10000,
+  15000, 20000, 25000, 30000, 35000, 40000, 45000, 50000
 ];
 
 function snapToNearestStep(value: number) {
@@ -60,25 +58,19 @@ const InfoTooltip = ({ content }: { content: string }) => (
 );
 
 const ConversionCalculator = () => {
-  // The index inside TRIAL_STEPS instead of direct monthlyTrials
-  const [trialStepIndex, setTrialStepIndex] = useState(6); // default to step index 6 (i.e., ~350)
+  const [trialStepIndex, setTrialStepIndex] = useState(6);
   const [currentConversion, setCurrentConversion] = useState(14);
   const conversionUplift = 30;
   const [monthlyArpu, setMonthlyArpu] = useState(100);
   const [results, setResults] = useState<ConversionResults | null>(null);
 
-  // Get the current trial signups value and update index if needed
   const monthlyTrials = TRIAL_STEPS[trialStepIndex];
-
-  // Product Fruits plan price based on monthlyTrials (userCount)
   const productFruitsPlanPrice = getProductFruitsPlanPrice(monthlyTrials);
 
-  // For handling slider changes (by index)
   const handleTrialSlider = (index: number) => {
     setTrialStepIndex(index);
   };
 
-  // For handling input changes (snap to nearest)
   const handleTrialInput = (value: string) => {
     const parsedValue = parseInt(value) || TRIAL_STEPS[0];
     const snapped = snapToNearestStep(parsedValue);
@@ -86,7 +78,6 @@ const ConversionCalculator = () => {
     setTrialStepIndex(index !== -1 ? index : 0);
   };
 
-  // All other sliders/input changes
   const handleInputChange = (setter: React.Dispatch<React.SetStateAction<number>>, value: string, min: number, max: number) => {
     const numValue = parseInt(value) || min;
     setter(Math.min(Math.max(numValue, min), max));
@@ -94,7 +85,6 @@ const ConversionCalculator = () => {
 
   useEffect(() => {
     calculateResults();
-    // eslint-disable-next-line
   }, [trialStepIndex, currentConversion, conversionUplift, monthlyArpu]);
 
   const calculateResults = () => {
