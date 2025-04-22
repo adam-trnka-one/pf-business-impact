@@ -8,7 +8,7 @@ import { HelpCircle } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { formatCurrency, formatNumber } from "@/utils/roiCalculator";
 
-// Utility function to determine Product Fruits plan price based on support tickets/user count
+// Use the pricing tiers according to user request and churn calculator rules
 function getProductFruitsPlanPrice(userCount: number) {
   if (userCount <= 1500) return 139;
   if (userCount <= 3000) return 189;
@@ -45,7 +45,7 @@ const ConversionCalculator = () => {
   const [monthlyArpu, setMonthlyArpu] = useState(100);
   const [results, setResults] = useState<ConversionResults | null>(null);
 
-  // Dynamically calculate the Product Fruits plan price from the current monthlyTrials
+  // Product Fruits plan price based on monthlyTrials (userCount)
   const productFruitsPlanPrice = getProductFruitsPlanPrice(monthlyTrials);
 
   const handleInputChange = (setter: React.Dispatch<React.SetStateAction<number>>, value: string, min: number, max: number) => {
@@ -231,3 +231,4 @@ const ConversionCalculator = () => {
 };
 
 export default ConversionCalculator;
+
