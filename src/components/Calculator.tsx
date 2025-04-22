@@ -11,7 +11,7 @@ const Calculator = () => {
   const [ticketsPerMonth, setTicketsPerMonth] = useState(1000);
   const [timePerTicket, setTimePerTicket] = useState(30);
   const [hourlyRate, setHourlyRate] = useState(30);
-  const [ticketReduction] = useState(25);
+  const ticketReduction = 25;
   const [userCount, setUserCount] = useState(2000);
   const [monthlyPaymentTier, setMonthlyPaymentTier] = useState(499);
   const [results, setResults] = useState<ROIResults | null>(null);
@@ -147,14 +147,9 @@ const Calculator = () => {
               </Label>
               <InfoTooltip content="Based on our customers' average reductions in support tickets" />
             </div>
-            <div className="flex items-center gap-4">
-              <Input
-                type="number"
-                value={ticketReduction}
-                readOnly
-                className="w-24 bg-gray-100 cursor-not-allowed"
-              />
-            </div>
+            <span className="calculator-value-display">
+              {ticketReduction}%
+            </span>
           </div>
         </CardContent>
       </Card>
