@@ -15,6 +15,27 @@ interface ROIResults {
   roi: number;
 }
 
+const CUSTOMER_STEPS = [
+  ...Array.from({ length: (1500 - 100) / 100 + 1 }, (_, i) => 100 + i * 100),
+  ...Array.from({ length: (3000 - 1500) / 500 }, (_, i) => 1500 + (i + 1) * 500),
+  ...Array.from({ length: (5000 - 3000) / 1000 }, (_, i) => 3000 + (i + 1) * 1000),
+  7500, 10000,
+  15000, 20000, 30000, 50000
+];
+
+function snapToNearestCustomerStep(value: number) {
+  let closest = CUSTOMER_STEPS[0];
+  let minDiff = Math.abs(value - closest);
+  for (const step of CUSTOMER_STEPS) {
+    const diff = Math.abs(step - value);
+    if (diff < minDiff) {
+      minDiff = diff;
+      closest = step;
+    }
+  }
+  return closest;
+}
+
 function getProductFruitsPlanPrice(customers: number): number {
   if (customers <= 1500) return 139;
   if (customers <= 3000) return 189;
@@ -29,7 +50,11 @@ const ChurnCalculator = () => {
   const [currentChurnRate, setCurrentChurnRate] = useState(5);
   const potentialChurnReduction = 0.30;
   const [results, setResults] = useState<ROIResults | null>(null);
-  const [showPercentage, setShowPercentage] = useState(false);
+
+  const customerSliderIndex = CUSTOMER_STEPS.findIndex((v) => v === customerCount);
+  const setSliderByIndex = (index: number) => {
+    setCustomerCount(CUSTOMER_STEPS[index]);
+  };
 
   useEffect(() => {
     calculateAndUpdateResults();
@@ -43,6 +68,15 @@ const ChurnCalculator = () => {
       potentialChurnReduction,
     });
     setResults(calculatedResults);
+  };
+
+  const handleCustomerCountInputChange = (
+    setter: React.Dispatch<React.SetStateAction<number>>,
+    value: string
+  ) => {
+    let numValue = parseInt(value) || CUSTOMER_STEPS[0];
+    numValue = Math.min(Math.max(numValue, CUSTOMER_STEPS[0]), CUSTOMER_STEPS[CUSTOMER_STEPS.length - 1]);
+    setter(snapToNearestCustomerStep(numValue));
   };
 
   const handleInputChange = (setter: React.Dispatch<React.SetStateAction<number>>, value: string, min: number, max: number) => {
@@ -85,17 +119,19 @@ const ChurnCalculator = () => {
             <div className="flex items-center gap-4">
               <Slider
                 id="customer-count"
-                min={100}
-                max={5000}
-                step={100}
-                value={[customerCount]}
-                onValueChange={(value) => setCustomerCount(value[0])}
+                min={0}
+                max={CUSTOMER_STEPS.length - 1}
+                step={1}
+                value={[customerSliderIndex]}
+                onValueChange={([idx]) => setSliderByIndex(idx)}
                 className="flex-1"
               />
               <Input
                 type="number"
                 value={customerCount}
-                onChange={(e) => handleInputChange(setCustomerCount, e.target.value, 100, 5000)}
+                min={CUSTOMER_STEPS[0]}
+                max={CUSTOMER_STEPS[CUSTOMER_STEPS.length - 1]}
+                onChange={(e) => handleCustomerCountInputChange(setCustomerCount, e.target.value)}
                 className="w-24"
               />
             </div>
@@ -205,7 +241,9 @@ const ChurnCalculator = () => {
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
                   <span className="text-sm text-gray-600">Product Fruits monthly plan</span>
-                  <span className="font-medium text-red-600">-{formatCurrency(productFruitsPlanPrice)}</span>
+                  <span className="font-medium text-red-600">
+                    -{formatCurrency(productFruitsPlanPrice)}
+                  </span>
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
                   <span className="text-sm text-gray-600">Net MRR increase</span>
