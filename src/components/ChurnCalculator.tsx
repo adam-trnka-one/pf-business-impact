@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -181,7 +182,7 @@ const ChurnCalculator = () => {
             <div className="space-y-6 animate-fade-in">
               <div className="space-y-4">
                 <div className="flex justify-between items-center border-b pb-2">
-                  <span className="text-sm text-gray-600">Churn avoided (customers)</span>
+                  <span className="text-sm text-gray-600">Customers avoided churn</span>
                   <span className="font-medium">{formatNumber(Math.round(customerCount * (currentChurnRate - results.reducedChurnRate)))}</span>
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
@@ -189,7 +190,7 @@ const ChurnCalculator = () => {
                   <span className="font-medium">{formatCurrency(results.monthlySavings)}</span>
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
-                  <span className="text-sm text-gray-600">Your Product Fruits plan</span>
+                  <span className="text-sm text-gray-600">Product Fruits monthly plan</span>
                   <span className="font-medium text-red-600">-{formatCurrency(299)}/month</span>
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
@@ -215,3 +216,4 @@ const ChurnCalculator = () => {
 };
 
 export default ChurnCalculator;
+
