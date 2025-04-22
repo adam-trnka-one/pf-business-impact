@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -152,9 +151,9 @@ const ConversionCalculator = () => {
           <div className="calculator-input">
             <div className="flex items-center justify-between">
               <Label htmlFor="monthly-arpu" className="calculator-label">
-                Monthly ARPU (USD)
+                Average monthly revenue per customer (USD)
               </Label>
-              <InfoTooltip content="Average Revenue Per User per month" />
+              <InfoTooltip content="Average monthly revenue generated per customer" />
             </div>
             <div className="flex items-center gap-4">
               <Slider
@@ -174,7 +173,7 @@ const ConversionCalculator = () => {
               />
             </div>
             <span className="calculator-value-display">
-              ${monthlyArpu}/user/month
+              ${monthlyArpu}/customer/month
             </span>
           </div>
         </CardContent>
