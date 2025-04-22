@@ -182,10 +182,12 @@ const Calculator = () => {
                   <span className="font-medium">{formatCurrency(results.netSavings.monthly)}</span>
                 </div>
                 
-                <div className="mt-8 text-center">
-                  <div className="text-sm text-gray-600 mb-2">Net annual savings</div>
-                  <div className="text-4xl font-bold text-green-600">
-                    {formatCurrency(results.netSavings.annual)}
+                <div className="pt-4 flex justify-center items-center">
+                  <div className="text-center">
+                    <p className="text-sm text-gray-600">Net annual savings</p>
+                    <p className="text-[28pt] font-bold text-green-600">
+                      {formatCurrency(results.netSavings.annual)}
+                    </p>
                   </div>
                 </div>
               </div>
