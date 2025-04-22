@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -198,12 +197,8 @@ const ChurnCalculator = () => {
             <div className="space-y-6 animate-fade-in">
               <div className="space-y-4">
                 <div className="flex justify-between items-center border-b pb-2">
-                  <span className="text-sm text-gray-600">Current monthly churn</span>
-                  <span className="font-medium">{formatPercent(results.currentChurnRate)}</span>
-                </div>
-                <div className="flex justify-between items-center border-b pb-2">
-                  <span className="text-sm text-gray-600">Potential reduced churn</span>
-                  <span className="font-medium">{formatPercent(results.reducedChurnRate)}</span>
+                  <span className="text-sm text-gray-600">Churn avoided (customers)</span>
+                  <span className="font-medium">{formatNumber(Math.round(customerCount * (currentChurnRate - results.reducedChurnRate)))}</span>
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
                   <span className="text-sm text-gray-600">Monthly retained revenue</span>
@@ -211,29 +206,22 @@ const ChurnCalculator = () => {
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
                   <span className="text-sm text-gray-600">Your Product Fruits plan</span>
-                  <span className="font-medium">{formatCurrency(299)}/month</span>
+                  <span className="font-medium text-red-600">-{formatCurrency(299)}/month</span>
+                </div>
+                <div className="flex justify-between items-center border-b pb-2">
+                  <span className="text-sm text-gray-600">Net MRR increase</span>
+                  <span className="font-medium">{formatCurrency(results.monthlySavings - 299)}</span>
                 </div>
               </div>
               
               <div className="pt-4">
                 <div className="flex justify-between items-center">
                   <div className="space-y-1">
-                    <p className="text-sm text-gray-500">Net annual savings</p>
+                    <p className="text-sm text-gray-500">Net ARR increase</p>
                     <p className="text-3xl font-bold text-green-600">
-                      {showPercentage 
-                        ? formatPercent(results.roi)
-                        : formatCurrency(results.annualSavings - (299 * 12))
-                      }
+                      {formatCurrency((results.monthlySavings - 299) * 12)}
                     </p>
                   </div>
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={() => setShowPercentage(!showPercentage)}
-                    className="h-8 w-8"
-                  >
-                    {showPercentage ? <DollarSign className="h-4 w-4" /> : <Percent className="h-4 w-4" />}
-                  </Button>
                 </div>
               </div>
             </div>
@@ -245,4 +233,3 @@ const ChurnCalculator = () => {
 };
 
 export default ChurnCalculator;
-
