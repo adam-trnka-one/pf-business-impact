@@ -7,6 +7,14 @@ import { calculateROI, formatCurrency, formatNumber, ROIResults } from "@/utils/
 import { HelpCircle } from "lucide-react";
 import { Tooltip, TooltipProvider, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 
+function getProductFruitsPlanPrice(ticketsPerMonth: number) {
+  if (ticketsPerMonth <= 1500) return 139;
+  if (ticketsPerMonth <= 3000) return 189;
+  if (ticketsPerMonth <= 5000) return 259;
+  if (ticketsPerMonth <= 10000) return 339;
+  return 439;
+}
+
 const Calculator = () => {
   const [ticketsPerMonth, setTicketsPerMonth] = useState(1000);
   const [timePerTicket, setTimePerTicket] = useState(30);
@@ -15,6 +23,8 @@ const Calculator = () => {
   const [userCount, setUserCount] = useState(2000);
   const [monthlyPaymentTier, setMonthlyPaymentTier] = useState(499);
   const [results, setResults] = useState<ROIResults | null>(null);
+
+  const productFruitsPlanPrice = getProductFruitsPlanPrice(ticketsPerMonth);
 
   useEffect(() => {
     calculateAndUpdateResults();
@@ -27,7 +37,7 @@ const Calculator = () => {
       hourlyRate,
       ticketReduction,
       userCount,
-      monthlyPaymentTier
+      monthlyPaymentTier: productFruitsPlanPrice
     });
     setResults(calculatedResults);
   };
@@ -177,7 +187,9 @@ const Calculator = () => {
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
                   <span className="text-sm text-gray-600">Product Fruits monthly plan</span>
-                  <span className="font-medium text-red-600">-{formatCurrency(monthlyPaymentTier)}</span>
+                  <span className="font-medium text-red-600">
+                    -{formatCurrency(productFruitsPlanPrice)}
+                  </span>
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
                   <span className="text-sm text-gray-600">Net monthly savings</span>
