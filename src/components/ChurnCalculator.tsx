@@ -1,14 +1,11 @@
-
 import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { calculateROI, formatCurrency, formatNumber, formatPercent } from "@/utils/churnCalculator";
-import { HelpCircle, Percent, DollarSign } from "lucide-react";
+import { HelpCircle } from "lucide-react";
 import { Tooltip, TooltipProvider, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 
 interface ROIResults {
   currentChurnRate: number;
@@ -21,7 +18,7 @@ interface ROIResults {
 const ChurnCalculator = () => {
   const [customerCount, setCustomerCount] = useState(1000);
   const [averageRevenuePerCustomer, setAverageRevenuePerCustomer] = useState(50);
-  const [currentChurnRate, setCurrentChurnRate] = useState(0.05);
+  const [currentChurnRate, setCurrentChurnRate] = useState(5);
   const potentialChurnReduction = 0.30;
   const [results, setResults] = useState<ROIResults | null>(null);
   const [showPercentage, setShowPercentage] = useState(false);
@@ -131,14 +128,14 @@ const ChurnCalculator = () => {
               <Label htmlFor="current-churn" className="calculator-label">
                 Current Churn Rate
               </Label>
-              <InfoTooltip content="Your current customer churn rate (as a decimal, e.g., 0.05 for 5%)." />
+              <InfoTooltip content="Your current customer churn rate as a percentage." />
             </div>
             <div className="flex items-center gap-4">
               <Slider
                 id="current-churn"
-                min={0.01}
-                max={0.20}
-                step={0.01}
+                min={1}
+                max={20}
+                step={1}
                 value={[currentChurnRate]}
                 onValueChange={(value) => setCurrentChurnRate(value[0])}
                 className="flex-1"
@@ -146,12 +143,12 @@ const ChurnCalculator = () => {
               <Input
                 type="number"
                 value={currentChurnRate}
-                onChange={(e) => handleInputChange(setCurrentChurnRate, e.target.value, 0.01, 0.20)}
+                onChange={(e) => handleInputChange(setCurrentChurnRate, e.target.value, 1, 20)}
                 className="w-24"
               />
             </div>
             <span className="calculator-value-display">
-              {formatPercent(currentChurnRate)}
+              {currentChurnRate}%
             </span>
           </div>
 

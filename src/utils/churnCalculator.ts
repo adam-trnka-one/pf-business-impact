@@ -17,13 +17,19 @@ export interface ChurnResults {
 }
 
 export const calculateROI = (inputs: ChurnInputs): ChurnResults => {
-  const { customerCount, averageRevenuePerCustomer, currentChurnRate, potentialChurnReduction } = inputs;
+  const { 
+    customerCount, 
+    averageRevenuePerCustomer, 
+    currentChurnRate,  // Now this will be a percentage value
+    potentialChurnReduction 
+  } = inputs;
 
-  // Calculate reduced churn rate
-  const reducedChurnRate = currentChurnRate * (1 - potentialChurnReduction);
+  // Convert percentage to decimal
+  const churnRateDecimal = currentChurnRate / 100;
+  const reducedChurnRateDecimal = churnRateDecimal * (1 - potentialChurnReduction);
 
   // Calculate the number of customers retained due to churn reduction
-  const retainedCustomers = customerCount * (currentChurnRate - reducedChurnRate);
+  const retainedCustomers = customerCount * (churnRateDecimal - reducedChurnRateDecimal);
 
   // Calculate monthly savings
   const monthlySavings = retainedCustomers * averageRevenuePerCustomer;
@@ -32,11 +38,11 @@ export const calculateROI = (inputs: ChurnInputs): ChurnResults => {
   const annualSavings = monthlySavings * 12;
 
   // Calculate ROI (Return on Investment)
-  const roi = annualSavings / (customerCount * averageRevenuePerCustomer * currentChurnRate * 12);
+  const roi = annualSavings / (customerCount * averageRevenuePerCustomer * churnRateDecimal * 12);
 
   return {
     currentChurnRate,
-    reducedChurnRate,
+    reducedChurnRate: reducedChurnRateDecimal * 100,
     monthlySavings,
     annualSavings,
     roi
