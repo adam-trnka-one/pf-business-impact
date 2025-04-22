@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -189,7 +188,7 @@ const ConversionCalculator = () => {
         </CardHeader>
         <CardContent>
           {results && (
-            <div className="space-y-6 animate-fade-in text-center">  {/* Added text-center here */}
+            <div className="space-y-6 animate-fade-in text-center">
               <div className="space-y-4">
                 <div className="flex justify-between items-center border-b pb-2">
                   <span className="text-sm text-gray-600">Additional conversions per month</span>
@@ -209,11 +208,11 @@ const ConversionCalculator = () => {
                 </div>
               </div>
               
-              <div className="pt-4 text-center">  {/* Added text-center here */}
-                <div className="flex justify-center items-center">  {/* Changed from flex-between to justify-center */}
-                  <div className="space-y-1">
-                    <p className="text-sm text-gray-500">Net yearly revenue increase</p>
-                    <p className="text-3xl font-bold text-green-600">
+              <div className="pt-4 text-center">
+                <div className="flex justify-center items-center">
+                  <div className="space-y-1 text-center">
+                    <p className="text-sm text-gray-500 text-center">Net yearly revenue increase</p>
+                    <p className="text-3xl font-bold text-green-600 text-center">
                       {formatCurrency((results.monthlyRevenue - 299) * 12)}
                     </p>
                   </div>
@@ -228,4 +227,3 @@ const ConversionCalculator = () => {
 };
 
 export default ConversionCalculator;
-
