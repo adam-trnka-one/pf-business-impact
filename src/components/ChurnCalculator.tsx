@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -217,7 +217,7 @@ const ChurnCalculator = () => {
               <div className="pt-4 flex justify-center items-center">
                 <div className="text-center">
                   <p className="text-sm text-gray-500">Net ARR increase</p>
-                  <p className="text-2xl font-bold text-green-600">
+                  <p className="text-[23px] font-bold text-green-600">
                     {formatCurrency((results.monthlySavings - 299) * 12)}
                   </p>
                 </div>
