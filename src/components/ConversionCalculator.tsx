@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -6,6 +7,15 @@ import { Slider } from "@/components/ui/slider";
 import { HelpCircle } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { formatCurrency, formatNumber } from "@/utils/roiCalculator";
+
+// Utility function to determine Product Fruits plan price based on support tickets/user count
+function getProductFruitsPlanPrice(userCount: number) {
+  if (userCount <= 1500) return 139;
+  if (userCount <= 3000) return 189;
+  if (userCount <= 5000) return 259;
+  if (userCount <= 10000) return 339;
+  return 439;
+}
 
 type ConversionResults = {
   additionalConversions: number;
@@ -35,6 +45,9 @@ const ConversionCalculator = () => {
   const [monthlyArpu, setMonthlyArpu] = useState(100);
   const [results, setResults] = useState<ConversionResults | null>(null);
 
+  // Dynamically calculate the Product Fruits plan price from the current monthlyTrials
+  const productFruitsPlanPrice = getProductFruitsPlanPrice(monthlyTrials);
+
   const handleInputChange = (setter: React.Dispatch<React.SetStateAction<number>>, value: string, min: number, max: number) => {
     const numValue = parseInt(value) || min;
     setter(Math.min(Math.max(numValue, min), max));
@@ -42,6 +55,7 @@ const ConversionCalculator = () => {
 
   useEffect(() => {
     calculateResults();
+    // eslint-disable-next-line
   }, [monthlyTrials, currentConversion, conversionUplift, monthlyArpu]);
 
   const calculateResults = () => {
@@ -192,11 +206,11 @@ const ConversionCalculator = () => {
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
                   <span className="text-sm text-gray-600">Product Fruits monthly plan</span>
-                  <span className="font-medium text-red-600">-{formatCurrency(299)}</span>
+                  <span className="font-medium text-red-600">-{formatCurrency(productFruitsPlanPrice)}</span>
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
                   <span className="text-sm text-gray-600">Net monthly revenue increase</span>
-                  <span className="font-medium">{formatCurrency(results.monthlyRevenue - 299)}</span>
+                  <span className="font-medium">{formatCurrency(results.monthlyRevenue - productFruitsPlanPrice)}</span>
                 </div>
               </div>
               
@@ -204,7 +218,7 @@ const ConversionCalculator = () => {
                 <div className="text-center">
                   <p className="text-sm text-gray-500">Net yearly revenue increase</p>
                   <p className="text-[28pt] font-bold text-green-600">
-                    {formatCurrency((results.monthlyRevenue - 299) * 12)}
+                    {formatCurrency((results.monthlyRevenue - productFruitsPlanPrice) * 12)}
                   </p>
                 </div>
               </div>
