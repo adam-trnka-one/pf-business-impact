@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Calculator from "@/components/Calculator";
@@ -6,7 +5,7 @@ import ChurnCalculator from "@/components/ChurnCalculator";
 import ConversionCalculator from "@/components/ConversionCalculator";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { TrendingUp, Users, BarChart } from "lucide-react";
+import { TrendingUp, Users, BarChart, Info } from "lucide-react";
 
 const Index = () => {
   return (
