@@ -135,9 +135,6 @@ const ChurnCalculator = () => {
                 className="w-24"
               />
             </div>
-            <span className="calculator-value-display">
-              {formatNumber(customerCount)} customers
-            </span>
           </div>
 
           <div className="calculator-input">
@@ -164,9 +161,6 @@ const ChurnCalculator = () => {
                 className="w-24"
               />
             </div>
-            <span className="calculator-value-display">
-              {formatCurrency(averageRevenuePerCustomer)}/month
-            </span>
           </div>
 
           <div className="calculator-input">
@@ -193,9 +187,6 @@ const ChurnCalculator = () => {
                 className="w-24"
               />
             </div>
-            <span className="calculator-value-display">
-              {currentChurnRate}%
-            </span>
           </div>
 
           <div className="calculator-input">
@@ -205,10 +196,6 @@ const ChurnCalculator = () => {
               </Label>
               <InfoTooltip content="The percentage reduction in churn rate you expect to achieve." />
             </div>
-            
-            <span className="calculator-value-display">
-              {formatPercent(potentialChurnReduction)}
-            </span>
           </div>
         </CardContent>
       </Card>
@@ -224,17 +211,6 @@ const ChurnCalculator = () => {
           {results && (
             <div className="space-y-6 animate-fade-in">
               <div className="space-y-4">
-                <div className="flex justify-between items-center border-b pb-2">
-                  <span className="text-sm text-gray-600">Monthly avoided churn customers</span>
-                  <span className="font-medium">
-                    {formatNumber(
-                      Math.round(
-                        (customerCount * (currentChurnRate / 100)) -
-                        ((customerCount * (currentChurnRate / 100)) * potentialChurnReduction)
-                      )
-                    )}
-                  </span>
-                </div>
                 <div className="flex justify-between items-center border-b pb-2">
                   <span className="text-sm text-gray-600">Monthly retained revenue</span>
                   <span className="font-medium">{formatCurrency(results.monthlySavings)}</span>
