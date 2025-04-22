@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -16,9 +17,9 @@ function getProductFruitsPlanPrice(userCount: number) {
   return 439;
 }
 
-// Trial steps: 10, 50, 100, 250, 500, 1k, 2.5k, 5k, 7.5k, 10k, 15k, 20k, ..., 50k
+// Updated trial steps: 50, 100, 250, 500, 1k, 2.5k, 5k, 7.5k, 10k, 15k, 20k, ..., 50k
 const TRIAL_STEPS = [
-  10, 50, 100, 250, 500, 1000, 2500, 5000, 7500,
+  50, 100, 250, 500, 1000, 2500, 5000, 7500,
   10000, 15000, 20000, 25000, 30000, 35000, 40000, 45000, 50000
 ];
 
@@ -266,3 +267,4 @@ const ConversionCalculator = () => {
 };
 
 export default ConversionCalculator;
+
