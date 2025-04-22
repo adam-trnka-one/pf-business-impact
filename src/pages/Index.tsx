@@ -14,7 +14,7 @@ const Index = () => {
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                See the Business Impact of Reducing Churn and Support Tickets
+                Business Impact of Reducing Churn and Support Tickets
               </h2>
               <p className="text-lg text-gray-600 max-w-3xl mx-auto">
                 Quantify the benefits of implementing in-app support solutions, reducing customer churn, and improving trial conversions.
