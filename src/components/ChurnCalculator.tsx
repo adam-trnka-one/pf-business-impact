@@ -21,13 +21,14 @@ const ChurnCalculator = () => {
   const [customerCount, setCustomerCount] = useState(1000);
   const [averageRevenuePerCustomer, setAverageRevenuePerCustomer] = useState(50);
   const [currentChurnRate, setCurrentChurnRate] = useState(0.05);
-  const [potentialChurnReduction, setPotentialChurnReduction] = useState(0.20);
+  // Fixed Potential Churn Reduction to 30% (0.30)
+  const potentialChurnReduction = 0.30;
   const [results, setResults] = useState<ROIResults | null>(null);
   const [showPercentage, setShowPercentage] = useState(false);
 
   useEffect(() => {
     calculateAndUpdateResults();
-  }, [customerCount, averageRevenuePerCustomer, currentChurnRate, potentialChurnReduction]);
+  }, [customerCount, averageRevenuePerCustomer, currentChurnRate]);
 
   const calculateAndUpdateResults = () => {
     const calculatedResults = calculateROI({
@@ -161,23 +162,7 @@ const ChurnCalculator = () => {
               </Label>
               <InfoTooltip content="The percentage reduction in churn rate you expect to achieve." />
             </div>
-            <div className="flex items-center gap-4">
-              <Slider
-                id="churn-reduction"
-                min={5}
-                max={70}
-                step={5}
-                value={[potentialChurnReduction * 100]}
-                onValueChange={(value) => setPotentialChurnReduction(value[0] / 100)}
-                className="flex-1"
-              />
-              <Input
-                type="number"
-                value={potentialChurnReduction * 100}
-                onChange={(e) => handleInputChange(setPotentialChurnReduction, String(parseFloat(e.target.value) / 100), 0.05, 0.70)}
-                className="w-24"
-              />
-            </div>
+            
             <span className="calculator-value-display">
               {formatPercent(potentialChurnReduction)}
             </span>
