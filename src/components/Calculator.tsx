@@ -12,7 +12,8 @@ function getProductFruitsPlanPrice(ticketsPerMonth: number) {
   if (ticketsPerMonth <= 3000) return 189;
   if (ticketsPerMonth <= 5000) return 259;
   if (ticketsPerMonth <= 10000) return 339;
-  return 439;
+  if (ticketsPerMonth <= 50000) return 439;
+  return 599;
 }
 
 const Calculator = () => {
@@ -83,7 +84,7 @@ const Calculator = () => {
               <Slider
                 id="tickets-per-month"
                 min={100}
-                max={10000}
+                max={50000}
                 step={100}
                 value={[ticketsPerMonth]}
                 onValueChange={(value) => setTicketsPerMonth(value[0])}
@@ -92,7 +93,7 @@ const Calculator = () => {
               <Input
                 type="number"
                 value={ticketsPerMonth}
-                onChange={(e) => handleInputChange(setTicketsPerMonth, e.target.value, 100, 10000)}
+                onChange={(e) => handleInputChange(setTicketsPerMonth, e.target.value, 100, 50000)}
                 className="w-24"
               />
             </div>
