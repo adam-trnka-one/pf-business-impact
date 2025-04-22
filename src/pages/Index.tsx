@@ -4,7 +4,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Calculator from "@/components/Calculator";
 import ChurnCalculator from "@/components/ChurnCalculator";
 import ConversionCalculator from "@/components/ConversionCalculator";
-import Footer from "@/components/Footer";
 import { TrendingUp, Users, BarChart, Info } from "lucide-react";
 
 const Index = () => {
@@ -83,8 +82,6 @@ const Index = () => {
           </div>
         </div>
       </main>
-      
-      <Footer />
     </div>
   );
 };
