@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -66,7 +65,9 @@ const Calculator = () => {
               <Label htmlFor="tickets-per-month" className="calculator-label">
                 Support tickets per month
               </Label>
-              <InfoTooltip content="The average number of support tickets your team handles each month" />
+              <InfoTooltip 
+                content="The average number of support tickets your team handles each month. We calculate this as 1 ticket per user." 
+              />
             </div>
             <div className="flex items-center gap-4">
               <Slider
