@@ -15,6 +15,14 @@ interface ROIResults {
   roi: number;
 }
 
+function getProductFruitsPlanPrice(customers: number): number {
+  if (customers <= 1500) return 139;
+  if (customers <= 3000) return 189;
+  if (customers <= 5000) return 259;
+  if (customers <= 10000) return 339;
+  return 439;
+}
+
 const ChurnCalculator = () => {
   const [customerCount, setCustomerCount] = useState(1000);
   const [averageRevenuePerCustomer, setAverageRevenuePerCustomer] = useState(50);
@@ -54,6 +62,8 @@ const ChurnCalculator = () => {
       </Tooltip>
     </TooltipProvider>
   );
+
+  const productFruitsPlanPrice = getProductFruitsPlanPrice(customerCount);
 
   return (
     <div className="grid gap-6 md:grid-cols-2 lg:gap-8">
@@ -195,11 +205,11 @@ const ChurnCalculator = () => {
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
                   <span className="text-sm text-gray-600">Product Fruits monthly plan</span>
-                  <span className="font-medium text-red-600">-{formatCurrency(299)}</span>
+                  <span className="font-medium text-red-600">-{formatCurrency(productFruitsPlanPrice)}</span>
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
                   <span className="text-sm text-gray-600">Net MRR increase</span>
-                  <span className="font-medium">{formatCurrency(results.monthlySavings - 299)}</span>
+                  <span className="font-medium">{formatCurrency(results.monthlySavings - productFruitsPlanPrice)}</span>
                 </div>
               </div>
               
@@ -207,7 +217,7 @@ const ChurnCalculator = () => {
                 <div className="text-center">
                   <p className="text-sm text-gray-500">Net ARR increase</p>
                   <p className="text-[28pt] font-bold text-green-600">
-                    {formatCurrency((results.monthlySavings - 299) * 12)}
+                    {formatCurrency((results.monthlySavings - productFruitsPlanPrice) * 12)}
                   </p>
                 </div>
               </div>
