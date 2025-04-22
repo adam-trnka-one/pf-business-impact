@@ -21,7 +21,6 @@ const ChurnCalculator = () => {
   const [customerCount, setCustomerCount] = useState(1000);
   const [averageRevenuePerCustomer, setAverageRevenuePerCustomer] = useState(50);
   const [currentChurnRate, setCurrentChurnRate] = useState(0.05);
-  // Fixed Potential Churn Reduction to 30% (0.30)
   const potentialChurnReduction = 0.30;
   const [results, setResults] = useState<ROIResults | null>(null);
   const [showPercentage, setShowPercentage] = useState(false);
@@ -202,7 +201,7 @@ const ChurnCalculator = () => {
               <div className="pt-4 flex justify-center items-center">
                 <div className="text-center">
                   <p className="text-sm text-gray-500">Net ARR increase</p>
-                  <p className="text-[23px] font-bold text-green-600">
+                  <p className="text-[28pt] font-bold text-green-600">
                     {formatCurrency((results.monthlySavings - 299) * 12)}
                   </p>
                 </div>
