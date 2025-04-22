@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -61,7 +62,7 @@ const ChurnCalculator = () => {
     <div className="grid gap-6 md:grid-cols-2 lg:gap-8">
       <Card className="md:col-span-1">
         <CardHeader>
-          <CardTitle>Churn Reduction ROI Calculator</CardTitle>
+          <CardTitle>Churn Reduction Calculator</CardTitle>
           <CardDescription>
             Estimate your savings from reducing customer churn.
           </CardDescription>
