@@ -159,22 +159,22 @@ const ChurnCalculator = () => {
               <Label htmlFor="churn-reduction" className="calculator-label">
                 Potential Churn Reduction
               </Label>
-              <InfoTooltip content="The percentage reduction in churn rate you expect to achieve (as a decimal, e.g., 0.20 for 20%)." />
+              <InfoTooltip content="The percentage reduction in churn rate you expect to achieve." />
             </div>
             <div className="flex items-center gap-4">
               <Slider
                 id="churn-reduction"
-                min={0.05}
-                max={0.70}
-                step={0.05}
-                value={[potentialChurnReduction]}
-                onValueChange={(value) => setPotentialChurnReduction(value[0])}
+                min={5}
+                max={70}
+                step={5}
+                value={[potentialChurnReduction * 100]}
+                onValueChange={(value) => setPotentialChurnReduction(value[0] / 100)}
                 className="flex-1"
               />
               <Input
                 type="number"
-                value={potentialChurnReduction}
-                onChange={(e) => handleInputChange(setPotentialChurnReduction, e.target.value, 0.05, 0.70)}
+                value={potentialChurnReduction * 100}
+                onChange={(e) => handleInputChange(setPotentialChurnReduction, String(parseFloat(e.target.value) / 100), 0.05, 0.70)}
                 className="w-24"
               />
             </div>
@@ -187,9 +187,9 @@ const ChurnCalculator = () => {
 
       <Card className="md:col-span-1">
         <CardHeader>
-          <CardTitle>Return on Investment</CardTitle>
+          <CardTitle>Retained revenue</CardTitle>
           <CardDescription>
-            Based on your inputs, here's your potential ROI
+            Based on your inputs, here's your potential impact on your revenue
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
