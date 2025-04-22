@@ -195,26 +195,6 @@ const ChurnCalculator = () => {
         <CardContent className="space-y-6">
           {results && (
             <div className="space-y-6 animate-fade-in">
-              <div className="flex justify-between items-center">
-                <div className="space-y-1">
-                  <p className="text-sm text-gray-500">ROI</p>
-                  <p className="text-3xl font-bold text-primary">
-                    {showPercentage 
-                      ? formatPercent(results.roi)
-                      : formatCurrency(results.annualSavings)
-                    }
-                  </p>
-                </div>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={() => setShowPercentage(!showPercentage)}
-                  className="h-8 w-8"
-                >
-                  {showPercentage ? <DollarSign className="h-4 w-4" /> : <Percent className="h-4 w-4" />}
-                </Button>
-              </div>
-
               <div className="space-y-4">
                 <div className="flex justify-between items-center border-b pb-2">
                   <span className="text-sm text-gray-600">Current monthly churn</span>
@@ -229,8 +209,30 @@ const ChurnCalculator = () => {
                   <span className="font-medium">{formatCurrency(results.monthlySavings)}</span>
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
-                  <span className="text-sm text-gray-600">Annual retained revenue</span>
-                  <span className="font-medium">{formatCurrency(results.annualSavings)}</span>
+                  <span className="text-sm text-gray-600">Your Product Fruits plan</span>
+                  <span className="font-medium">{formatCurrency(299)}</span>
+                </div>
+              </div>
+              
+              <div className="pt-4">
+                <div className="flex justify-between items-center">
+                  <div className="space-y-1">
+                    <p className="text-sm text-gray-500">Net annual savings</p>
+                    <p className="text-3xl font-bold text-green-600">
+                      {showPercentage 
+                        ? formatPercent(results.roi)
+                        : formatCurrency(results.annualSavings - (299 * 12))
+                      }
+                    </p>
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => setShowPercentage(!showPercentage)}
+                    className="h-8 w-8"
+                  >
+                    {showPercentage ? <DollarSign className="h-4 w-4" /> : <Percent className="h-4 w-4" />}
+                  </Button>
                 </div>
               </div>
             </div>
