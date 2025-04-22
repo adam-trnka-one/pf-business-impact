@@ -7,6 +7,8 @@ export interface ROIInputs {
   timePerTicket: number; // in minutes
   hourlyRate: number; // in USD
   ticketReduction: number; // percentage (0-100)
+  userCount: number;
+  monthlyPaymentTier: number;
 }
 
 export interface ROIResults {
@@ -17,10 +19,14 @@ export interface ROIResults {
     annual: number;
   };
   potentialTicketsReduced: number;
+  netSavings: {
+    monthly: number;
+    annual: number;
+  };
 }
 
 export const calculateROI = (inputs: ROIInputs): ROIResults => {
-  const { ticketsPerMonth, timePerTicket, hourlyRate, ticketReduction } = inputs;
+  const { ticketsPerMonth, timePerTicket, hourlyRate, ticketReduction, userCount, monthlyPaymentTier } = inputs;
   
   // Calculate total time spent on tickets (converted to hours)
   const totalTimeSpent = (ticketsPerMonth * timePerTicket) / 60;
@@ -31,9 +37,13 @@ export const calculateROI = (inputs: ROIInputs): ROIResults => {
   // Calculate estimated savings
   const reductionFactor = ticketReduction / 100;
   const monthlySavings = totalCost * reductionFactor;
+
+  // Calculate tickets per user (0.5 per user as specified)
+  const expectedTicketsPerUser = 0.5;
+  const potentialTicketsReduced = Math.round(userCount * expectedTicketsPerUser * reductionFactor);
   
-  // Calculate potential number of tickets reduced
-  const potentialTicketsReduced = Math.round(ticketsPerMonth * reductionFactor);
+  // Calculate net savings (savings minus monthly payment tier)
+  const netMonthlySavings = monthlySavings - monthlyPaymentTier;
   
   return {
     totalTimeSpent,
@@ -42,7 +52,11 @@ export const calculateROI = (inputs: ROIInputs): ROIResults => {
       monthly: monthlySavings,
       annual: monthlySavings * 12
     },
-    potentialTicketsReduced
+    potentialTicketsReduced,
+    netSavings: {
+      monthly: netMonthlySavings,
+      annual: netMonthlySavings * 12
+    }
   };
 };
 
