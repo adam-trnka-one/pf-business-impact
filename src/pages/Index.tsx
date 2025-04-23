@@ -5,8 +5,11 @@ import Calculator from "@/components/Calculator";
 import ChurnCalculator from "@/components/ChurnCalculator";
 import ConversionCalculator from "@/components/ConversionCalculator";
 import { TrendingUp, Users, BarChart, Info } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Index = () => {
+  const isMobile = useIsMobile();
+
   return (
     <div className="min-h-screen flex flex-col">
       <main className="flex-1">
@@ -22,18 +25,18 @@ const Index = () => {
             </div>
             
             <Tabs defaultValue="support" className="mb-8">
-              <TabsList className="grid w-full grid-cols-3 mb-8">
-                <TabsTrigger value="support" className="flex items-center gap-2">
+              <TabsList className="grid w-full grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-0 mb-8">
+                <TabsTrigger value="support" className="flex items-center gap-2 text-sm sm:text-base">
                   <BarChart className="h-4 w-4" />
-                  <span>Support Cost Reduction</span>
+                  <span>{isMobile ? "Support" : "Support Cost Reduction"}</span>
                 </TabsTrigger>
-                <TabsTrigger value="churn" className="flex items-center gap-2">
+                <TabsTrigger value="churn" className="flex items-center gap-2 text-sm sm:text-base">
                   <Users className="h-4 w-4" />
-                  <span>Churn Reduction</span>
+                  <span>{isMobile ? "Churn" : "Churn Reduction"}</span>
                 </TabsTrigger>
-                <TabsTrigger value="conversion" className="flex items-center gap-2">
+                <TabsTrigger value="conversion" className="flex items-center gap-2 text-sm sm:text-base">
                   <TrendingUp className="h-4 w-4" />
-                  <span>Revenue Impact</span>
+                  <span>{isMobile ? "Revenue" : "Revenue Impact"}</span>
                 </TabsTrigger>
               </TabsList>
               
