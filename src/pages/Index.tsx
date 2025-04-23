@@ -25,17 +25,17 @@ const Index = () => {
             </div>
             
             <Tabs defaultValue="support" className="mb-8">
-              <TabsList className="grid w-full grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-0 mb-8">
-                <TabsTrigger value="support" className="flex items-center gap-2 text-sm sm:text-base">
-                  <BarChart className="h-4 w-4" />
+              <TabsList className="grid w-full grid-cols-3 mb-8">
+                <TabsTrigger value="support" className="flex items-center gap-1 text-xs sm:text-base px-2 sm:px-3 py-1.5">
+                  <BarChart className="h-3 w-3 sm:h-4 sm:w-4" />
                   <span>{isMobile ? "Support" : "Support Cost Reduction"}</span>
                 </TabsTrigger>
-                <TabsTrigger value="churn" className="flex items-center gap-2 text-sm sm:text-base">
-                  <Users className="h-4 w-4" />
+                <TabsTrigger value="churn" className="flex items-center gap-1 text-xs sm:text-base px-2 sm:px-3 py-1.5">
+                  <Users className="h-3 w-3 sm:h-4 sm:w-4" />
                   <span>{isMobile ? "Churn" : "Churn Reduction"}</span>
                 </TabsTrigger>
-                <TabsTrigger value="conversion" className="flex items-center gap-2 text-sm sm:text-base">
-                  <TrendingUp className="h-4 w-4" />
+                <TabsTrigger value="conversion" className="flex items-center gap-1 text-xs sm:text-base px-2 sm:px-3 py-1.5">
+                  <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4" />
                   <span>{isMobile ? "Revenue" : "Revenue Impact"}</span>
                 </TabsTrigger>
               </TabsList>
