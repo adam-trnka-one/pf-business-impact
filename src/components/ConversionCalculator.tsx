@@ -116,7 +116,7 @@ const ConversionCalculator = () => {
         <CardHeader>
           <CardTitle>Conversion Rate Calculator</CardTitle>
           <CardDescription>
-            Estimate additional revenue from improved trial-to-paid conversion rates
+            Enter your data: Your Potential Savings from improved trial-to-paid conversion rates
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
@@ -222,7 +222,7 @@ const ConversionCalculator = () => {
 
       <Card className="md:col-span-1">
         <CardHeader>
-          <CardTitle>Potential Revenue Uplift</CardTitle>
+          <CardTitle>Your Potential Savings</CardTitle>
           <CardDescription>
             Based on your inputs, here's your potential additional revenue
           </CardDescription>
@@ -240,7 +240,7 @@ const ConversionCalculator = () => {
                   <span className="font-medium">{formatCurrency(results.monthlyRevenue)}</span>
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
-                  <span className="text-sm text-gray-600">Product Fruits monthly plan</span>
+                  <span className="text-sm text-gray-600">Product Fruits monthly cost</span>
                   <span className="font-medium text-red-600">-{formatCurrency(productFruitsPlanPrice)}</span>
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
