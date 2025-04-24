@@ -155,10 +155,8 @@ const ConversionCalculator = () => {
 
       <Card className="md:col-span-1">
         <CardHeader>
-          <CardTitle>Your Potential Savings</CardTitle>
-          <CardDescription>
-            Based on your inputs, here's your potential additional revenue
-          </CardDescription>
+          <CardTitle>Additional revenue to unlock</CardTitle>
+          <CardDescription>Here’s how much additional revenue you could generate with Product Fruits</CardDescription>
         </CardHeader>
         <CardContent>
           {results && <div className="space-y-6 animate-fade-in">
@@ -168,7 +166,7 @@ const ConversionCalculator = () => {
                   <span className="font-medium">{formatNumber(results.additionalConversions)}</span>
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
-                  <span className="text-sm text-gray-600">MRR Increase</span>
+                  <span className="text-sm text-gray-600">Monthly Recurring Revenue Increase</span>
                   <span className="font-medium">{formatCurrency(results.monthlyRevenue)}</span>
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
