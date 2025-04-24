@@ -96,10 +96,8 @@ const ConversionCalculator = () => {
   return <div className="grid gap-6 md:grid-cols-2 lg:gap-8">
       <Card className="md:col-span-1">
         <CardHeader>
-          <CardTitle>Conversion Rate Calculator</CardTitle>
-          <CardDescription>
-            Enter your data: Your Potential Savings from improved trial-to-paid conversion rates
-          </CardDescription>
+          <CardTitle>Enter your data</CardTitle>
+          <CardDescription>Your potential savings from improved trial-to-paid conversion rates</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="calculator-input">
