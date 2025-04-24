@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Calculator from "@/components/Calculator";
@@ -22,15 +21,15 @@ const Index = () => {
               <TabsList className="grid w-full grid-cols-3 mb-8">
                 <TabsTrigger value="churn" className="flex items-center gap-1 text-xs sm:text-base px-2 sm:px-3 py-1.5">
                   <Users className="h-3 w-3 sm:h-4 sm:w-4" />
-                  <span>{isMobile ? "Churn" : "Churn reduction"}</span>
+                  <span>{isMobile ? "Churn" : "Churn Reduction"}</span>
                 </TabsTrigger>
                 <TabsTrigger value="support" className="flex items-center gap-1 text-xs sm:text-base px-2 sm:px-3 py-1.5">
                   <BarChart className="h-3 w-3 sm:h-4 sm:w-4" />
-                  <span>{isMobile ? "Support" : "Support cost reduction"}</span>
+                  <span>{isMobile ? "Support" : "Support Cost Reduction"}</span>
                 </TabsTrigger>
                 <TabsTrigger value="conversion" className="flex items-center gap-1 text-xs sm:text-base px-2 sm:px-3 py-1.5">
                   <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4" />
-                  <span>{isMobile ? "Revenue" : "Revenue uplift"}</span>
+                  <span>{isMobile ? "Revenue" : "Revenue Uplift"}</span>
                 </TabsTrigger>
               </TabsList>
               
