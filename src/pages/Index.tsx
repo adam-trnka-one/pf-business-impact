@@ -1,9 +1,11 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ChurnCalculator from "@/components/ChurnCalculator";
 import ConversionCalculator from "@/components/ConversionCalculator";
 import { TrendingUp, Users, BarChart, Info } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import Calculator from "@/components/Calculator";
 
 const Index = () => {
   const isMobile = useIsMobile();
