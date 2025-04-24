@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -6,6 +6,7 @@ import { Slider } from "@/components/ui/slider";
 import { calculateROI, formatCurrency, formatNumber, ROIResults } from "@/utils/roiCalculator";
 import { HelpCircle } from "lucide-react";
 import { Tooltip, TooltipProvider, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
+
 function getProductFruitsPlanPrice(ticketsPerMonth: number) {
   if (ticketsPerMonth <= 1500) return 139;
   if (ticketsPerMonth <= 3000) return 189;
@@ -14,6 +15,7 @@ function getProductFruitsPlanPrice(ticketsPerMonth: number) {
   if (ticketsPerMonth <= 50000) return 439;
   return 599;
 }
+
 const TICKET_STEPS = [...Array.from({
   length: (1500 - 100) / 100 + 1
 }, (_, i) => 100 + i * 100), ...Array.from({
@@ -21,6 +23,7 @@ const TICKET_STEPS = [...Array.from({
 }, (_, i) => 1500 + (i + 1) * 500), ...Array.from({
   length: (5000 - 3000) / 1000
 }, (_, i) => 3000 + (i + 1) * 1000), 7500, 10000, 15000, 20000, 30000, 50000];
+
 function snapToNearestStep(value: number) {
   let closest = TICKET_STEPS[0];
   let minDiff = Math.abs(value - closest);
@@ -33,6 +36,7 @@ function snapToNearestStep(value: number) {
   }
   return closest;
 }
+
 const Calculator = () => {
   const [ticketsPerMonth, setTicketsPerMonth] = useState(1000);
   const [timePerTicket, setTimePerTicket] = useState(30);
@@ -42,9 +46,11 @@ const Calculator = () => {
   const [monthlyPaymentTier, setMonthlyPaymentTier] = useState(499);
   const [results, setResults] = useState<ROIResults | null>(null);
   const productFruitsPlanPrice = getProductFruitsPlanPrice(ticketsPerMonth);
+
   useEffect(() => {
     calculateAndUpdateResults();
   }, [ticketsPerMonth, timePerTicket, hourlyRate]);
+
   const calculateAndUpdateResults = () => {
     const calculatedResults = calculateROI({
       ticketsPerMonth,
@@ -56,15 +62,18 @@ const Calculator = () => {
     });
     setResults(calculatedResults);
   };
+
   const handleInputChange = (setter: React.Dispatch<React.SetStateAction<number>>, value: string) => {
     let numValue = parseInt(value) || TICKET_STEPS[0];
     numValue = Math.min(Math.max(numValue, TICKET_STEPS[0]), TICKET_STEPS[TICKET_STEPS.length - 1]);
     setter(snapToNearestStep(numValue));
   };
+
   const sliderIndex = TICKET_STEPS.findIndex(v => v === ticketsPerMonth);
   const setSliderByIndex = (index: number) => {
     setTicketsPerMonth(TICKET_STEPS[index]);
   };
+
   const InfoTooltip = ({
     content
   }: {
@@ -79,6 +88,7 @@ const Calculator = () => {
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>;
+
   return <div className="grid gap-6 md:grid-cols-2 lg:gap-8">
       <Card className="md:col-span-1">
         <CardHeader>
@@ -91,7 +101,7 @@ const Calculator = () => {
               <Label htmlFor="tickets-per-month" className="calculator-label">
                 Support tickets per month
               </Label>
-              <InfoTooltip content="The average number of support tickets your team handles each month. We calculate this as 1 ticket per user." />
+              <InfoTooltip content="The average number of support tickets your team handles each month." />
             </div>
             <div className="flex items-center gap-4">
               <Slider id="tickets-per-month" min={0} max={TICKET_STEPS.length - 1} step={1} value={[sliderIndex]} onValueChange={([idx]) => setSliderByIndex(idx)} className="flex-1" />
@@ -188,4 +198,5 @@ const Calculator = () => {
       </Card>
     </div>;
 };
+
 export default Calculator;
