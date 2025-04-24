@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -150,12 +149,7 @@ const ChurnCalculator = () => {
               <InfoTooltip content="The standard reduction in churn rate based on Product Fruits data." />
             </div>
             <div className="flex items-center gap-4">
-              <Input 
-                type="text" 
-                value="30" 
-                readOnly 
-                className="w-24 bg-gray-100 cursor-not-allowed" 
-              />
+              <span className="text-base font-medium">30</span>
             </div>
           </div>
         </CardContent>
