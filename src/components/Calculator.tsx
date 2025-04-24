@@ -83,7 +83,7 @@ const Calculator = () => {
       <Card className="md:col-span-1">
         <CardHeader>
           <CardTitle>Enter your data</CardTitle>
-          <CardDescription>Calculate how much you’ll save with in-app support</CardDescription>
+          <CardDescription>We’ll use this to calculate your business impact</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="calculator-input">
@@ -148,13 +148,13 @@ const Calculator = () => {
       <Card className="md:col-span-1">
         <CardHeader>
           <CardTitle>Your support cost savings</CardTitle>
-          <CardDescription>Based on your data, here’s how much you can save with Product Fruits</CardDescription>
+          <CardDescription>Based on your data, here’s the business impact of Product Fruits</CardDescription>
         </CardHeader>
         <CardContent>
           {results && <div className="space-y-6">
               <div className="space-y-4">
                 <div className="flex justify-between items-center border-b pb-2">
-                  <span className="text-sm text-gray-600">Potential monthly tickets reduction</span>
+                  <span className="text-sm text-gray-600">Monthly decrease in support tickets</span>
                   <span className="font-medium">
                     {formatNumber(Math.round(ticketsPerMonth * ticketReduction / 100))}
                   </span>
@@ -176,7 +176,7 @@ const Calculator = () => {
 
                 <div className="pt-4 flex justify-center items-center">
                   <div className="text-center">
-                    <p className="text-sm text-gray-600">Net annual savings</p>
+                    <p className="text-sm text-gray-600">Your yearly net savings</p>
                     <p className="text-[28pt] font-bold text-green-600">
                       {formatCurrency(results.netSavings.annual)}
                     </p>
