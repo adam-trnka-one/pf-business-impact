@@ -97,7 +97,7 @@ const ConversionCalculator = () => {
       <Card className="md:col-span-1">
         <CardHeader>
           <CardTitle>Enter your data</CardTitle>
-          <CardDescription>Your potential savings from improved trial-to-paid conversion rates</CardDescription>
+          <CardDescription>We’ll use this to calculate your business impact</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="calculator-input">
@@ -155,14 +155,14 @@ const ConversionCalculator = () => {
 
       <Card className="md:col-span-1">
         <CardHeader>
-          <CardTitle>Additional revenue to unlock</CardTitle>
-          <CardDescription>Here’s how much additional revenue you could generate with Product Fruits</CardDescription>
+          <CardTitle>Your improved conversion results</CardTitle>
+          <CardDescription>Based on your data, here’s the business impact of Product Fruits</CardDescription>
         </CardHeader>
         <CardContent>
           {results && <div className="space-y-6 animate-fade-in">
               <div className="space-y-4">
                 <div className="flex justify-between items-center border-b pb-2">
-                  <span className="text-sm text-gray-600">Monthly additional conversions</span>
+                  <span className="text-sm text-gray-600">Incremental monthly conversions</span>
                   <span className="font-medium">{formatNumber(results.additionalConversions)}</span>
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
