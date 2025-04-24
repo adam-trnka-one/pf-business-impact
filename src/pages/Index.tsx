@@ -1,7 +1,5 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Calculator from "@/components/Calculator";
 import ChurnCalculator from "@/components/ChurnCalculator";
 import ConversionCalculator from "@/components/ConversionCalculator";
 import { TrendingUp, Users, BarChart, Info } from "lucide-react";
@@ -39,8 +37,8 @@ const Index = () => {
                   <Info className="text-primary h-5 w-5 mr-3 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm text-gray-800">
-                      Data from Product Fruits clients show a <strong>30-70% reduction</strong> in 
-                      customer churn after implementing automated user onboarding.
+                      Clients using Product Fruits see a <strong>30-70% reduction</strong> in 
+                      customer churn after implementing automated onboarding.
                     </p>
                   </div>
                 </div>
