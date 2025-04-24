@@ -6,7 +6,6 @@ import { Slider } from "@/components/ui/slider";
 import { calculateROI, formatCurrency, formatNumber, formatPercent } from "@/utils/churnCalculator";
 import { HelpCircle } from "lucide-react";
 import { Tooltip, TooltipProvider, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
-
 interface ROIResults {
   currentChurnRate: number;
   reducedChurnRate: number;
@@ -14,7 +13,6 @@ interface ROIResults {
   annualSavings: number;
   roi: number;
 }
-
 const CUSTOMER_STEPS = [...Array.from({
   length: (200 - 100) / 100 + 1
 }, (_, i) => 200 + i * 100), ...Array.from({
@@ -24,7 +22,6 @@ const CUSTOMER_STEPS = [...Array.from({
 }, (_, i) => 1500 + (i + 1) * 500), ...Array.from({
   length: (5000 - 3000) / 1000 + 1
 }, (_, i) => 3000 + (i + 1) * 1000), 7500, 10000, 15000, 20000, 30000, 50000];
-
 function snapToNearestCustomerStep(value: number) {
   let closest = CUSTOMER_STEPS[0];
   let minDiff = Math.abs(value - closest);
@@ -37,7 +34,6 @@ function snapToNearestCustomerStep(value: number) {
   }
   return closest;
 }
-
 function getProductFruitsPlanPrice(customers: number): number {
   if (customers <= 1500) return 139;
   if (customers <= 3000) return 189;
@@ -45,7 +41,6 @@ function getProductFruitsPlanPrice(customers: number): number {
   if (customers <= 10000) return 339;
   return 439;
 }
-
 const ChurnCalculator = () => {
   const [customerCount, setCustomerCount] = useState(1000);
   const [averageRevenuePerCustomer, setAverageRevenuePerCustomer] = useState(50);
@@ -56,11 +51,9 @@ const ChurnCalculator = () => {
   const setSliderByIndex = (index: number) => {
     setCustomerCount(CUSTOMER_STEPS[index]);
   };
-
   useEffect(() => {
     calculateAndUpdateResults();
   }, [customerCount, averageRevenuePerCustomer, currentChurnRate]);
-
   const calculateAndUpdateResults = () => {
     const calculatedResults = calculateROI({
       customerCount,
@@ -70,18 +63,15 @@ const ChurnCalculator = () => {
     });
     setResults(calculatedResults);
   };
-
   const handleCustomerCountInputChange = (setter: React.Dispatch<React.SetStateAction<number>>, value: string) => {
     let numValue = parseInt(value) || CUSTOMER_STEPS[0];
     numValue = Math.min(Math.max(numValue, CUSTOMER_STEPS[0]), CUSTOMER_STEPS[CUSTOMER_STEPS.length - 1]);
     setter(snapToNearestCustomerStep(numValue));
   };
-
   const handleInputChange = (setter: React.Dispatch<React.SetStateAction<number>>, value: string, min: number, max: number) => {
     const numValue = parseFloat(value) || min;
     setter(Math.min(Math.max(numValue, min), max));
   };
-
   const InfoTooltip = ({
     content
   }: {
@@ -96,9 +86,7 @@ const ChurnCalculator = () => {
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>;
-
   const productFruitsPlanPrice = getProductFruitsPlanPrice(customerCount);
-
   return <div className="grid gap-6 md:grid-cols-2 lg:gap-8">
       <Card className="md:col-span-1">
         <CardHeader>
@@ -142,7 +130,7 @@ const ChurnCalculator = () => {
 
           <div className="calculator-input">
             <div className="flex items-center justify-between">
-              <Label htmlFor="churn-reduction" className="calculator-label">Estimated churn reduction (%)</Label>
+              <Label htmlFor="churn-reduction" className="calculator-label">Current churn rate (%)</Label>
               <InfoTooltip content="The standard reduction in churn rate based on Product Fruits data." />
             </div>
             <div className="flex items-center gap-4">
@@ -158,16 +146,8 @@ const ChurnCalculator = () => {
           <CardDescription>Based on your data, here's how many customers you prevent from churning with Product Fruits</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          {results && (
-            <div className="space-y-6 animate-fade-in">
+          {results && <div className="space-y-6 animate-fade-in">
               <div className="space-y-4">
-                <div className="flex justify-between items-center border-b pb-2">
-                  <span className="text-sm text-gray-600">Customers you saved</span>
-                  <span className="font-medium">
-                    {formatNumber(Math.round(customerCount * currentChurnRate / 100 * potentialChurnReduction))}
-                  </span>
-                </div>
-                
                 <div className="flex justify-between items-center border-b pb-2">
                   <span className="text-sm text-gray-600">Monthly retained revenue</span>
                   <span className="font-medium">{formatCurrency(results.monthlySavings)}</span>
@@ -192,11 +172,9 @@ const ChurnCalculator = () => {
                   </p>
                 </div>
               </div>
-            </div>
-          )}
+            </div>}
         </CardContent>
       </Card>
     </div>;
 };
-
 export default ChurnCalculator;
