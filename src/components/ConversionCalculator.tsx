@@ -17,11 +17,7 @@ function getProductFruitsPlanPrice(userCount: number) {
 }
 
 // Updated trial steps: 50, 100, 250, 500, 1k, 2.5k, 5k, 7.5k, 10k, 15k, 20k, ..., 50k
-const TRIAL_STEPS = [
-  50, 100, 250, 500, 1000, 2500, 5000, 7500,
-  10000, 15000, 20000, 25000, 30000, 35000, 40000, 45000, 50000
-];
-
+const TRIAL_STEPS = [50, 100, 250, 500, 1000, 2500, 5000, 7500, 10000, 15000, 20000, 25000, 30000, 35000, 40000, 45000, 50000];
 function snapToNearestStep(value: number) {
   let closest = TRIAL_STEPS[0];
   let minDiff = Math.abs(value - closest);
@@ -34,7 +30,6 @@ function snapToNearestStep(value: number) {
   }
   return closest;
 }
-
 type ConversionResults = {
   additionalConversions: number;
   originalConversions: number;
@@ -42,9 +37,11 @@ type ConversionResults = {
   monthlyRevenue: number;
   annualRevenue: number;
 };
-
-const InfoTooltip = ({ content }: { content: string }) => (
-  <TooltipProvider>
+const InfoTooltip = ({
+  content
+}: {
+  content: string;
+}) => <TooltipProvider>
     <Tooltip>
       <TooltipTrigger className="cursor-help">
         <HelpCircle className="h-4 w-4 text-gray-400" />
@@ -53,9 +50,7 @@ const InfoTooltip = ({ content }: { content: string }) => (
         <p>{content}</p>
       </TooltipContent>
     </Tooltip>
-  </TooltipProvider>
-);
-
+  </TooltipProvider>;
 const ConversionCalculator = () => {
   const [trialStepIndex, setTrialStepIndex] = useState(0);
   const [currentConversion, setCurrentConversion] = useState(14);
@@ -66,7 +61,6 @@ const ConversionCalculator = () => {
   // Use the updated TRIAL_STEPS for value
   const monthlyTrials = TRIAL_STEPS[trialStepIndex];
   const productFruitsPlanPrice = getProductFruitsPlanPrice(monthlyTrials);
-
   const handleTrialSlider = (index: number) => {
     setTrialStepIndex(index);
   };
@@ -75,43 +69,31 @@ const ConversionCalculator = () => {
   const handleTrialInput = (value: string) => {
     const parsedValue = parseInt(value) || TRIAL_STEPS[0];
     const snapped = snapToNearestStep(parsedValue);
-    const index = TRIAL_STEPS.findIndex((v) => v === snapped);
+    const index = TRIAL_STEPS.findIndex(v => v === snapped);
     setTrialStepIndex(index !== -1 ? index : 0);
   };
-
-  const handleInputChange = (
-    setter: React.Dispatch<React.SetStateAction<number>>,
-    value: string,
-    min: number,
-    max: number
-  ) => {
+  const handleInputChange = (setter: React.Dispatch<React.SetStateAction<number>>, value: string, min: number, max: number) => {
     const numValue = parseInt(value) || min;
     setter(Math.min(Math.max(numValue, min), max));
   };
-
   useEffect(() => {
     calculateResults();
   }, [trialStepIndex, currentConversion, conversionUplift, monthlyArpu]);
-
   const calculateResults = () => {
-    const originalConversions = (monthlyTrials * currentConversion) / 100;
-    const newConversions =
-      monthlyTrials * (currentConversion / 100) * (1 + conversionUplift / 100);
+    const originalConversions = monthlyTrials * currentConversion / 100;
+    const newConversions = monthlyTrials * (currentConversion / 100) * (1 + conversionUplift / 100);
     const additionalConversions = newConversions - originalConversions;
     const monthlyRevenue = additionalConversions * monthlyArpu;
     const annualRevenue = monthlyRevenue * 12;
-
     setResults({
       originalConversions,
       newConversions,
       additionalConversions,
       monthlyRevenue,
-      annualRevenue,
+      annualRevenue
     });
   };
-
-  return (
-    <div className="grid gap-6 md:grid-cols-2 lg:gap-8">
+  return <div className="grid gap-6 md:grid-cols-2 lg:gap-8">
       <Card className="md:col-span-1">
         <CardHeader>
           <CardTitle>Conversion Rate Calculator</CardTitle>
@@ -128,24 +110,8 @@ const ConversionCalculator = () => {
               <InfoTooltip content="The average number of new trial users you get each month" />
             </div>
             <div className="flex items-center gap-4">
-              <Slider
-                id="monthly-trials"
-                min={0}
-                max={TRIAL_STEPS.length - 1}
-                step={1}
-                value={[trialStepIndex]}
-                onValueChange={([idx]) => handleTrialSlider(idx)}
-                className="flex-1"
-              />
-              <Input
-                type="number"
-                value={monthlyTrials}
-                min={TRIAL_STEPS[0]}
-                max={TRIAL_STEPS[TRIAL_STEPS.length - 1]}
-                step="10"
-                onChange={(e) => handleTrialInput(e.target.value)}
-                className="w-24"
-              />
+              <Slider id="monthly-trials" min={0} max={TRIAL_STEPS.length - 1} step={1} value={[trialStepIndex]} onValueChange={([idx]) => handleTrialSlider(idx)} className="flex-1" />
+              <Input type="number" value={monthlyTrials} min={TRIAL_STEPS[0]} max={TRIAL_STEPS[TRIAL_STEPS.length - 1]} step="10" onChange={e => handleTrialInput(e.target.value)} className="w-24" />
             </div>
           </div>
 
@@ -157,23 +123,8 @@ const ConversionCalculator = () => {
               <InfoTooltip content="Your current trial-to-paid conversion rate" />
             </div>
             <div className="flex items-center gap-4">
-              <Slider
-                id="current-conversion"
-                min={1}
-                max={50}
-                step={1}
-                value={[currentConversion]}
-                onValueChange={(value) => setCurrentConversion(value[0])}
-                className="flex-1"
-              />
-              <Input
-                type="number"
-                value={currentConversion}
-                min={1}
-                max={50}
-                onChange={(e) => handleInputChange(setCurrentConversion, e.target.value, 1, 50)}
-                className="w-24"
-              />
+              <Slider id="current-conversion" min={1} max={50} step={1} value={[currentConversion]} onValueChange={value => setCurrentConversion(value[0])} className="flex-1" />
+              <Input type="number" value={currentConversion} min={1} max={50} onChange={e => handleInputChange(setCurrentConversion, e.target.value, 1, 50)} className="w-24" />
             </div>
           </div>
 
@@ -185,24 +136,8 @@ const ConversionCalculator = () => {
               <InfoTooltip content="Average monthly revenue generated per customer" />
             </div>
             <div className="flex items-center gap-4">
-              <Slider
-                id="monthly-arpu"
-                min={10}
-                max={1000}
-                step={10}
-                value={[monthlyArpu]}
-                onValueChange={(value) => setMonthlyArpu(value[0])}
-                className="flex-1"
-              />
-              <Input
-                type="number"
-                value={monthlyArpu}
-                min={10}
-                max={1000}
-                step="10"
-                onChange={(e) => handleInputChange(setMonthlyArpu, e.target.value, 10, 1000)}
-                className="w-24"
-              />
+              <Slider id="monthly-arpu" min={10} max={1000} step={10} value={[monthlyArpu]} onValueChange={value => setMonthlyArpu(value[0])} className="flex-1" />
+              <Input type="number" value={monthlyArpu} min={10} max={1000} step="10" onChange={e => handleInputChange(setMonthlyArpu, e.target.value, 10, 1000)} className="w-24" />
             </div>
           </div>
 
@@ -214,7 +149,7 @@ const ConversionCalculator = () => {
               <InfoTooltip content="Based on our customers' average improvements in trial-to-paid conversion rates" />
             </div>
             <div className="flex items-center gap-4">
-              <span className="">{conversionUplift}%</span>
+              <span className="text-sm text-neutral-500">{conversionUplift}%</span>
             </div>
           </div>
         </CardContent>
@@ -228,8 +163,7 @@ const ConversionCalculator = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          {results && (
-            <div className="space-y-6 animate-fade-in">
+          {results && <div className="space-y-6 animate-fade-in">
               <div className="space-y-4">
                 <div className="flex justify-between items-center border-b pb-2">
                   <span className="text-sm text-gray-600">Monthly additional conversions</span>
@@ -257,12 +191,9 @@ const ConversionCalculator = () => {
                   </p>
                 </div>
               </div>
-            </div>
-          )}
+            </div>}
         </CardContent>
       </Card>
-    </div>
-  );
+    </div>;
 };
-
 export default ConversionCalculator;
