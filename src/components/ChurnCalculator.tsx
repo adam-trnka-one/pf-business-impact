@@ -91,7 +91,7 @@ const ChurnCalculator = () => {
       <Card className="md:col-span-1">
         <CardHeader>
           <CardTitle>Enter your data</CardTitle>
-          <CardDescription>Calculate your user churn savings</CardDescription>
+          <CardDescription>We’ll use this to calculate your business impact</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="calculator-input">
@@ -142,7 +142,7 @@ const ChurnCalculator = () => {
       <Card className="md:col-span-1">
         <CardHeader>
           <CardTitle>Your user retention gains</CardTitle>
-          <CardDescription>Based on your data, here's how many customers you prevent from churning with Product Fruits</CardDescription>
+          <CardDescription>Based on your data, here’s the business impact of Product Fruits</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           {results && <div className="space-y-6 animate-fade-in">
@@ -165,14 +165,14 @@ const ChurnCalculator = () => {
                   </span>
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
-                  <span className="text-sm text-gray-600">Extra net monthly revenue</span>
+                  <span className="text-sm text-gray-600">Incremental net monthly revenue</span>
                   <span className="font-medium">{formatCurrency(results.monthlySavings - productFruitsPlanPrice)}</span>
                 </div>
               </div>
               
               <div className="pt-4 flex justify-center items-center">
                 <div className="text-center">
-                  <p className="text-sm text-gray-500">Net ARR increase</p>
+                  <p className="text-sm text-gray-500">Your yearly net revenue increase</p>
                   <p className="text-[28pt] font-bold text-green-600">
                     {formatCurrency((results.monthlySavings - productFruitsPlanPrice) * 12)}
                   </p>
