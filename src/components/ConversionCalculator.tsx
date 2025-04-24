@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -145,7 +144,7 @@ const ConversionCalculator = () => {
                 max={TRIAL_STEPS[TRIAL_STEPS.length - 1]}
                 step="10"
                 onChange={(e) => handleTrialInput(e.target.value)}
-                className="w-32"
+                className="w-24"
               />
             </div>
           </div>
@@ -267,4 +266,3 @@ const ConversionCalculator = () => {
 };
 
 export default ConversionCalculator;
-
