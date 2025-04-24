@@ -128,9 +128,9 @@ const Calculator = () => {
           <div className="calculator-input">
             <div className="flex items-center justify-between">
               <Label htmlFor="hourly-rate" className="calculator-label">
-                Hourly rate of support staff (USD/hour)
+                Average hourly cost per support team member (USD/hour)
               </Label>
-              <InfoTooltip content="The average hourly cost of your support team members" />
+              <InfoTooltip content="Average hourly cost per support team member" />
             </div>
             <div className="flex items-center gap-4">
               <Slider id="hourly-rate" min={15} max={100} step={1} value={[hourlyRate]} onValueChange={value => setHourlyRate(value[0])} className="flex-1" />
