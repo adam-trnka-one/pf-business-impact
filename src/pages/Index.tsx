@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ChurnCalculator from "@/components/ChurnCalculator";
@@ -53,7 +52,7 @@ const Index = () => {
                   <Info className="text-primary h-5 w-5 mr-3 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm text-gray-800">
-                      Data from Product Fruits clients show a <strong>20-35% reduction</strong> in 
+                      Clients using Product Fruits see a <strong>20-35% reduction</strong> in 
                       support tickets after implementing automated user onboarding.
                     </p>
                   </div>
