@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -158,7 +159,7 @@ const ChurnCalculator = () => {
       <Card className="md:col-span-1">
         <CardHeader>
           <CardTitle>Your user retention gains</CardTitle>
-          <CardDescription>Based on your data, here’s how many customers you prevent from churning with Product Fruits</CardDescription>
+          <CardDescription>Based on your data, here's how many customers you prevent from churning with Product Fruits</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           {results && <div className="space-y-6 animate-fade-in">
