@@ -52,7 +52,7 @@ const InfoTooltip = ({
     </Tooltip>
   </TooltipProvider>;
 const ConversionCalculator = () => {
-  const [trialStepIndex, setTrialStepIndex] = useState(0);
+  const [trialStepIndex, setTrialStepIndex] = useState(4); // Changed to index of 1000
   const [currentConversion, setCurrentConversion] = useState(14);
   const conversionUplift = 30;
   const [monthlyArpu, setMonthlyArpu] = useState(100);
