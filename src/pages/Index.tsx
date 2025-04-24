@@ -1,3 +1,4 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ChurnCalculator from "@/components/ChurnCalculator";
@@ -66,8 +67,7 @@ const Index = () => {
                   <Info className="text-primary h-5 w-5 mr-3 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm text-gray-800">
-                      Based on industry data, companies typically see a <strong>25-50% improvement</strong> in 
-                      trial-to-paid conversion rates after implementing guided onboarding.
+                      Clients using Product Fruits see a <strong>25-50% lift</strong> in trial-to-paid conversions after implementing automated onboarding.
                     </p>
                   </div>
                 </div>
