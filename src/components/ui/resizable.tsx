@@ -32,7 +32,7 @@ const ResizableHandle = ({
     {...props}
   >
     {withHandle && (
-      <div className="z-10 flex h-10 w-10 -ml-5 items-center justify-center rounded-full bg-primary shadow-md hover:bg-primary/90 transition-colors">
+      <div className="z-10 flex h-10 w-10 -ml-5 items-center justify-center rounded-full bg-gradient-to-r from-[#FF8927] to-[#FF4809] shadow-md hover:opacity-90 transition-opacity">
         <img 
           src="/lovable-uploads/39a3df3e-f1e3-421f-bef8-912bb60ddbfd.png" 
           alt="Drag handle" 
