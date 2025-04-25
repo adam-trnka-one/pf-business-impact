@@ -39,7 +39,7 @@ const ResultsChart = ({ currentCost, reducedCost, savings }: ResultsChartProps) 
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 animate-fade-in">
       <ResponsiveContainer width="100%" height={200}>
         <BarChart data={data} margin={{ top: 10, right: 10, left: 10, bottom: 10 }}>
           <XAxis dataKey="name" tick={{ fontSize: 12 }} />
