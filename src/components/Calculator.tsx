@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -158,7 +159,7 @@ const Calculator = () => {
       <Card className="md:col-span-1">
         <CardHeader>
           <CardTitle>Your support cost savings</CardTitle>
-          <CardDescription>Based on your data, here’s the business impact of Product Fruits</CardDescription>
+          <CardDescription>Based on your data, here's the business impact of Product Fruits</CardDescription>
         </CardHeader>
         <CardContent>
           {results && <div className="space-y-6">
@@ -187,7 +188,7 @@ const Calculator = () => {
                 <div className="pt-4 flex justify-center items-center">
                   <div className="text-center">
                     <p className="text-sm text-gray-600">Your yearly net savings</p>
-                    <p className="text-[28pt] font-bold text-green-600">
+                    <p className="text-[28pt] font-bold text-[#5BC77E]">
                       {formatCurrency(results.netSavings.annual)}
                     </p>
                   </div>
