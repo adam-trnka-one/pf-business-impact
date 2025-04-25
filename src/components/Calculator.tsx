@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -188,7 +187,7 @@ const Calculator = () => {
                 <div className="pt-4 flex justify-center items-center">
                   <div className="text-center">
                     <p className="text-sm text-gray-600">Your yearly net savings</p>
-                    <p className="text-[28pt] font-bold text-[#5BC77E]">
+                    <p className="text-[28pt] font-bold text-[#03BF92]">
                       {formatCurrency(results.netSavings.annual)}
                     </p>
                   </div>
