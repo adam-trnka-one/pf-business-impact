@@ -166,7 +166,7 @@ const ConversionCalculator = () => {
                   <span className="font-medium">{formatNumber(results.additionalConversions)}</span>
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
-                  <span className="text-sm text-gray-600">Monthly Recurring Revenue Increase</span>
+                  <span className="text-sm text-gray-600">Monthly recurring revenue increase</span>
                   <span className="font-medium">{formatCurrency(results.monthlyRevenue)}</span>
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
