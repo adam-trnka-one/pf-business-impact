@@ -59,7 +59,7 @@ const ResultsChart = ({ currentCost, reducedCost, savings }: ResultsChartProps) 
           <span className="text-xs">Current Cost</span>
         </div>
         <div className="flex items-center">
-          <div className="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
+          <div className="w-3 h-3 bg-[#5BC77E] rounded-full mr-2"></div>
           <span className="text-xs">Reduced Cost</span>
         </div>
         <div className="flex items-center">

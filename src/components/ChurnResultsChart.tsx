@@ -1,3 +1,4 @@
+
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, TooltipProps } from 'recharts';
 import { formatCurrency } from '@/utils/roiCalculator';
 
@@ -62,7 +63,7 @@ const ChurnResultsChart = ({ currentLost, potentialSaved, stillLost }: ChurnResu
           <span className="text-xs">Optimized Loss</span>
         </div>
         <div className="flex items-center">
-          <div className="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
+          <div className="w-3 h-3 bg-[#5BC77E] rounded-full mr-2"></div>
           <span className="text-xs">Retained Revenue</span>
         </div>
       </div>
