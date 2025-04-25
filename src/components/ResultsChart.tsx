@@ -18,7 +18,7 @@ const ResultsChart = ({ currentCost, reducedCost, savings }: ResultsChartProps) 
     {
       name: 'After Implementation',
       value: reducedCost,
-      fill: '#22c55e' // Green
+      fill: '#5BC77E' // Green updated to #5BC77E
     }
   ];
 

@@ -1,4 +1,3 @@
-
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, TooltipProps } from 'recharts';
 import { formatCurrency } from '@/utils/roiCalculator';
 
@@ -23,7 +22,7 @@ const ChurnResultsChart = ({ currentLost, potentialSaved, stillLost }: ChurnResu
   ];
 
   const savingsData = [
-    { name: 'Potential Savings', value: potentialSaved, fill: '#22c55e' } // Green
+    { name: 'Potential Savings', value: potentialSaved, fill: '#5BC77E' } // Green updated to #5BC77E
   ];
 
   const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>) => {
