@@ -359,18 +359,6 @@ const ChurnCalculator = () => {
           <div className="mt-2 text-center text-xs text-gray-500">
             After submitting the form, your PDF report will download automatically.
           </div>
-          <div className="mt-2 flex justify-end">
-            <Button 
-              variant="outline" 
-              onClick={() => {
-                // Allow users to download without submitting the form if needed
-                handleDownloadPDF();
-                setFormModalOpen(false);
-              }}
-            >
-              Skip and download report
-            </Button>
-          </div>
         </DialogContent>
       </Dialog>
     </div>;
