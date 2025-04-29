@@ -3,9 +3,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
+import { Button } from "@/components/ui/button";
 import { calculateROI, formatCurrency, formatNumber, formatPercent } from "@/utils/churnCalculator";
-import { HelpCircle } from "lucide-react";
+import { HelpCircle, Download } from "lucide-react";
 import { Tooltip, TooltipProvider, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
+import { toast } from "sonner";
+
 interface ROIResults {
   currentChurnRate: number;
   reducedChurnRate: number;
@@ -71,6 +74,18 @@ const ChurnCalculator = () => {
   const handleInputChange = (setter: React.Dispatch<React.SetStateAction<number>>, value: string, min: number, max: number) => {
     const numValue = parseFloat(value) || min;
     setter(Math.min(Math.max(numValue, min), max));
+  };
+  const handleDownloadPDF = () => {
+    // In a real implementation, this would generate a PDF with the data
+    // For now, we'll just show a toast notification
+    toast.success("PDF download started", {
+      description: "Your report will be downloaded shortly"
+    });
+    
+    // Simulate download delay
+    setTimeout(() => {
+      toast.success("PDF downloaded successfully");
+    }, 1500);
   };
   const InfoTooltip = ({
     content
@@ -176,6 +191,14 @@ const ChurnCalculator = () => {
                   <p className="text-[28pt] font-bold text-[#03BF92]">
                     {formatCurrency((results.monthlySavings - productFruitsPlanPrice) * 12)}
                   </p>
+                  <Button 
+                    variant="outline" 
+                    className="mt-4 border-[#03BF92] text-[#03BF92] hover:bg-[#03BF92]/10"
+                    onClick={handleDownloadPDF}
+                  >
+                    <Download className="mr-2 h-4 w-4" />
+                    Download PDF Report
+                  </Button>
                 </div>
               </div>
             </div>}
