@@ -8,6 +8,8 @@ import { calculateROI, formatCurrency, formatNumber, formatPercent } from "@/uti
 import { HelpCircle, Download } from "lucide-react";
 import { Tooltip, TooltipProvider, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 import { toast } from "sonner";
+import jsPDF from "jspdf";
+
 interface ROIResults {
   currentChurnRate: number;
   reducedChurnRate: number;
@@ -15,6 +17,7 @@ interface ROIResults {
   annualSavings: number;
   roi: number;
 }
+
 const CUSTOMER_STEPS = [...Array.from({
   length: (200 - 100) / 100 + 1
 }, (_, i) => 200 + i * 100), ...Array.from({
@@ -75,16 +78,70 @@ const ChurnCalculator = () => {
     setter(Math.min(Math.max(numValue, min), max));
   };
   const handleDownloadPDF = () => {
-    // In a real implementation, this would generate a PDF with the data
-    // For now, we'll just show a toast notification
-    toast.success("PDF download started", {
-      description: "Your report will be downloaded shortly"
-    });
-
-    // Simulate download delay
-    setTimeout(() => {
-      toast.success("PDF downloaded successfully");
-    }, 1500);
+    if (!results) return;
+    
+    const productFruitsPlanPrice = getProductFruitsPlanPrice(customerCount);
+    const savedCustomers = Math.round(customerCount * currentChurnRate / 100 * potentialChurnReduction);
+    const netMonthlyRevenue = results.monthlySavings - productFruitsPlanPrice;
+    const yearlyNetRevenue = netMonthlyRevenue * 12;
+    
+    try {
+      // Create a new PDF document
+      const pdf = new jsPDF();
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      
+      // Add title
+      pdf.setFontSize(20);
+      pdf.setTextColor(3, 191, 146); // #03bf92
+      pdf.text("Product Fruits ROI Report", pageWidth / 2, 20, { align: "center" });
+      
+      // Add subtitle and date
+      pdf.setFontSize(12);
+      pdf.setTextColor(100);
+      const today = new Date().toLocaleDateString();
+      pdf.text(`Generated on ${today}`, pageWidth / 2, 30, { align: "center" });
+      
+      // Add input parameters section
+      pdf.setFontSize(16);
+      pdf.setTextColor(0);
+      pdf.text("Your Business Information", 20, 45);
+      
+      pdf.setFontSize(11);
+      pdf.text(`Number of customers: ${formatNumber(customerCount)}`, 20, 55);
+      pdf.text(`Average revenue per customer: $${averageRevenuePerCustomer}/month`, 20, 62);
+      pdf.text(`Current churn rate: ${currentChurnRate}%`, 20, 69);
+      pdf.text(`Projected churn reduction: 30%`, 20, 76);
+      
+      // Add results section
+      pdf.setFontSize(16);
+      pdf.text("Business Impact Results", 20, 90);
+      
+      pdf.setFontSize(11);
+      pdf.text(`Saved customers: ${formatNumber(savedCustomers)}`, 20, 100);
+      pdf.text(`Monthly revenue saved: ${formatCurrency(results.monthlySavings)}`, 20, 107);
+      pdf.text(`Product Fruits monthly cost: -${formatCurrency(productFruitsPlanPrice)}`, 20, 114);
+      pdf.text(`Net monthly revenue increase: ${formatCurrency(netMonthlyRevenue)}`, 20, 121);
+      
+      // Add yearly summary
+      pdf.setFontSize(18);
+      pdf.setTextColor(3, 191, 146);
+      pdf.text(`Annual Net Revenue Increase: ${formatCurrency(yearlyNetRevenue)}`, pageWidth / 2, 140, { align: "center" });
+      
+      // Add footer
+      pdf.setFontSize(10);
+      pdf.setTextColor(100);
+      pdf.text("www.productfruits.com", pageWidth / 2, 260, { align: "center" });
+      
+      // Save the PDF
+      pdf.save("product-fruits-roi-report.pdf");
+      
+      toast.success("PDF report downloaded successfully");
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+      toast.error("Failed to generate PDF report", {
+        description: "Please try again later"
+      });
+    }
   };
   const InfoTooltip = ({
     content
@@ -105,7 +162,7 @@ const ChurnCalculator = () => {
       <Card className="md:col-span-1">
         <CardHeader>
           <CardTitle>Enter your data</CardTitle>
-          <CardDescription>We’ll use this to calculate your business impact</CardDescription>
+          <CardDescription>We'll use this to calculate your business impact</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="calculator-input">
@@ -179,7 +236,7 @@ const ChurnCalculator = () => {
                   </span>
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
-                  <span className="text-sm text-gray-600">Incremental net monthly revenue</span>
+                  <span className="text-sm text-gray-600">Incremental net monthly revenue</span>
                   <span className="font-medium">{formatCurrency(results.monthlySavings - productFruitsPlanPrice)}</span>
                 </div>
               </div>
