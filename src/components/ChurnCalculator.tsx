@@ -72,14 +72,25 @@ const ChurnCalculator = () => {
   }, [customerCount, averageRevenuePerCustomer, currentChurnRate]);
   
   useEffect(() => {
-    // Listen for messages from the Microsoft form iframe
+    // Enhanced message handling from the Microsoft form iframe
     const handleFormMessage = (event: MessageEvent) => {
-      // Microsoft Form sends a message when submitted
-      if (event.data && event.data.type === "form-submit") {
+      console.log("Received message event:", event.data);
+      
+      // Microsoft Form sends various messages, we need to detect submission
+      if (
+        event.data && 
+        (event.data.type === "form-submit" || 
+         (typeof event.data === 'string' && event.data.includes('submit')))
+      ) {
+        console.log("Form submission detected");
         setFormSubmitted(true);
         toast.success("Form submitted successfully");
         setFormModalOpen(false);
-        handleDownloadPDF();
+        
+        // Small delay to ensure the modal closes before downloading
+        setTimeout(() => {
+          handleDownloadPDF();
+        }, 500);
       }
     };
 
@@ -125,6 +136,7 @@ const ChurnCalculator = () => {
     const yearlyNetRevenue = netMonthlyRevenue * 12;
     
     try {
+      console.log("Starting PDF generation...");
       // Create a new PDF document
       const pdf = new jsPDF();
       const pageWidth = pdf.internal.pageSize.getWidth();
@@ -135,6 +147,7 @@ const ChurnCalculator = () => {
       
       logoImg.onload = function() {
         try {
+          console.log("Logo loaded, adding to PDF");
           // Add the logo to the top left
           pdf.addImage(logoImg, 'SVG', 20, 10, 40, 15);
           
@@ -143,12 +156,14 @@ const ChurnCalculator = () => {
           
           // Save the PDF
           pdf.save("product-fruits-roi-report.pdf");
+          console.log("PDF saved successfully");
           toast.success("PDF report downloaded successfully");
         } catch (error) {
           console.error("Error adding logo:", error);
           // Fallback - just create the PDF without the logo
           createPDFContent(pdf, pageWidth, savedCustomers, netMonthlyRevenue, yearlyNetRevenue, productFruitsPlanPrice);
           pdf.save("product-fruits-roi-report.pdf");
+          console.log("PDF saved without logo");
           toast.success("PDF report downloaded (without logo)");
         }
       };
@@ -158,6 +173,7 @@ const ChurnCalculator = () => {
         // Create PDF without the logo
         createPDFContent(pdf, pageWidth, savedCustomers, netMonthlyRevenue, yearlyNetRevenue, productFruitsPlanPrice);
         pdf.save("product-fruits-roi-report.pdf");
+        console.log("PDF saved without logo (logo error)");
         toast.success("PDF report downloaded (without logo)");
       };
     } catch (error) {
@@ -347,11 +363,17 @@ const ChurnCalculator = () => {
               style={{ border: "none" }}
               allowFullScreen
               onLoad={(e) => {
-                // Handle iframe load event if needed
                 const iframe = e.target as HTMLIFrameElement;
                 if (iframe.contentWindow) {
-                  // Setup for iframe communication if needed
                   console.log("Microsoft Form iframe loaded");
+                  
+                  // Try to establish communication with the iframe
+                  try {
+                    iframe.contentWindow.postMessage("hello", "*");
+                    console.log("Sent initial message to iframe");
+                  } catch (err) {
+                    console.error("Error communicating with iframe:", err);
+                  }
                 }
               }}
             />
