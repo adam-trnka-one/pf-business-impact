@@ -8,7 +8,6 @@ import { calculateROI, formatCurrency, formatNumber, formatPercent } from "@/uti
 import { HelpCircle, Download } from "lucide-react";
 import { Tooltip, TooltipProvider, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 import { toast } from "sonner";
-
 interface ROIResults {
   currentChurnRate: number;
   reducedChurnRate: number;
@@ -81,7 +80,7 @@ const ChurnCalculator = () => {
     toast.success("PDF download started", {
       description: "Your report will be downloaded shortly"
     });
-    
+
     // Simulate download delay
     setTimeout(() => {
       toast.success("PDF downloaded successfully");
@@ -175,7 +174,7 @@ const ChurnCalculator = () => {
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
                   <span className="text-sm text-gray-600">Product Fruits monthly cost</span>
-                  <span className="font-medium text-red-600">
+                  <span className="font-medium text-[#ff4747]">
                     -{formatCurrency(productFruitsPlanPrice)}
                   </span>
                 </div>
@@ -191,11 +190,7 @@ const ChurnCalculator = () => {
                   <p className="text-[28pt] font-bold text-[#03BF92]">
                     {formatCurrency((results.monthlySavings - productFruitsPlanPrice) * 12)}
                   </p>
-                  <Button 
-                    variant="outline" 
-                    className="mt-4 border-[#03BF92] text-[#03BF92] hover:bg-[#03BF92]/10"
-                    onClick={handleDownloadPDF}
-                  >
+                  <Button variant="outline" className="mt-4 border-[#03BF92] text-[#03BF92] hover:bg-[#03BF92]/10" onClick={handleDownloadPDF}>
                     <Download className="mr-2 h-4 w-4" />
                     Download PDF Report
                   </Button>
@@ -206,5 +201,4 @@ const ChurnCalculator = () => {
       </Card>
     </div>;
 };
-
 export default ChurnCalculator;
