@@ -90,12 +90,37 @@ const ChurnCalculator = () => {
       const pdf = new jsPDF();
       const pageWidth = pdf.internal.pageSize.getWidth();
       
-      // Start by creating the PDF without the logo first
-      createPDFContent(pdf, pageWidth, savedCustomers, netMonthlyRevenue, yearlyNetRevenue, productFruitsPlanPrice);
+      // Add logo
+      const logoImg = new Image();
+      logoImg.src = "https://productfruits.com/images/pf_logo.svg";
       
-      // Save the PDF
-      pdf.save("product-fruits-roi-report.pdf");
-      toast.success("PDF report downloaded successfully");
+      logoImg.onload = function() {
+        try {
+          // Add the logo to the top left
+          pdf.addImage(logoImg, 'SVG', 20, 10, 40, 15);
+          
+          // Create the PDF content after logo is loaded
+          createPDFContent(pdf, pageWidth, savedCustomers, netMonthlyRevenue, yearlyNetRevenue, productFruitsPlanPrice);
+          
+          // Save the PDF
+          pdf.save("product-fruits-roi-report.pdf");
+          toast.success("PDF report downloaded successfully");
+        } catch (error) {
+          console.error("Error adding logo:", error);
+          // Fallback - just create the PDF without the logo
+          createPDFContent(pdf, pageWidth, savedCustomers, netMonthlyRevenue, yearlyNetRevenue, productFruitsPlanPrice);
+          pdf.save("product-fruits-roi-report.pdf");
+          toast.success("PDF report downloaded (without logo)");
+        }
+      };
+      
+      logoImg.onerror = function() {
+        console.error("Error loading logo");
+        // Create PDF without the logo
+        createPDFContent(pdf, pageWidth, savedCustomers, netMonthlyRevenue, yearlyNetRevenue, productFruitsPlanPrice);
+        pdf.save("product-fruits-roi-report.pdf");
+        toast.success("PDF report downloaded (without logo)");
+      };
     } catch (error) {
       console.error("Error generating PDF:", error);
       toast.error("Failed to generate PDF report", {
@@ -108,7 +133,7 @@ const ChurnCalculator = () => {
   const createPDFContent = (pdf, pageWidth, savedCustomers, netMonthlyRevenue, yearlyNetRevenue, productFruitsPlanPrice) => {
     // Add title
     pdf.setFontSize(20);
-    pdf.setTextColor(3, 191, 146); // #03bf92
+    pdf.setTextColor(255, 117, 29); // #FF751D - ProductFruits orange color
     pdf.text("Your user retention gains", pageWidth / 2, 20, { align: "center" });
     
     // Add subtitle and date
@@ -140,7 +165,7 @@ const ChurnCalculator = () => {
     
     // Add yearly summary
     pdf.setFontSize(18);
-    pdf.setTextColor(3, 191, 146);
+    pdf.setTextColor(255, 117, 29); // #FF751D - ProductFruits orange color
     pdf.text(`Annual Net Revenue Increase: ${formatCurrency(yearlyNetRevenue)}`, pageWidth / 2, 140, { align: "center" });
     
     // Add footer
