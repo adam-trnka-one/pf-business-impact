@@ -61,7 +61,7 @@ const Index = () => {
               </TabsContent>
 
               <TabsContent value="conversion">
-                <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-8 flex items-start">
+                <div className="border border-green-200 rounded-lg p-4 mb-8 flex items-start bg-[#03bf92]/[0.06]">
                   <Info className="text-primary h-5 w-5 mr-3 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm text-gray-800">
