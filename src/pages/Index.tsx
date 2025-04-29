@@ -6,6 +6,7 @@ import ConversionCalculator from "@/components/ConversionCalculator";
 import { TrendingUp, Users, BarChart, Info } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import Calculator from "@/components/Calculator";
+
 const Index = () => {
   const isMobile = useIsMobile();
   return <div className="min-h-screen flex flex-col">
@@ -19,15 +20,15 @@ const Index = () => {
             
             <Tabs defaultValue="churn" className="mb-8">
               <TabsList className="grid w-full grid-cols-3 mb-8">
-                <TabsTrigger value="churn" className="flex items-center gap-1 text-xs sm:text-base px-2 sm:px-3 py-1.5 border border-gray-300">
+                <TabsTrigger value="churn" className="flex items-center gap-1 text-xs sm:text-base px-2 sm:px-3 py-1.5 border border-gray-300 bg-white">
                   <Users className="h-3 w-3 sm:h-4 sm:w-4" />
                   <span>{isMobile ? "Churn" : "Churn reduction"}</span>
                 </TabsTrigger>
-                <TabsTrigger value="support" className="flex items-center gap-1 text-xs sm:text-base px-2 sm:px-3 py-1.5 border border-gray-300">
+                <TabsTrigger value="support" className="flex items-center gap-1 text-xs sm:text-base px-2 sm:px-3 py-1.5 border border-gray-300 bg-white">
                   <BarChart className="h-3 w-3 sm:h-4 sm:w-4" />
                   <span>{isMobile ? "Support" : "Support cost reduction"}</span>
                 </TabsTrigger>
-                <TabsTrigger value="conversion" className="flex items-center gap-1 text-xs sm:text-base px-2 sm:px-3 py-1.5 border border-gray-300">
+                <TabsTrigger value="conversion" className="flex items-center gap-1 text-xs sm:text-base px-2 sm:px-3 py-1.5 border border-gray-300 bg-white">
                   <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4" />
                   <span>{isMobile ? "Revenue" : "Revenue uplift"}</span>
                 </TabsTrigger>
