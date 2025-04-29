@@ -90,140 +90,63 @@ const ChurnCalculator = () => {
       const pdf = new jsPDF();
       const pageWidth = pdf.internal.pageSize.getWidth();
       
-      // Add ProductFruits logo
-      const img = new Image();
-      img.src = "https://productfruits.com/images/pf_logo.svg";
+      // Start by creating the PDF without the logo first
+      createPDFContent(pdf, pageWidth, savedCustomers, netMonthlyRevenue, yearlyNetRevenue, productFruitsPlanPrice);
       
-      img.onload = () => {
-        // Add logo to the top left corner
-        try {
-          const logoHeight = 15;
-          const logoWidth = (img.width / img.height) * logoHeight;
-          pdf.addImage(img, 'SVG', 20, 15, logoWidth, logoHeight);
-          
-          // Add title
-          pdf.setFontSize(20);
-          pdf.setTextColor(3, 191, 146); // #03bf92
-          pdf.text("Your user retention gains", pageWidth / 2, 20, { align: "center" });
-          
-          // Add subtitle and date
-          pdf.setFontSize(12);
-          pdf.setTextColor(100);
-          const today = new Date().toLocaleDateString();
-          pdf.text(`Generated on ${today}`, pageWidth / 2, 30, { align: "center" });
-          
-          // Add input parameters section
-          pdf.setFontSize(16);
-          pdf.setTextColor(0);
-          pdf.text("Your Business Information", 20, 45);
-          
-          pdf.setFontSize(11);
-          pdf.text(`Number of customers: ${formatNumber(customerCount)}`, 20, 55);
-          pdf.text(`Average revenue per customer: $${averageRevenuePerCustomer}/month`, 20, 62);
-          pdf.text(`Current churn rate: ${currentChurnRate}%`, 20, 69);
-          pdf.text(`Projected churn reduction: 30%`, 20, 76);
-          
-          // Add results section
-          pdf.setFontSize(16);
-          pdf.text("Business Impact Results", 20, 90);
-          
-          pdf.setFontSize(11);
-          pdf.text(`Saved customers: ${formatNumber(savedCustomers)}`, 20, 100);
-          pdf.text(`Monthly revenue saved: ${formatCurrency(results.monthlySavings)}`, 20, 107);
-          pdf.text(`Product Fruits monthly cost: -${formatCurrency(productFruitsPlanPrice)}`, 20, 114);
-          pdf.text(`Net monthly revenue increase: ${formatCurrency(netMonthlyRevenue)}`, 20, 121);
-          
-          // Add yearly summary
-          pdf.setFontSize(18);
-          pdf.setTextColor(3, 191, 146);
-          pdf.text(`Annual Net Revenue Increase: ${formatCurrency(yearlyNetRevenue)}`, pageWidth / 2, 140, { align: "center" });
-          
-          // Add footer
-          pdf.setFontSize(10);
-          pdf.setTextColor(100);
-          pdf.text("www.productfruits.com", pageWidth / 2, 260, { align: "center" });
-          
-          // Save the PDF
-          pdf.save("product-fruits-roi-report.pdf");
-          
-          toast.success("PDF report downloaded successfully");
-        } catch (error) {
-          console.error("Error adding image:", error);
-          failPDF();
-        }
-      };
-      
-      img.onerror = () => {
-        // If logo loading fails, continue without it
-        console.error("Failed to load logo image");
-        createPDFWithoutLogo();
-      };
-      
-      // Fallback function if logo fails to load
-      const createPDFWithoutLogo = () => {
-        // Add title
-        pdf.setFontSize(20);
-        pdf.setTextColor(3, 191, 146); // #03bf92
-        pdf.text("Your user retention gains", pageWidth / 2, 20, { align: "center" });
-        
-        // Continue with the rest of the PDF
-        pdf.setFontSize(12);
-        pdf.setTextColor(100);
-        const today = new Date().toLocaleDateString();
-        pdf.text(`Generated on ${today}`, pageWidth / 2, 30, { align: "center" });
-        
-        // Add rest of PDF content
-        
-        // Add input parameters section
-        pdf.setFontSize(16);
-        pdf.setTextColor(0);
-        pdf.text("Your Business Information", 20, 45);
-        
-        pdf.setFontSize(11);
-        pdf.text(`Number of customers: ${formatNumber(customerCount)}`, 20, 55);
-        pdf.text(`Average revenue per customer: $${averageRevenuePerCustomer}/month`, 20, 62);
-        pdf.text(`Current churn rate: ${currentChurnRate}%`, 20, 69);
-        pdf.text(`Projected churn reduction: 30%`, 20, 76);
-        
-        // Add results section
-        pdf.setFontSize(16);
-        pdf.text("Business Impact Results", 20, 90);
-        
-        pdf.setFontSize(11);
-        pdf.text(`Saved customers: ${formatNumber(savedCustomers)}`, 20, 100);
-        pdf.text(`Monthly revenue saved: ${formatCurrency(results.monthlySavings)}`, 20, 107);
-        pdf.text(`Product Fruits monthly cost: -${formatCurrency(productFruitsPlanPrice)}`, 20, 114);
-        pdf.text(`Net monthly revenue increase: ${formatCurrency(netMonthlyRevenue)}`, 20, 121);
-        
-        // Add yearly summary
-        pdf.setFontSize(18);
-        pdf.setTextColor(3, 191, 146);
-        pdf.text(`Annual Net Revenue Increase: ${formatCurrency(yearlyNetRevenue)}`, pageWidth / 2, 140, { align: "center" });
-        
-        // Add footer
-        pdf.setFontSize(10);
-        pdf.setTextColor(100);
-        pdf.text("www.productfruits.com", pageWidth / 2, 260, { align: "center" });
-        
-        // Save the PDF
-        pdf.save("product-fruits-roi-report.pdf");
-        
-        toast.success("PDF report downloaded successfully");
-      };
-      
-      // Function to handle PDF failure
-      const failPDF = () => {
-        toast.error("Failed to generate PDF report", {
-          description: "Please try again later"
-        });
-      };
-      
+      // Save the PDF
+      pdf.save("product-fruits-roi-report.pdf");
+      toast.success("PDF report downloaded successfully");
     } catch (error) {
       console.error("Error generating PDF:", error);
       toast.error("Failed to generate PDF report", {
         description: "Please try again later"
       });
     }
+  };
+  
+  // Move PDF content creation to a separate function
+  const createPDFContent = (pdf, pageWidth, savedCustomers, netMonthlyRevenue, yearlyNetRevenue, productFruitsPlanPrice) => {
+    // Add title
+    pdf.setFontSize(20);
+    pdf.setTextColor(3, 191, 146); // #03bf92
+    pdf.text("Your user retention gains", pageWidth / 2, 20, { align: "center" });
+    
+    // Add subtitle and date
+    pdf.setFontSize(12);
+    pdf.setTextColor(100);
+    const today = new Date().toLocaleDateString();
+    pdf.text(`Generated on ${today}`, pageWidth / 2, 30, { align: "center" });
+    
+    // Add input parameters section
+    pdf.setFontSize(16);
+    pdf.setTextColor(0);
+    pdf.text("Your Business Information", 20, 45);
+    
+    pdf.setFontSize(11);
+    pdf.text(`Number of customers: ${formatNumber(customerCount)}`, 20, 55);
+    pdf.text(`Average revenue per customer: $${averageRevenuePerCustomer}/month`, 20, 62);
+    pdf.text(`Current churn rate: ${currentChurnRate}%`, 20, 69);
+    pdf.text(`Projected churn reduction: 30%`, 20, 76);
+    
+    // Add results section
+    pdf.setFontSize(16);
+    pdf.text("Business Impact Results", 20, 90);
+    
+    pdf.setFontSize(11);
+    pdf.text(`Saved customers: ${formatNumber(savedCustomers)}`, 20, 100);
+    pdf.text(`Monthly revenue saved: ${formatCurrency(results.monthlySavings)}`, 20, 107);
+    pdf.text(`Product Fruits monthly cost: -${formatCurrency(productFruitsPlanPrice)}`, 20, 114);
+    pdf.text(`Net monthly revenue increase: ${formatCurrency(netMonthlyRevenue)}`, 20, 121);
+    
+    // Add yearly summary
+    pdf.setFontSize(18);
+    pdf.setTextColor(3, 191, 146);
+    pdf.text(`Annual Net Revenue Increase: ${formatCurrency(yearlyNetRevenue)}`, pageWidth / 2, 140, { align: "center" });
+    
+    // Add footer
+    pdf.setFontSize(10);
+    pdf.setTextColor(100);
+    pdf.text("www.productfruits.com", pageWidth / 2, 260, { align: "center" });
   };
 
   const InfoTooltip = ({
