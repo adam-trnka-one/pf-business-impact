@@ -60,7 +60,7 @@ const ChurnCalculator = () => {
   const potentialChurnReduction = 0.30;
   const [results, setResults] = useState<ROIResults | null>(null);
   const customerSliderIndex = CUSTOMER_STEPS.findIndex(v => v === customerCount);
-  const [notionFormOpen, setNotionFormOpen] = useState(false);
+  const [formModalOpen, setFormModalOpen] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
   
   const setSliderByIndex = (index: number) => {
@@ -72,13 +72,13 @@ const ChurnCalculator = () => {
   }, [customerCount, averageRevenuePerCustomer, currentChurnRate]);
   
   useEffect(() => {
-    // Listen for messages from the Notion form iframe
+    // Listen for messages from the Microsoft form iframe
     const handleFormMessage = (event: MessageEvent) => {
-      // Check if the message is from our Notion form
-      if (event.data === "notion-form-submit-success") {
+      // Microsoft Form sends a message when submitted
+      if (event.data && event.data.type === "form-submit") {
         setFormSubmitted(true);
         toast.success("Form submitted successfully");
-        setNotionFormOpen(false);
+        setFormModalOpen(false);
         handleDownloadPDF();
       }
     };
@@ -113,7 +113,7 @@ const ChurnCalculator = () => {
   };
   
   const handleDownloadButtonClick = () => {
-    setNotionFormOpen(true);
+    setFormModalOpen(true);
   };
   
   const handleDownloadPDF = () => {
@@ -329,9 +329,9 @@ const ChurnCalculator = () => {
         </CardContent>
       </Card>
       
-      {/* Notion Form Modal */}
-      <Dialog open={notionFormOpen} onOpenChange={setNotionFormOpen}>
-        <DialogContent className="sm:max-w-[600px] max-h-[80vh]">
+      {/* Microsoft Form Modal */}
+      <Dialog open={formModalOpen} onOpenChange={setFormModalOpen}>
+        <DialogContent className="sm:max-w-[650px] max-h-[80vh]">
           <DialogHeader>
             <DialogTitle>Complete the form to download your report</DialogTitle>
             <DialogDescription>
@@ -339,20 +339,37 @@ const ChurnCalculator = () => {
             </DialogDescription>
           </DialogHeader>
           <div className="h-[500px] overflow-auto">
-            <iframe
-              src="https://product-fruits.notion.site/1e40eeb37c498056aaa7e698efea038f?pvs=105"
-              className="w-full h-full border-none"
+            <iframe 
+              width="100%" 
+              height="480px" 
+              src="https://forms.office.com/e/0ECiiNiBy6?embed=true" 
+              className="border-none max-w-full max-h-[70vh]" 
+              style={{ border: "none" }}
+              allowFullScreen
               onLoad={(e) => {
-                // Add a message listener to the iframe if needed
+                // Handle iframe load event if needed
                 const iframe = e.target as HTMLIFrameElement;
                 if (iframe.contentWindow) {
-                  // Any setup needed for the iframe communication
+                  // Setup for iframe communication if needed
+                  console.log("Microsoft Form iframe loaded");
                 }
               }}
             />
           </div>
           <div className="mt-2 text-center text-xs text-gray-500">
             After submitting the form, your PDF report will download automatically.
+          </div>
+          <div className="mt-2 flex justify-end">
+            <Button 
+              variant="outline" 
+              onClick={() => {
+                // Allow users to download without submitting the form if needed
+                handleDownloadPDF();
+                setFormModalOpen(false);
+              }}
+            >
+              Skip and download report
+            </Button>
           </div>
         </DialogContent>
       </Dialog>
