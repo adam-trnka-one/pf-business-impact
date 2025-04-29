@@ -171,7 +171,7 @@ const ConversionCalculator = () => {
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
                   <span className="text-sm text-gray-600">Product Fruits monthly cost</span>
-                  <span className="font-medium text-red-600">-{formatCurrency(productFruitsPlanPrice)}</span>
+                  <span className="font-medium text-[#ff4747]">-{formatCurrency(productFruitsPlanPrice)}</span>
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
                   <span className="text-sm text-gray-600">Net monthly revenue increase</span>
