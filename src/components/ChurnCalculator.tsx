@@ -9,6 +9,13 @@ import { HelpCircle, Download } from "lucide-react";
 import { Tooltip, TooltipProvider, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 import { toast } from "sonner";
 import jsPDF from "jspdf";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription
+} from "@/components/ui/dialog";
 
 interface ROIResults {
   currentChurnRate: number;
@@ -53,12 +60,37 @@ const ChurnCalculator = () => {
   const potentialChurnReduction = 0.30;
   const [results, setResults] = useState<ROIResults | null>(null);
   const customerSliderIndex = CUSTOMER_STEPS.findIndex(v => v === customerCount);
+  const [notionFormOpen, setNotionFormOpen] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  
   const setSliderByIndex = (index: number) => {
     setCustomerCount(CUSTOMER_STEPS[index]);
   };
+  
   useEffect(() => {
     calculateAndUpdateResults();
   }, [customerCount, averageRevenuePerCustomer, currentChurnRate]);
+  
+  useEffect(() => {
+    // Listen for messages from the Notion form iframe
+    const handleFormMessage = (event: MessageEvent) => {
+      // Check if the message is from our Notion form
+      if (event.data === "notion-form-submit-success") {
+        setFormSubmitted(true);
+        toast.success("Form submitted successfully");
+        setNotionFormOpen(false);
+        handleDownloadPDF();
+      }
+    };
+
+    window.addEventListener("message", handleFormMessage);
+    
+    // Clean up
+    return () => {
+      window.removeEventListener("message", handleFormMessage);
+    };
+  }, []);
+
   const calculateAndUpdateResults = () => {
     const calculatedResults = calculateROI({
       customerCount,
@@ -68,15 +100,22 @@ const ChurnCalculator = () => {
     });
     setResults(calculatedResults);
   };
+  
   const handleCustomerCountInputChange = (setter: React.Dispatch<React.SetStateAction<number>>, value: string) => {
     let numValue = parseInt(value) || CUSTOMER_STEPS[0];
     numValue = Math.min(Math.max(numValue, CUSTOMER_STEPS[0]), CUSTOMER_STEPS[CUSTOMER_STEPS.length - 1]);
     setter(snapToNearestCustomerStep(numValue));
   };
+  
   const handleInputChange = (setter: React.Dispatch<React.SetStateAction<number>>, value: string, min: number, max: number) => {
     const numValue = parseFloat(value) || min;
     setter(Math.min(Math.max(numValue, min), max));
   };
+  
+  const handleDownloadButtonClick = () => {
+    setNotionFormOpen(true);
+  };
+  
   const handleDownloadPDF = () => {
     if (!results) return;
     
@@ -188,7 +227,9 @@ const ChurnCalculator = () => {
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>;
+    
   const productFruitsPlanPrice = getProductFruitsPlanPrice(customerCount);
+  
   return <div className="grid gap-6 md:grid-cols-2 lg:gap-8">
       <Card className="md:col-span-1">
         <CardHeader>
@@ -278,7 +319,7 @@ const ChurnCalculator = () => {
                   <p className="text-[28pt] font-bold text-[#03BF92]">
                     {formatCurrency((results.monthlySavings - productFruitsPlanPrice) * 12)}
                   </p>
-                  <Button variant="outline" className="mt-4 border-[#03BF92] text-[#03BF92] hover:bg-[#03BF92]/10" onClick={handleDownloadPDF}>
+                  <Button variant="outline" className="mt-4 border-[#03BF92] text-[#03BF92] hover:bg-[#03BF92]/10" onClick={handleDownloadButtonClick}>
                     <Download className="mr-2 h-4 w-4" />
                     Download PDF Report
                   </Button>
@@ -287,6 +328,35 @@ const ChurnCalculator = () => {
             </div>}
         </CardContent>
       </Card>
+      
+      {/* Notion Form Modal */}
+      <Dialog open={notionFormOpen} onOpenChange={setNotionFormOpen}>
+        <DialogContent className="sm:max-w-[600px] max-h-[80vh]">
+          <DialogHeader>
+            <DialogTitle>Complete the form to download your report</DialogTitle>
+            <DialogDescription>
+              Please provide your details to receive your PDF report.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="h-[500px] overflow-auto">
+            <iframe
+              src="https://product-fruits.notion.site/1e40eeb37c498056aaa7e698efea038f?pvs=105"
+              className="w-full h-full border-none"
+              onLoad={(e) => {
+                // Add a message listener to the iframe if needed
+                const iframe = e.target as HTMLIFrameElement;
+                if (iframe.contentWindow) {
+                  // Any setup needed for the iframe communication
+                }
+              }}
+            />
+          </div>
+          <div className="mt-2 text-center text-xs text-gray-500">
+            After submitting the form, your PDF report will download automatically.
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>;
 };
+
 export default ChurnCalculator;
