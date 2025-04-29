@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ChurnCalculator from "@/components/ChurnCalculator";
@@ -6,7 +5,6 @@ import ConversionCalculator from "@/components/ConversionCalculator";
 import { TrendingUp, Users, BarChart, Info } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import Calculator from "@/components/Calculator";
-
 const Index = () => {
   const isMobile = useIsMobile();
   return <div className="min-h-screen flex flex-col">
@@ -14,8 +12,8 @@ const Index = () => {
         <div className="container mx-auto px-4 py-8 bg-[#f4f6f8]">
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Calculate the business impact of Product Fruits</h2>
-              <p className="text-lg text-gray-600 max-w-3xl mx-auto">Poor onboarding doesn't just frustrate users. It costs you in churn, conversions, and support overhead.</p>
+              <h2 className="text-3xl text-gray-900 mb-4 font-semibold md:text-4xl">Calculate the business impact of Product Fruits</h2>
+              <p className="text-lg max-w-3xl mx-auto text-slate-950">Poor onboarding doesn't just frustrate users. It costs you in churn, conversions, and support overhead.</p>
             </div>
             
             <Tabs defaultValue="churn" className="mb-8">
