@@ -76,3 +76,28 @@ export const formatPercent = (value: number): string => {
     maximumFractionDigits: 1,
   }).format(value);
 };
+
+/**
+ * Submits data to Customer.io
+ */
+export const submitToCustomerIO = async (data: {
+  email: string;
+  firstName: string;
+  lastName: string;
+  company: string;
+}): Promise<boolean> => {
+  try {
+    // In a real implementation, this would be an API call to Customer.io
+    // For now, we'll simulate a successful API call
+    console.log("Submitting to Customer.io:", data);
+    
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 800));
+    
+    // Return success
+    return true;
+  } catch (error) {
+    console.error("Error submitting to Customer.io:", error);
+    return false;
+  }
+};

@@ -17,6 +17,7 @@ import {
   DialogTitle,
   DialogDescription
 } from "@/components/ui/dialog";
+import NewsletterForm from "./NewsletterForm";
 
 interface ROIResults {
   currentChurnRate: number;
@@ -72,32 +73,6 @@ const ChurnCalculator = () => {
     calculateAndUpdateResults();
   }, [customerCount, averageRevenuePerCustomer, currentChurnRate]);
   
-  useEffect(() => {
-    // Enhanced message handling from the Microsoft form iframe
-    const handleFormMessage = (event: MessageEvent) => {
-      console.log("Received message event:", event.data);
-      
-      // Microsoft Form sends various messages, we need to detect submission
-      if (
-        event.data && 
-        (event.data.type === "form-submit" || 
-         (typeof event.data === 'string' && event.data.includes('submit')))
-      ) {
-        console.log("Form submission detected");
-        setFormSubmitted(true);
-        toast.success("Form submitted successfully");
-        setFormModalOpen(false);
-      }
-    };
-
-    window.addEventListener("message", handleFormMessage);
-    
-    // Clean up
-    return () => {
-      window.removeEventListener("message", handleFormMessage);
-    };
-  }, []);
-
   const calculateAndUpdateResults = () => {
     const calculatedResults = calculateROI({
       customerCount,
@@ -121,6 +96,12 @@ const ChurnCalculator = () => {
   
   const handleDownloadButtonClick = () => {
     setFormModalOpen(true);
+  };
+  
+  const handleNewsletterSuccess = () => {
+    setFormSubmitted(true);
+    setFormModalOpen(false);
+    toast.success("Thank you for subscribing!");
   };
   
   const handleDownloadPDF = () => {
@@ -212,7 +193,7 @@ const ChurnCalculator = () => {
     pdf.text(`Saved customers: ${formatNumber(savedCustomers)}`, 20, 100);
     pdf.text(`Monthly revenue saved: ${formatCurrency(results.monthlySavings)}`, 20, 107);
     pdf.text(`Product Fruits monthly cost: -${formatCurrency(productFruitsPlanPrice)}`, 20, 114);
-    pdf.text(`Net monthly revenue increase: ${formatCurrency(netMonthlyRevenue)}`, 20, 121);
+    pdf.text(`Net monthly revenue increase: ${formatCurrency(results.monthlySavings - productFruitsPlanPrice)}`, 20, 121);
     
     // Add yearly summary
     pdf.setFontSize(18);
@@ -356,42 +337,20 @@ const ChurnCalculator = () => {
         </CardContent>
       </Card>
       
-      {/* Microsoft Form Modal */}
+      {/* Newsletter Signup Modal */}
       <Dialog open={formModalOpen} onOpenChange={setFormModalOpen}>
-        <DialogContent className="sm:max-w-[650px] max-h-[80vh]">
+        <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>
-            <DialogTitle>Complete the form to download your report</DialogTitle>
+            <DialogTitle>Subscribe to get your report</DialogTitle>
             <DialogDescription>
               Please provide your details to receive your PDF report.
             </DialogDescription>
           </DialogHeader>
-          <div className="h-[500px] overflow-auto">
-            <iframe 
-              width="100%" 
-              height="480px" 
-              src="https://forms.office.com/e/0ECiiNiBy6?embed=true" 
-              className="border-none max-w-full max-h-[70vh]" 
-              style={{ border: "none" }}
-              allowFullScreen
-              onLoad={(e) => {
-                const iframe = e.target as HTMLIFrameElement;
-                if (iframe.contentWindow) {
-                  console.log("Microsoft Form iframe loaded");
-                  
-                  // Try to establish communication with the iframe
-                  try {
-                    iframe.contentWindow.postMessage("hello", "*");
-                    console.log("Sent initial message to iframe");
-                  } catch (err) {
-                    console.error("Error communicating with iframe:", err);
-                  }
-                }
-              }}
-            />
-          </div>
-          <div className="mt-2 text-center text-xs text-gray-500">
-            After submitting the form, you'll be able to download your PDF report.
-          </div>
+          
+          <NewsletterForm 
+            onSuccess={handleNewsletterSuccess}
+            onCancel={() => setFormModalOpen(false)}
+          />
         </DialogContent>
       </Dialog>
     </div>;
