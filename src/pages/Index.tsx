@@ -17,7 +17,7 @@ const Index = () => {
             </div>
             
             <Tabs defaultValue="churn" className="mb-8">
-              <TabsList className="grid w-full grid-cols-3 gap-2 mb-8">
+              <TabsList className="grid w-full grid-cols-3 gap-2 mb-8 bg-white">
                 <TabsTrigger value="churn" className="flex items-center gap-1 text-xs sm:text-base px-2 sm:px-3 py-1.5 border border-gray-300 bg-white">
                   <Users className="h-3 w-3 sm:h-4 sm:w-4" />
                   <span>{isMobile ? "Churn" : "Churn reduction"}</span>
