@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -215,7 +216,7 @@ const ChurnCalculator = () => {
       <Tooltip>
         <TooltipTrigger className="cursor-help">
           <img 
-            src="/lovable-uploads/0b2c8b81-7a82-4bfb-85dc-22f40cc52599.png" 
+            src="/lovable-uploads/3bcc2d94-904f-483c-9d32-c019de350fd6.png" 
             alt="Info" 
             className="h-4 w-4" 
           />
