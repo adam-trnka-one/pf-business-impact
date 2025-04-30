@@ -221,8 +221,8 @@ const ChurnCalculator = () => {
             className="h-4 w-4" 
           />
         </TooltipTrigger>
-        <TooltipContent side="right" align="start" className="max-w-[250px]">
-          <p>{content}</p>
+        <TooltipContent side="right" align="start" className="max-w-[280px]">
+          <p className="text-white text-opacity-95">{content}</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>;
