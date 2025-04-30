@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -6,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { calculateROI, formatCurrency, formatNumber, formatPercent } from "@/utils/churnCalculator";
-import { HelpCircle, Download } from "lucide-react";
+import { Download } from "lucide-react";
 import { Tooltip, TooltipProvider, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 import { toast } from "sonner";
 import jsPDF from "jspdf";
@@ -36,6 +35,7 @@ const CUSTOMER_STEPS = [...Array.from({
 }, (_, i) => 1500 + (i + 1) * 500), ...Array.from({
   length: (5000 - 3000) / 1000 + 1
 }, (_, i) => 3000 + (i + 1) * 1000), 7500, 10000, 15000, 20000, 30000, 50000];
+
 function snapToNearestCustomerStep(value: number) {
   let closest = CUSTOMER_STEPS[0];
   let minDiff = Math.abs(value - closest);
@@ -48,6 +48,7 @@ function snapToNearestCustomerStep(value: number) {
   }
   return closest;
 }
+
 function getProductFruitsPlanPrice(customers: number): number {
   if (customers <= 1500) return 139;
   if (customers <= 3000) return 189;
@@ -55,6 +56,7 @@ function getProductFruitsPlanPrice(customers: number): number {
   if (customers <= 10000) return 339;
   return 439;
 }
+
 const ChurnCalculator = () => {
   const [customerCount, setCustomerCount] = useState(1000);
   const [averageRevenuePerCustomer, setAverageRevenuePerCustomer] = useState(50);
@@ -161,7 +163,6 @@ const ChurnCalculator = () => {
     }
   };
   
-  // Move PDF content creation to a separate function
   const createPDFContent = (pdf, pageWidth, savedCustomers, netMonthlyRevenue, yearlyNetRevenue, productFruitsPlanPrice) => {
     // Add title
     pdf.setFontSize(20);
@@ -213,7 +214,11 @@ const ChurnCalculator = () => {
   }) => <TooltipProvider>
       <Tooltip>
         <TooltipTrigger className="cursor-help">
-          <HelpCircle className="h-4 w-4 text-gray-400" />
+          <img 
+            src="/lovable-uploads/0b2c8b81-7a82-4bfb-85dc-22f40cc52599.png" 
+            alt="Info" 
+            className="h-4 w-4" 
+          />
         </TooltipTrigger>
         <TooltipContent side="right" align="start" className="max-w-[250px]">
           <p>{content}</p>
