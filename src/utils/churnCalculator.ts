@@ -87,15 +87,30 @@ export const submitToCustomerIO = async (data: {
   company: string;
 }): Promise<boolean> => {
   try {
-    // In a real implementation, this would be an API call to Customer.io
-    // For now, we'll simulate a successful API call
-    console.log("Submitting to Customer.io:", data);
+    const { email, firstName, lastName, company } = data;
     
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 800));
-    
-    // Return success
-    return true;
+    // Call our Supabase Edge Function
+    const response = await fetch(`https://ehicsjqjvhnbgbmaonls.supabase.co/functions/v1/submit-to-customerio`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ 
+        email, 
+        firstName, 
+        lastName, 
+        company 
+      }),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("Error submitting to Customer.io:", errorText);
+      return false;
+    }
+
+    const result = await response.json();
+    return result.success;
   } catch (error) {
     console.error("Error submitting to Customer.io:", error);
     return false;
