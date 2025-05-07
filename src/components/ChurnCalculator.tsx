@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -318,25 +317,6 @@ const ChurnCalculator = () => {
                   <p className="text-[28pt] font-bold text-[#03BF92]">
                     {formatCurrency((results.monthlySavings - productFruitsPlanPrice) * 12)}
                   </p>
-                  {formSubmitted ? (
-                    <Button 
-                      variant="outline" 
-                      className="mt-4 border-[#03BF92] text-[#03BF92] hover:bg-[#03BF92]/10" 
-                      onClick={handleDownloadPDF}
-                    >
-                      <Download className="mr-2 h-4 w-4" />
-                      Download PDF Report
-                    </Button>
-                  ) : (
-                    <Button 
-                      variant="outline" 
-                      className="mt-4 border-[#03BF92] text-[#03BF92] hover:bg-[#03BF92]/10" 
-                      onClick={handleDownloadButtonClick}
-                    >
-                      <Download className="mr-2 h-4 w-4" />
-                      Request PDF Report
-                    </Button>
-                  )}
                 </div>
               </div>
             </div>}
