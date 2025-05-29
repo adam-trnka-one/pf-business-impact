@@ -1,11 +1,11 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Download } from "lucide-react";
+import { Download, Edit } from "lucide-react";
 import { formatCurrency, formatNumber } from "@/utils/churnCalculator";
 import { generateAndDownloadPDF } from "@/utils/pdfGenerator";
-import { getProductFruitsPlanPrice } from "@/utils/customerSteps";
+import PDFStructureEditor from "@/components/PDFStructureEditor";
 
 interface ChurnCalculatorResultsProps {
   customerCount: number;
@@ -22,6 +22,8 @@ const ChurnCalculatorResults = ({
   results,
   productFruitsPlanPrice
 }: ChurnCalculatorResultsProps) => {
+  const [showEditor, setShowEditor] = useState(false);
+
   if (!results) return null;
 
   const handleDownloadPDF = () => {
@@ -73,14 +75,36 @@ const ChurnCalculatorResults = ({
                 {formatCurrency((results.monthlySavings - productFruitsPlanPrice) * 12)}
               </p>
             </div>
-            <Button 
-              onClick={handleDownloadPDF}
-              className="bg-[#ff4747] hover:bg-[#e63e3e] text-white px-6 py-2"
-            >
-              <Download className="w-4 h-4 mr-2" />
-              Download PDF
-            </Button>
+            <div className="flex gap-3">
+              <Button 
+                onClick={handleDownloadPDF}
+                className="bg-[#ff4747] hover:bg-[#e63e3e] text-white px-6 py-2"
+              >
+                <Download className="w-4 h-4 mr-2" />
+                Download PDF
+              </Button>
+              <Button 
+                onClick={() => setShowEditor(!showEditor)}
+                variant="outline"
+                className="px-6 py-2"
+              >
+                <Edit className="w-4 h-4 mr-2" />
+                {showEditor ? "Hide Editor" : "Customize PDF"}
+              </Button>
+            </div>
           </div>
+
+          {showEditor && (
+            <div className="mt-6 border-t pt-6">
+              <PDFStructureEditor
+                customerCount={customerCount}
+                averageRevenuePerCustomer={results.monthlySavings / (customerCount * currentChurnRate / 100 * 0.3)}
+                currentChurnRate={currentChurnRate}
+                results={results}
+                productFruitsPlanPrice={productFruitsPlanPrice}
+              />
+            </div>
+          )}
         </div>
       </CardContent>
     </>

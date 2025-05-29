@@ -14,6 +14,7 @@ interface PDFData {
     monthlySavings: number;
   };
   productFruitsPlanPrice: number;
+  customHtml?: string;
 }
 
 export const generateAndDownloadPDF = async (data: PDFData): Promise<void> => {
@@ -29,54 +30,65 @@ export const generateAndDownloadPDF = async (data: PDFData): Promise<void> => {
     tempContainer.style.height = '1123px';
     document.body.appendChild(tempContainer);
 
-    // Create React root and render the PDF report component
-    const root = createRoot(tempContainer);
-    
-    // Create a promise to wait for the component to render
-    await new Promise<void>((resolve, reject) => {
-      const reportElement = React.createElement(PDFReport, data);
-      root.render(reportElement);
+    if (data.customHtml) {
+      // Use custom HTML structure
+      tempContainer.innerHTML = data.customHtml;
       
-      // Wait a bit for the component to fully render
-      setTimeout(async () => {
-        try {
-          // Capture the rendered component as canvas
-          const canvas = await html2canvas(tempContainer.firstChild as HTMLElement, {
-            width: 794,
-            height: 1123,
-            scale: 2, // Higher resolution
-            useCORS: true,
-            allowTaint: true,
-            backgroundColor: '#ffffff'
-          });
+      // Wait a bit for the HTML to render
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    } else {
+      // Create React root and render the PDF report component
+      const root = createRoot(tempContainer);
+      
+      // Create a promise to wait for the component to render
+      await new Promise<void>((resolve, reject) => {
+        const reportElement = React.createElement(PDFReport, data);
+        root.render(reportElement);
+        
+        // Wait a bit for the component to fully render
+        setTimeout(async () => {
+          try {
+            resolve();
+          } catch (error) {
+            reject(error);
+          }
+        }, 1000);
+      });
+    }
 
-          // Create PDF
-          const pdf = new jsPDF({
-            orientation: 'portrait',
-            unit: 'px',
-            format: [794, 1123]
-          });
-
-          // Add the canvas image to PDF
-          const imgData = canvas.toDataURL('image/png');
-          pdf.addImage(imgData, 'PNG', 0, 0, 794, 1123);
-
-          // Save the PDF
-          pdf.save("product-fruits-roi-report.pdf");
-          
-          console.log("PDF generated successfully with html2canvas");
-          toast.success("PDF report downloaded successfully");
-          resolve();
-        } catch (error) {
-          console.error("Error generating PDF:", error);
-          toast.error("Failed to generate PDF report");
-          reject(error);
-        }
-      }, 1000); // Wait 1 second for rendering
+    // Capture the rendered content as canvas
+    const targetElement = data.customHtml ? tempContainer : tempContainer.firstChild as HTMLElement;
+    const canvas = await html2canvas(targetElement, {
+      width: 794,
+      height: 1123,
+      scale: 2, // Higher resolution
+      useCORS: true,
+      allowTaint: true,
+      backgroundColor: '#ffffff'
     });
 
+    // Create PDF
+    const pdf = new jsPDF({
+      orientation: 'portrait',
+      unit: 'px',
+      format: [794, 1123]
+    });
+
+    // Add the canvas image to PDF
+    const imgData = canvas.toDataURL('image/png');
+    pdf.addImage(imgData, 'PNG', 0, 0, 794, 1123);
+
+    // Save the PDF
+    pdf.save("product-fruits-roi-report.pdf");
+    
+    console.log("PDF generated successfully with html2canvas");
+    toast.success("PDF report downloaded successfully");
+
     // Clean up
-    root.unmount();
+    if (!data.customHtml) {
+      const root = createRoot(tempContainer);
+      root.unmount();
+    }
     document.body.removeChild(tempContainer);
 
   } catch (error) {
