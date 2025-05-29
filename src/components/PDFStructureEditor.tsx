@@ -109,7 +109,6 @@ const PDFStructureEditor: React.FC<PDFStructureEditorProps> = ({
     .replace(/\{\{monthlySavings\}\}/g, `$${results.monthlySavings.toLocaleString()}`);
 
   const handleDownloadPDF = () => {
-    // We'll need to modify the PDF generator to accept custom HTML
     generateAndDownloadPDF({
       customerCount,
       averageRevenuePerCustomer,
@@ -151,7 +150,7 @@ const PDFStructureEditor: React.FC<PDFStructureEditorProps> = ({
       </div>
       
       <p className="text-sm text-gray-600">
-        Edit the HTML structure for your PDF. Use variables like {{"{"}{"}"}} customerCount {{"}"}{"}"}, {{"{"}{"}"}} yearlyNetRevenue {{"}"}{"}"}, etc.
+        Edit the HTML structure for your PDF. Use variables like customerCount, yearlyNetRevenue, etc. wrapped in double curly braces.
       </p>
 
       <Textarea
