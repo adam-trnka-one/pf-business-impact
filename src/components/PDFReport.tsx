@@ -28,13 +28,14 @@ const PDFReport: React.FC<PDFReportProps> = ({
     <div className="w-[794px] h-[1123px] bg-gray-50 p-12 font-sans text-black relative overflow-hidden" style={{ fontFamily: 'Arial, sans-serif' }}>
       {/* Header with Logo */}
       <div className="flex items-center mb-12">
-        <img 
-          src="https://productfruits.com/images/pf_logo.svg" 
-          alt="ProductFruits Logo"
-          className="h-12 w-auto"
-          style={{ maxHeight: '48px', width: 'auto' }}
-          crossOrigin="anonymous"
-        />
+        <div className="flex items-center">
+          <div className="bg-[#ff4747] text-white px-6 py-3 rounded-lg font-bold text-xl mr-4">
+            ProductFruits
+          </div>
+          <div className="text-gray-600 text-sm">
+            User Experience Platform
+          </div>
+        </div>
       </div>
 
       {/* Main Title Section */}
