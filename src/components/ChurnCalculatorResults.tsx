@@ -1,7 +1,11 @@
 
 import React from "react";
 import { CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Download } from "lucide-react";
 import { formatCurrency, formatNumber } from "@/utils/churnCalculator";
+import { generateAndDownloadPDF } from "@/utils/pdfGenerator";
+import { getProductFruitsPlanPrice } from "@/utils/customerSteps";
 
 interface ChurnCalculatorResultsProps {
   customerCount: number;
@@ -19,6 +23,16 @@ const ChurnCalculatorResults = ({
   productFruitsPlanPrice
 }: ChurnCalculatorResultsProps) => {
   if (!results) return null;
+
+  const handleDownloadPDF = () => {
+    generateAndDownloadPDF({
+      customerCount,
+      averageRevenuePerCustomer: results.monthlySavings / (customerCount * currentChurnRate / 100 * 0.3),
+      currentChurnRate,
+      results,
+      productFruitsPlanPrice
+    });
+  };
 
   return (
     <>
@@ -52,13 +66,20 @@ const ChurnCalculatorResults = ({
             </div>
           </div>
           
-          <div className="pt-4 flex justify-center items-center">
+          <div className="pt-4 flex flex-col justify-center items-center space-y-4">
             <div className="text-center">
               <p className="text-sm text-gray-500">Your yearly net revenue increase</p>
               <p className="text-[28pt] font-bold text-[#03BF92]">
                 {formatCurrency((results.monthlySavings - productFruitsPlanPrice) * 12)}
               </p>
             </div>
+            <Button 
+              onClick={handleDownloadPDF}
+              className="bg-[#ff4747] hover:bg-[#e63e3e] text-white px-6 py-2"
+            >
+              <Download className="w-4 h-4 mr-2" />
+              Download PDF
+            </Button>
           </div>
         </div>
       </CardContent>
