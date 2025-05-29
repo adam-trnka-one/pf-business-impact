@@ -78,7 +78,7 @@ export const formatPercent = (value: number): string => {
 };
 
 /**
- * Submits data to Customer.io
+ * Mock function for Customer.io submission (no longer functional)
  */
 export const submitToCustomerIO = async (data: {
   email: string;
@@ -86,33 +86,8 @@ export const submitToCustomerIO = async (data: {
   lastName: string;
   company: string;
 }): Promise<boolean> => {
-  try {
-    const { email, firstName, lastName, company } = data;
-    
-    // Call our Supabase Edge Function
-    const response = await fetch(`https://ehicsjqjvhnbgbmaonls.supabase.co/functions/v1/submit-to-customerio`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ 
-        email, 
-        firstName, 
-        lastName, 
-        company 
-      }),
-    });
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error("Error submitting to Customer.io:", errorText);
-      return false;
-    }
-
-    const result = await response.json();
-    return result.success;
-  } catch (error) {
-    console.error("Error submitting to Customer.io:", error);
-    return false;
-  }
+  console.log('Customer.io submission would have been made with:', data);
+  // Simulate a successful submission for demo purposes
+  await new Promise(resolve => setTimeout(resolve, 1000));
+  return true;
 };

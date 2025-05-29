@@ -1,5 +1,0 @@
-
-project_id = "ehicsjqjvhnbgbmaonls"
-
-[functions.submit-to-customerio]
-verify_jwt = false

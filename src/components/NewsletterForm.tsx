@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { submitToCustomerIO } from "@/utils/churnCalculator";
 import { toast } from "sonner";
 
 interface NewsletterFormProps {
@@ -45,14 +44,12 @@ const NewsletterForm: React.FC<NewsletterFormProps> = ({ onSuccess, onCancel }) 
     setIsSubmitting(true);
     
     try {
-      const success = await submitToCustomerIO(formData);
+      // Simulate form submission without backend
+      console.log('Form submission data:', formData);
+      await new Promise(resolve => setTimeout(resolve, 1000));
       
-      if (success) {
-        toast.success("Thank you for subscribing!");
-        onSuccess();
-      } else {
-        toast.error("Failed to subscribe. Please try again.");
-      }
+      toast.success("Thank you for subscribing!");
+      onSuccess();
     } catch (error) {
       toast.error("An error occurred. Please try again.");
       console.error("Newsletter submission error:", error);
