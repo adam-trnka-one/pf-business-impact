@@ -76,18 +76,3 @@ export const formatPercent = (value: number): string => {
     maximumFractionDigits: 1,
   }).format(value);
 };
-
-/**
- * Mock function for Customer.io submission (no longer functional)
- */
-export const submitToCustomerIO = async (data: {
-  email: string;
-  firstName: string;
-  lastName: string;
-  company: string;
-}): Promise<boolean> => {
-  console.log('Customer.io submission would have been made with:', data);
-  // Simulate a successful submission for demo purposes
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  return true;
-};
