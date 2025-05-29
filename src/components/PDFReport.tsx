@@ -31,7 +31,9 @@ const PDFReport: React.FC<PDFReportProps> = ({
         <img 
           src="https://productfruits.com/images/pf_logo.svg" 
           alt="ProductFruits Logo"
-          className="h-10 w-auto"
+          className="h-12 w-auto"
+          style={{ maxHeight: '48px', width: 'auto' }}
+          crossOrigin="anonymous"
         />
       </div>
 
