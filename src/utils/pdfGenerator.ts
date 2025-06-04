@@ -14,7 +14,6 @@ interface PDFData {
     monthlySavings: number;
   };
   productFruitsPlanPrice: number;
-  customHtml?: string;
 }
 
 export const generateAndDownloadPDF = async (data: PDFData): Promise<void> => {
@@ -30,34 +29,26 @@ export const generateAndDownloadPDF = async (data: PDFData): Promise<void> => {
     tempContainer.style.height = '1123px';
     document.body.appendChild(tempContainer);
 
-    if (data.customHtml) {
-      // Use custom HTML structure
-      tempContainer.innerHTML = data.customHtml;
+    // Create React root and render the PDF report component
+    const root = createRoot(tempContainer);
+    
+    // Create a promise to wait for the component to render
+    await new Promise<void>((resolve, reject) => {
+      const reportElement = React.createElement(PDFReport, data);
+      root.render(reportElement);
       
-      // Wait a bit for the HTML to render
-      await new Promise(resolve => setTimeout(resolve, 1000));
-    } else {
-      // Create React root and render the PDF report component
-      const root = createRoot(tempContainer);
-      
-      // Create a promise to wait for the component to render
-      await new Promise<void>((resolve, reject) => {
-        const reportElement = React.createElement(PDFReport, data);
-        root.render(reportElement);
-        
-        // Wait a bit for the component to fully render
-        setTimeout(async () => {
-          try {
-            resolve();
-          } catch (error) {
-            reject(error);
-          }
-        }, 1000);
-      });
-    }
+      // Wait a bit for the component to fully render
+      setTimeout(async () => {
+        try {
+          resolve();
+        } catch (error) {
+          reject(error);
+        }
+      }, 1000);
+    });
 
     // Capture the rendered content as canvas
-    const targetElement = data.customHtml ? tempContainer : tempContainer.firstChild as HTMLElement;
+    const targetElement = tempContainer.firstChild as HTMLElement;
     const canvas = await html2canvas(targetElement, {
       width: 794,
       height: 1123,
@@ -85,10 +76,7 @@ export const generateAndDownloadPDF = async (data: PDFData): Promise<void> => {
     toast.success("PDF report downloaded successfully");
 
     // Clean up
-    if (!data.customHtml) {
-      const root = createRoot(tempContainer);
-      root.unmount();
-    }
+    root.unmount();
     document.body.removeChild(tempContainer);
 
   } catch (error) {
