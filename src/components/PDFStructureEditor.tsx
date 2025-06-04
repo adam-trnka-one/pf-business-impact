@@ -16,69 +16,125 @@ interface PDFStructureEditorProps {
   productFruitsPlanPrice: number;
 }
 
-const defaultTemplate = `<div className="w-[794px] h-[1123px] bg-gray-50 p-12 font-sans text-black relative overflow-hidden" style={{ fontFamily: 'Arial, sans-serif' }}>
+const defaultTemplate = `<div className="w-[794px] h-[1123px] bg-white p-12 font-sans text-black relative overflow-hidden" style={{ fontFamily: 'Arial, sans-serif' }}>
   {/* Header with Logo */}
-  <div className="flex items-center mb-12">
+  <div className="flex items-center mb-8">
     <div className="flex items-center">
-      <div className="bg-[#ff4747] text-white px-6 py-3 rounded-lg font-bold text-xl mr-4">
-        ProductFruits
-      </div>
-      <div className="text-gray-600 text-sm">
-        User Experience Platform
+      <svg width="40" height="40" viewBox="0 0 40 40" className="mr-3">
+        <circle cx="12" cy="12" r="4" fill="#FF751D"/>
+        <circle cx="20" cy="8" r="3" fill="#FF751D"/>
+        <circle cx="28" cy="12" r="4" fill="#FF751D"/>
+        <circle cx="16" cy="20" r="3" fill="#FF751D"/>
+        <circle cx="24" cy="20" r="3" fill="#FF751D"/>
+        <path d="M8 16 Q12 12 16 16 Q20 8 24 16 Q28 12 32 16" stroke="#4A5568" strokeWidth="2" fill="none"/>
+      </svg>
+      <div>
+        <span className="text-2xl font-bold text-gray-800">Product </span>
+        <span className="text-2xl font-bold text-orange-500">Fruits</span>
       </div>
     </div>
   </div>
 
-  {/* Main Title Section */}
-  <div className="mb-16">
-    <h1 className="text-4xl font-bold text-gray-800 mb-4">
-      Your Yearly Net Revenue Increase
+  {/* Main Title */}
+  <div className="mb-12">
+    <h1 className="text-3xl font-bold text-gray-800 mb-4">
+      Calculation of the business impact of Product Fruits
     </h1>
-    <p className="text-gray-600 text-lg">
-      ROI Analysis Report - Generated on {{today}}
+    <p className="text-gray-600 text-base leading-relaxed">
+      Poor onboarding doesn't just frustrate users. It costs you in churn, conversions, and support overhead.
     </p>
   </div>
 
-  {/* Annual Summary - Highlighted Box */}
-  <div className="bg-white rounded-xl shadow-lg p-8 text-center mb-12 border-l-4 border-green-500">
-    <h2 className="text-2xl font-bold text-gray-800 mb-4">
-      Annual Net Revenue Increase
-    </h2>
-    <p className="text-5xl font-bold text-green-600 mb-4">
+  {/* Tab-like section */}
+  <div className="mb-8">
+    <div className="flex border-b border-gray-200">
+      <div className="px-6 py-3 bg-orange-50 border-b-2 border-orange-500 text-orange-600 font-medium text-sm">
+        📉 Churn reduction
+      </div>
+      <div className="px-6 py-3 text-gray-500 font-medium text-sm">
+        📊 Support cost reduction
+      </div>
+      <div className="px-6 py-3 text-gray-500 font-medium text-sm">
+        📈 Revenue uplift
+      </div>
+    </div>
+    
+    {/* Info box */}
+    <div className="bg-green-50 border border-green-200 rounded-lg p-4 mt-4 flex items-center">
+      <div className="bg-orange-100 rounded-full p-2 mr-3">
+        <span className="text-orange-600 text-sm">ℹ️</span>
+      </div>
+      <p className="text-sm text-gray-700">
+        Clients using Product Fruits see a <strong>30-70% reduction</strong> in customer churn after implementing automated onboarding.
+      </p>
+    </div>
+  </div>
+
+  {/* Two Column Layout */}
+  <div className="grid grid-cols-2 gap-8 mb-12">
+    {/* Left Column - Your entered data */}
+    <div>
+      <h2 className="text-xl font-bold text-gray-800 mb-2">Your entered data</h2>
+      <p className="text-sm text-gray-500 mb-6">We'll use this to calculate your business impact</p>
+      
+      <div className="space-y-4">
+        <div className="flex justify-between py-2">
+          <span className="text-gray-700">Number of customers</span>
+          <span className="font-medium">{{customerCount}}</span>
+        </div>
+        <div className="flex justify-between py-2">
+          <span className="text-gray-700">Average revenue per customer (USD/month)</span>
+          <span className="font-medium">{{averageRevenuePerCustomer}}</span>
+        </div>
+        <div className="flex justify-between py-2">
+          <span className="text-gray-700">Current churn rate (%)</span>
+          <span className="font-medium">{{currentChurnRate}}</span>
+        </div>
+        <div className="flex justify-between py-2">
+          <span className="text-gray-700">Estimated churn reduction (%)</span>
+          <span className="font-medium">30</span>
+        </div>
+      </div>
+    </div>
+
+    {/* Right Column - Your user retention gains */}
+    <div>
+      <h2 className="text-xl font-bold text-gray-800 mb-2">Your user retention gains</h2>
+      <p className="text-sm text-gray-500 mb-6">Based on your data, here's the business impact of Product Fruits</p>
+      
+      <div className="space-y-4">
+        <div className="flex justify-between py-2">
+          <span className="text-gray-700">Saved customers</span>
+          <span className="font-medium">{{savedCustomers}}</span>
+        </div>
+        <div className="flex justify-between py-2">
+          <span className="text-gray-700">Revenue saved monthly</span>
+          <span className="font-medium">{{monthlySavings}}</span>
+        </div>
+        <div className="flex justify-between py-2">
+          <span className="text-gray-700">Product Fruits monthly cost</span>
+          <span className="font-medium text-red-600">-$139</span>
+        </div>
+        <div className="flex justify-between py-2">
+          <span className="text-gray-700">Incremental net monthly revenue</span>
+          <span className="font-medium">{{netMonthlyRevenue}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {/* Large Revenue Number */}
+  <div className="text-center mb-16">
+    <h2 className="text-2xl text-gray-500 mb-4">Your yearly net revenue increase</h2>
+    <div className="text-6xl font-bold text-green-500 mb-8">
       {{yearlyNetRevenue}}
-    </p>
-    <p className="text-gray-600">
-      Based on {{savedCustomers}} customers retained through improved user experience
-    </p>
-  </div>
-
-  {/* Business Metrics Summary */}
-  <div className="bg-white rounded-xl p-6 shadow-sm">
-    <h3 className="text-lg font-semibold mb-4 text-gray-800">Key Business Metrics</h3>
-    <div className="grid grid-cols-2 gap-4 text-sm">
-      <div className="flex justify-between">
-        <span className="text-gray-600">Total Customers:</span>
-        <span className="font-medium">{{customerCount}}</span>
-      </div>
-      <div className="flex justify-between">
-        <span className="text-gray-600">Avg Revenue/Customer:</span>
-        <span className="font-medium">{{averageRevenuePerCustomer}}/mo</span>
-      </div>
-      <div className="flex justify-between">
-        <span className="text-gray-600">Current Churn Rate:</span>
-        <span className="font-medium">{{currentChurnRate}}%</span>
-      </div>
-      <div className="flex justify-between">
-        <span className="text-gray-600">Monthly Savings:</span>
-        <span className="font-medium">{{monthlySavings}}</span>
-      </div>
     </div>
   </div>
 
   {/* Footer */}
-  <div className="absolute bottom-8 left-0 right-0 text-center">
-    <p className="text-sm text-gray-500">
-      www.productfruits.com | Your partner in user retention
+  <div className="text-center">
+    <p className="text-sm text-gray-600">
+      Speak with our specialist about your use case today. Link to demo https://productfruits.com/demo
     </p>
   </div>
 </div>`;
@@ -104,9 +160,10 @@ const PDFStructureEditor: React.FC<PDFStructureEditorProps> = ({
     .replace(/\{\{yearlyNetRevenue\}\}/g, `$${yearlyNetRevenue.toLocaleString()}`)
     .replace(/\{\{savedCustomers\}\}/g, savedCustomers.toString())
     .replace(/\{\{customerCount\}\}/g, customerCount.toLocaleString())
-    .replace(/\{\{averageRevenuePerCustomer\}\}/g, `$${averageRevenuePerCustomer}`)
+    .replace(/\{\{averageRevenuePerCustomer\}\}/g, averageRevenuePerCustomer.toString())
     .replace(/\{\{currentChurnRate\}\}/g, currentChurnRate.toString())
-    .replace(/\{\{monthlySavings\}\}/g, `$${results.monthlySavings.toLocaleString()}`);
+    .replace(/\{\{monthlySavings\}\}/g, `$${results.monthlySavings.toLocaleString()}`)
+    .replace(/\{\{netMonthlyRevenue\}\}/g, `$${netMonthlyRevenue.toLocaleString()}`);
 
   const handleDownloadPDF = () => {
     generateAndDownloadPDF({
