@@ -39,7 +39,7 @@ const PDFReport: React.FC<PDFReportProps> = ({
 
       {/* Main Title */}
       <h1 className="text-3xl font-bold text-black mb-4">
-        Product Fruits business impact calculator: Results overview
+        Business impact calculator: Results overview
       </h1>
       
       <p className="text-gray-600 text-base mb-12">
