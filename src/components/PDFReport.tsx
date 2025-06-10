@@ -52,7 +52,7 @@ const PDFReport: React.FC<PDFReportProps> = ({
           href="https://productfruits.com/roi-calculator" 
           target="_blank" 
           rel="noopener noreferrer"
-          className="px-6 py-3 bg-orange-100 border border-orange-300 rounded-lg hover:bg-orange-200 transition-colors"
+          className="px-6 py-3 bg-orange-50 border border-orange-300 rounded-lg hover:bg-orange-100 transition-colors"
         >
           <span className="text-orange-600 font-medium text-sm">🔥 Churn reduction</span>
         </a>
