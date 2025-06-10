@@ -47,16 +47,31 @@ const PDFReport: React.FC<PDFReportProps> = ({
       </p>
 
       {/* Tab indicators */}
-      <div className="flex gap-6 mb-10">
-        <div className="px-8 py-4 bg-orange-100 border border-orange-300 rounded-lg">
+      <div className="flex gap-8 mb-10">
+        <a 
+          href="https://productfruits.com/roi-calculator" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="px-6 py-3 bg-orange-100 border border-orange-300 rounded-lg hover:bg-orange-200 transition-colors"
+        >
           <span className="text-orange-600 font-medium text-sm">🔥 Churn reduction</span>
-        </div>
-        <div className="px-8 py-4 bg-gray-100 border border-gray-300 rounded-lg">
+        </a>
+        <a 
+          href="https://productfruits.com/roi-calculator" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="px-6 py-3 bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200 transition-colors"
+        >
           <span className="text-gray-500 font-medium text-sm">📊 Support cost reduction</span>
-        </div>
-        <div className="px-8 py-4 bg-gray-100 border border-gray-300 rounded-lg">
+        </a>
+        <a 
+          href="https://productfruits.com/roi-calculator" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="px-6 py-3 bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200 transition-colors"
+        >
           <span className="text-gray-500 font-medium text-sm">📈 Revenue uplift</span>
-        </div>
+        </a>
       </div>
 
       {/* Info box */}
@@ -99,7 +114,7 @@ const PDFReport: React.FC<PDFReportProps> = ({
         </div>
 
         {/* Right column - Your user retention gains */}
-        <div className="bg-orange-100 p-6 rounded-lg">
+        <div className="bg-orange-50 p-6 rounded-lg">
           <h2 className="text-xl font-bold text-black mb-2">Your user retention gains</h2>
           <p className="text-gray-500 text-sm mb-6">Based on your data, here's the business impact of Product Fruits</p>
           
