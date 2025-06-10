@@ -1,3 +1,4 @@
+
 import React from "react";
 import { formatCurrency, formatNumber } from "@/utils/churnCalculator";
 
@@ -91,7 +92,7 @@ const PDFReport: React.FC<PDFReportProps> = ({
             </div>
             <div className="flex justify-between">
               <span className="text-gray-700">Average revenue per customer (USD/month)</span>
-              <span className="font-medium">{averageRevenuePerCustomer}</span>
+              <span className="font-medium">{Math.round(averageRevenuePerCustomer)}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-700">Current churn rate (%)</span>
