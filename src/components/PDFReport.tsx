@@ -29,18 +29,11 @@ const PDFReport: React.FC<PDFReportProps> = ({
       {/* Header with Logo */}
       <div className="flex items-center mb-12">
         <div className="flex items-center">
-          <svg width="40" height="40" viewBox="0 0 40 40" className="mr-3">
-            <circle cx="8" cy="8" r="4" fill="#ff6b35"/>
-            <circle cx="20" cy="8" r="4" fill="#ff6b35"/>
-            <circle cx="32" cy="8" r="4" fill="#ff6b35"/>
-            <circle cx="14" cy="20" r="4" fill="#ff6b35"/>
-            <circle cx="26" cy="20" r="4" fill="#ff6b35"/>
-            <circle cx="20" cy="32" r="4" fill="#ff6b35"/>
-          </svg>
-          <div>
-            <span className="font-bold text-2xl text-black">Product </span>
-            <span className="font-bold text-2xl text-[#ff6b35]">Fruits</span>
-          </div>
+          <img 
+            src="/lovable-uploads/f56fab7a-3f0d-438f-a019-9cb8a25174e7.png" 
+            alt="ProductFruits Logo" 
+            className="h-12"
+          />
         </div>
       </div>
 
