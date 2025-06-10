@@ -1,4 +1,3 @@
-
 import React from "react";
 import { CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -24,9 +23,12 @@ const ChurnCalculatorResults = ({
   if (!results) return null;
 
   const handleDownloadPDF = () => {
+    const savedCustomers = customerCount * currentChurnRate / 100 * 0.3;
+    const averageRevenuePerCustomer = savedCustomers > 0 ? results.monthlySavings / savedCustomers : 0;
+    
     generateAndDownloadPDF({
       customerCount,
-      averageRevenuePerCustomer: results.monthlySavings / (customerCount * currentChurnRate / 100 * 0.3),
+      averageRevenuePerCustomer,
       currentChurnRate,
       results,
       productFruitsPlanPrice
