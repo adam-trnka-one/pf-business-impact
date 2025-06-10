@@ -1,4 +1,3 @@
-
 import React from "react";
 import { formatCurrency, formatNumber } from "@/utils/churnCalculator";
 
@@ -46,7 +45,7 @@ const PDFReport: React.FC<PDFReportProps> = ({
 
       {/* Main Title */}
       <h1 className="text-3xl font-bold text-black mb-4">
-        Calculation of the business impact of Product Fruits
+        Product Fruits business impact calculator: Results overview
       </h1>
       
       <p className="text-gray-600 text-base mb-12">
