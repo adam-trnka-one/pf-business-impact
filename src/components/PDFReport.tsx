@@ -74,7 +74,7 @@ const PDFReport: React.FC<PDFReportProps> = ({
       {/* Two column layout */}
       <div className="grid grid-cols-2 gap-8 mb-12">
         {/* Left column - Your data */}
-        <div>
+        <div className="bg-gray-100 p-6 rounded-lg">
           <h2 className="text-xl font-bold text-black mb-2">Your data</h2>
           <p className="text-gray-500 text-sm mb-6">We'll use this to calculate your business impact</p>
           
