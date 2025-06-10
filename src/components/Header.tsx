@@ -10,7 +10,7 @@ const Header = () => {
         <div className="flex items-center space-x-2">
           <div className="flex items-center">
             <img 
-              src="https://productfruits.com/images/pf_logo.svg" 
+              src="/lovable-uploads/2519e9cb-b1a7-47dd-b13a-30b43056947d.png" 
               alt="ProductFruits Logo" 
               className="h-8"
             />
