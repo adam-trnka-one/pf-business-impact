@@ -12,7 +12,7 @@ const Header = () => {
             <img 
               src="/lovable-uploads/2519e9cb-b1a7-47dd-b13a-30b43056947d.png" 
               alt="ProductFruits Logo" 
-              className="h-8"
+              className="h-10"
             />
           </div>
           <div>
