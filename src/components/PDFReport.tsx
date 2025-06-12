@@ -150,7 +150,7 @@ const PDFReport: React.FC<PDFReportProps> = ({
       {/* Footer */}
       <div className="absolute bottom-8 left-0 right-0 text-center">
         <p className="text-sm text-gray-600">
-          Speak with our specialist about your use case today. Link to demo https://productfruits.com/demo
+          Speak with our specialist about your use case today. Reserve demo: https://productfruits.com/demo
         </p>
       </div>
     </div>
