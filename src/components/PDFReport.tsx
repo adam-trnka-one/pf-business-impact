@@ -46,34 +46,6 @@ const PDFReport: React.FC<PDFReportProps> = ({
         Poor onboarding doesn't just frustrate users. It costs you in churn, conversions, and support overhead.
       </p>
 
-      {/* Tab indicators */}
-      <div className="flex gap-8 mb-10">
-        <a 
-          href="https://productfruits.com/roi-calculator" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="px-6 py-3 bg-orange-50 border border-orange-300 rounded-lg hover:bg-orange-100 transition-colors"
-        >
-          <span className="text-orange-600 font-medium text-sm leading-none">🔥 Churn reduction</span>
-        </a>
-        <a 
-          href="https://productfruits.com/roi-calculator" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="px-6 py-3 bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200 transition-colors"
-        >
-          <span className="text-gray-500 font-medium text-sm">📊 Support cost reduction</span>
-        </a>
-        <a 
-          href="https://productfruits.com/roi-calculator" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="px-6 py-3 bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200 transition-colors"
-        >
-          <span className="text-gray-500 font-medium text-sm">📈 Revenue uplift</span>
-        </a>
-      </div>
-
       {/* Info box */}
       <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-12">
         <div className="flex items-center">
