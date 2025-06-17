@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { HelpCircle, Download } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { formatCurrency, formatNumber } from "@/utils/roiCalculator";
+import { generateAndDownloadConversionPDF } from "@/utils/conversionPdfGenerator";
 
 // Product Fruits pricing logic
 function getProductFruitsPlanPrice(userCount: number) {
@@ -95,16 +96,19 @@ const ConversionCalculator = () => {
     });
   };
 
-  const handleDownloadPDF = () => {
-    // TODO: Implement conversion PDF generation
-    console.log("Conversion PDF download requested", {
+  const handleDownloadPDF = async () => {
+    if (!results) return;
+    
+    const pdfData = {
       monthlyTrials,
       currentConversion,
       conversionUplift,
       monthlyArpu,
       results,
       productFruitsPlanPrice
-    });
+    };
+    
+    await generateAndDownloadConversionPDF(pdfData);
   };
 
   return <div className="grid gap-6 md:grid-cols-2 lg:gap-8">
