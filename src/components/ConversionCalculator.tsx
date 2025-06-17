@@ -3,7 +3,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
-import { HelpCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { HelpCircle, Download } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { formatCurrency, formatNumber } from "@/utils/roiCalculator";
 
@@ -61,9 +62,6 @@ const ConversionCalculator = () => {
   // Use the updated TRIAL_STEPS for value
   const monthlyTrials = TRIAL_STEPS[trialStepIndex];
   const productFruitsPlanPrice = getProductFruitsPlanPrice(monthlyTrials);
-  const handleTrialSlider = (index: number) => {
-    setTrialStepIndex(index);
-  };
 
   // Snap input to nearest defined step and update slider index
   const handleTrialInput = (value: string) => {
@@ -93,11 +91,24 @@ const ConversionCalculator = () => {
       annualRevenue
     });
   };
+
+  const handleDownloadPDF = () => {
+    // TODO: Implement conversion PDF generation
+    console.log("Conversion PDF download requested", {
+      monthlyTrials,
+      currentConversion,
+      conversionUplift,
+      monthlyArpu,
+      results,
+      productFruitsPlanPrice
+    });
+  };
+
   return <div className="grid gap-6 md:grid-cols-2 lg:gap-8">
       <Card className="md:col-span-1">
         <CardHeader>
           <CardTitle>Enter your data</CardTitle>
-          <CardDescription>We’ll use this to calculate your business impact</CardDescription>
+          <CardDescription>We'll use this to calculate your business impact</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="calculator-input">
@@ -156,7 +167,7 @@ const ConversionCalculator = () => {
       <Card className="md:col-span-1">
         <CardHeader>
           <CardTitle>Your improved conversion results</CardTitle>
-          <CardDescription>Based on your data, here’s the business impact of Product Fruits</CardDescription>
+          <CardDescription>Based on your data, here's the business impact of Product Fruits</CardDescription>
         </CardHeader>
         <CardContent>
           {results && <div className="space-y-6 animate-fade-in">
@@ -179,13 +190,20 @@ const ConversionCalculator = () => {
                 </div>
               </div>
               
-              <div className="pt-4 flex justify-center items-center">
+              <div className="pt-4 flex flex-col justify-center items-center space-y-4">
                 <div className="text-center">
                   <p className="text-sm text-gray-500">Net yearly revenue increase</p>
                   <p className="text-[28pt] font-bold text-[#03BF92]">
                     {formatCurrency((results.monthlyRevenue - productFruitsPlanPrice) * 12)}
                   </p>
                 </div>
+                <Button 
+                  onClick={handleDownloadPDF}
+                  className="bg-[#FF751D] hover:bg-[#E05A00] text-white flex items-center gap-2"
+                >
+                  <Download className="h-4 w-4" />
+                  Download PDF
+                </Button>
               </div>
             </div>}
         </CardContent>
