@@ -212,7 +212,7 @@ const Calculator = () => {
                 <div className="pt-4 flex justify-center">
                   <Button 
                     onClick={handleDownloadPDF}
-                    className="bg-[#03BF92] hover:bg-[#02a67d] text-white flex items-center gap-2"
+                    className="bg-[#FF751D] hover:bg-[#E05A00] text-white flex items-center gap-2"
                   >
                     <Download className="h-4 w-4" />
                     Download PDF
