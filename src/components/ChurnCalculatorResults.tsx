@@ -1,3 +1,4 @@
+
 import React from "react";
 import { CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -76,9 +77,9 @@ const ChurnCalculatorResults = ({
             </div>
             <Button 
               onClick={handleDownloadPDF}
-              className="bg-[#ff4747] hover:bg-[#e63e3e] text-white px-6 py-2"
+              className="bg-[#FF751D] hover:bg-[#E05A00] text-white flex items-center gap-2"
             >
-              <Download className="w-4 h-4 mr-2" />
+              <Download className="h-4 w-4" />
               Download PDF
             </Button>
           </div>
