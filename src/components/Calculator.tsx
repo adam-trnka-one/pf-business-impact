@@ -3,9 +3,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
+import { Button } from "@/components/ui/button";
 import { calculateROI, formatCurrency, formatNumber, ROIResults } from "@/utils/roiCalculator";
-import { HelpCircle } from "lucide-react";
+import { HelpCircle, Download } from "lucide-react";
 import { Tooltip, TooltipProvider, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
+import { generateAndDownloadSupportPDF } from "@/utils/supportPdfGenerator";
+
 function getProductFruitsPlanPrice(ticketsPerMonth: number) {
   if (ticketsPerMonth <= 1500) return 139;
   if (ticketsPerMonth <= 3000) return 189;
@@ -41,10 +44,13 @@ const Calculator = () => {
   const [userCount, setUserCount] = useState(2000);
   const [monthlyPaymentTier, setMonthlyPaymentTier] = useState(499);
   const [results, setResults] = useState<ROIResults | null>(null);
+
   const productFruitsPlanPrice = getProductFruitsPlanPrice(ticketsPerMonth);
+
   useEffect(() => {
     calculateAndUpdateResults();
   }, [ticketsPerMonth, timePerTicket, hourlyRate]);
+
   const calculateAndUpdateResults = () => {
     const calculatedResults = calculateROI({
       ticketsPerMonth,
@@ -56,15 +62,34 @@ const Calculator = () => {
     });
     setResults(calculatedResults);
   };
+
+  const handleDownloadPDF = async () => {
+    if (!results) return;
+    
+    const pdfData = {
+      ticketsPerMonth,
+      timePerTicket,
+      hourlyRate,
+      ticketReduction,
+      userCount,
+      results,
+      monthlyPaymentTier: productFruitsPlanPrice
+    };
+    
+    await generateAndDownloadSupportPDF(pdfData);
+  };
+
   const handleInputChange = (setter: React.Dispatch<React.SetStateAction<number>>, value: string) => {
     let numValue = parseInt(value) || TICKET_STEPS[0];
     numValue = Math.min(Math.max(numValue, TICKET_STEPS[0]), TICKET_STEPS[TICKET_STEPS.length - 1]);
     setter(snapToNearestStep(numValue));
   };
+
   const sliderIndex = TICKET_STEPS.findIndex(v => v === ticketsPerMonth);
   const setSliderByIndex = (index: number) => {
     setTicketsPerMonth(TICKET_STEPS[index]);
   };
+
   const InfoTooltip = ({
     content
   }: {
@@ -79,6 +104,7 @@ const Calculator = () => {
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>;
+
   return <div className="grid gap-6 md:grid-cols-2 lg:gap-8">
       <Card className="md:col-span-1">
         <CardHeader>
@@ -182,10 +208,21 @@ const Calculator = () => {
                     </p>
                   </div>
                 </div>
+
+                <div className="pt-4 flex justify-center">
+                  <Button 
+                    onClick={handleDownloadPDF}
+                    className="bg-[#03BF92] hover:bg-[#02a67d] text-white flex items-center gap-2"
+                  >
+                    <Download className="h-4 w-4" />
+                    Download PDF
+                  </Button>
+                </div>
               </div>
             </div>}
         </CardContent>
       </Card>
     </div>;
 };
+
 export default Calculator;
