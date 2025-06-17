@@ -54,7 +54,7 @@ const PDFReport: React.FC<PDFReportProps> = ({
           rel="noopener noreferrer"
           className="px-6 py-3 bg-orange-50 border border-orange-300 rounded-lg hover:bg-orange-100 transition-colors"
         >
-          <span className="text-orange-600 font-medium text-sm leading-none">🔥 Churn reduction</span>
+          <span className="text-orange-600 font-medium text-sm leading-none">Churn reduction</span>
         </a>
         <a 
           href="https://productfruits.com/roi-calculator" 
@@ -62,7 +62,7 @@ const PDFReport: React.FC<PDFReportProps> = ({
           rel="noopener noreferrer"
           className="px-6 py-3 bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200 transition-colors"
         >
-          <span className="text-gray-500 font-medium text-sm">📊 Support cost reduction</span>
+          <span className="text-gray-500 font-medium text-sm">Support cost reduction</span>
         </a>
         <a 
           href="https://productfruits.com/roi-calculator" 
@@ -70,7 +70,7 @@ const PDFReport: React.FC<PDFReportProps> = ({
           rel="noopener noreferrer"
           className="px-6 py-3 bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200 transition-colors"
         >
-          <span className="text-gray-500 font-medium text-sm">📈 Revenue uplift</span>
+          <span className="text-gray-500 font-medium text-sm">Revenue uplift</span>
         </a>
       </div>
 
@@ -78,7 +78,7 @@ const PDFReport: React.FC<PDFReportProps> = ({
       <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-12">
         <div className="flex items-center">
           <div className="bg-green-100 rounded-full p-2 mr-3">
-            <span className="text-green-600">ℹ️</span>
+            <span className="text-green-600">i</span>
           </div>
           <p className="text-green-800 text-sm">
             Clients using Product Fruits see a <strong>30-70% reduction</strong> in customer churn after implementing automated onboarding.
