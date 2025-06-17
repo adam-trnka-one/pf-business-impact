@@ -109,7 +109,7 @@ const Calculator = () => {
       <Card className="md:col-span-1">
         <CardHeader>
           <CardTitle>Enter your data</CardTitle>
-          <CardDescription>We’ll use this to calculate your business impact</CardDescription>
+          <CardDescription>We'll use this to calculate your business impact</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="calculator-input">
@@ -199,25 +199,22 @@ const Calculator = () => {
                   <span className="text-sm text-gray-600">Net monthly savings</span>
                   <span className="font-medium">{formatCurrency(results.netSavings.monthly)}</span>
                 </div>
-
-                <div className="pt-4 flex justify-center items-center">
-                  <div className="text-center">
-                    <p className="text-sm text-gray-600">Your yearly net savings</p>
-                    <p className="text-[28pt] font-bold text-[#03BF92]">
-                      {formatCurrency(results.netSavings.annual)}
-                    </p>
-                  </div>
+              </div>
+              
+              <div className="pt-4 flex flex-col justify-center items-center space-y-4">
+                <div className="text-center">
+                  <p className="text-sm text-gray-500">Your yearly net savings</p>
+                  <p className="text-[28pt] font-bold text-[#03BF92] py-0">
+                    {formatCurrency(results.netSavings.annual)}
+                  </p>
                 </div>
-
-                <div className="pt-4 flex justify-center">
-                  <Button 
-                    onClick={handleDownloadPDF}
-                    className="bg-[#FF751D] hover:bg-[#E05A00] text-white flex items-center gap-2"
-                  >
-                    <Download className="h-4 w-4" />
-                    Download PDF
-                  </Button>
-                </div>
+                <Button 
+                  onClick={handleDownloadPDF}
+                  className="bg-[#FF751D] hover:bg-[#E05A00] text-white flex items-center gap-2"
+                >
+                  <Download className="h-4 w-4" />
+                  Download PDF
+                </Button>
               </div>
             </div>}
         </CardContent>
