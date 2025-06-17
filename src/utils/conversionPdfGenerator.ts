@@ -74,8 +74,8 @@ export const generateAndDownloadConversionPDF = async (data: ConversionPDFData):
     const imgData = canvas.toDataURL('image/png');
     pdf.addImage(imgData, 'PNG', 0, 0, 794, 1123);
 
-    // Save the PDF
-    pdf.save("product-fruits-conversion-uplift-report.pdf");
+    // Save the PDF with updated filename to match pattern
+    pdf.save("product-fruits-revenue-uplift-calculation.pdf");
     
     console.log("Conversion PDF generated successfully with html2canvas");
     toast.success("PDF report downloaded successfully");
