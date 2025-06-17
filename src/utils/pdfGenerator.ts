@@ -69,8 +69,8 @@ export const generateAndDownloadPDF = async (data: PDFData): Promise<void> => {
     const imgData = canvas.toDataURL('image/png');
     pdf.addImage(imgData, 'PNG', 0, 0, 794, 1123);
 
-    // Save the PDF with the new filename
-    pdf.save("churn-reduction-calculation.pdf");
+    // Save the PDF with the updated filename
+    pdf.save("product-fruits-churn-reduction-calculation.pdf");
     
     console.log("PDF generated successfully with html2canvas");
     toast.success("PDF report downloaded successfully");
