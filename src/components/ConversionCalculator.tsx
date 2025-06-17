@@ -70,13 +70,16 @@ const ConversionCalculator = () => {
     const index = TRIAL_STEPS.findIndex(v => v === snapped);
     setTrialStepIndex(index !== -1 ? index : 0);
   };
+  
   const handleInputChange = (setter: React.Dispatch<React.SetStateAction<number>>, value: string, min: number, max: number) => {
     const numValue = parseInt(value) || min;
     setter(Math.min(Math.max(numValue, min), max));
   };
+  
   useEffect(() => {
     calculateResults();
   }, [trialStepIndex, currentConversion, conversionUplift, monthlyArpu]);
+  
   const calculateResults = () => {
     const originalConversions = monthlyTrials * currentConversion / 100;
     const newConversions = monthlyTrials * (currentConversion / 100) * (1 + conversionUplift / 100);
@@ -119,7 +122,7 @@ const ConversionCalculator = () => {
               <InfoTooltip content="The average number of new trial users you get each month" />
             </div>
             <div className="flex items-center gap-4">
-              <Slider id="monthly-trials" min={0} max={TRIAL_STEPS.length - 1} step={1} value={[trialStepIndex]} onValueChange={([idx]) => handleTrialSlider(idx)} className="flex-1" />
+              <Slider id="monthly-trials" min={0} max={TRIAL_STEPS.length - 1} step={1} value={[trialStepIndex]} onValueChange={([idx]) => setTrialStepIndex(idx)} className="flex-1" />
               <Input type="number" value={monthlyTrials} min={TRIAL_STEPS[0]} max={TRIAL_STEPS[TRIAL_STEPS.length - 1]} step="10" onChange={e => handleTrialInput(e.target.value)} className="w-24" />
             </div>
           </div>
