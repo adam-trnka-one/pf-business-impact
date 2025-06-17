@@ -1,4 +1,3 @@
-
 import React from "react";
 import { formatCurrency, formatNumber } from "@/utils/churnCalculator";
 
@@ -60,7 +59,7 @@ const PDFReport: React.FC<PDFReportProps> = ({
           href="https://productfruits.com/roi-calculator" 
           target="_blank" 
           rel="noopener noreferrer"
-          className="px-6 py-3 bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200 transition-colors"
+          className="px-6 py-3 hover:bg-gray-50 transition-colors"
         >
           <span className="text-gray-500 font-medium text-sm">Support cost reduction</span>
         </a>
@@ -68,7 +67,7 @@ const PDFReport: React.FC<PDFReportProps> = ({
           href="https://productfruits.com/roi-calculator" 
           target="_blank" 
           rel="noopener noreferrer"
-          className="px-6 py-3 bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200 transition-colors"
+          className="px-6 py-3 hover:bg-gray-50 transition-colors"
         >
           <span className="text-gray-500 font-medium text-sm">Revenue uplift</span>
         </a>
