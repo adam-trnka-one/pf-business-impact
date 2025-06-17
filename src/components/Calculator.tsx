@@ -17,6 +17,7 @@ function getProductFruitsPlanPrice(ticketsPerMonth: number) {
   if (ticketsPerMonth <= 50000) return 439;
   return 599;
 }
+
 const TICKET_STEPS = [...Array.from({
   length: (1500 - 100) / 100 + 1
 }, (_, i) => 100 + i * 100), ...Array.from({
@@ -36,6 +37,7 @@ function snapToNearestStep(value: number) {
   }
   return closest;
 }
+
 const Calculator = () => {
   const [ticketsPerMonth, setTicketsPerMonth] = useState(1000);
   const [timePerTicket, setTimePerTicket] = useState(30);
