@@ -64,30 +64,36 @@ const ConversionPDFReport: React.FC<ConversionPDFData> = ({
 
       {/* Tab indicators */}
       <div className="flex gap-8 mb-10">
-        <a 
-          href="https://productfruits.com/roi-calculator" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="px-6 py-3 hover:bg-gray-50 transition-colors"
-        >
-          <span className="text-gray-500 font-medium text-sm">Churn reduction</span>
-        </a>
-        <a 
-          href="https://productfruits.com/roi-calculator" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="px-6 py-3 hover:bg-gray-50 transition-colors"
-        >
-          <span className="text-gray-500 font-medium text-sm">Support cost reduction</span>
-        </a>
-        <a 
-          href="https://productfruits.com/roi-calculator" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="px-6 py-3 bg-orange-50 border border-orange-300 rounded-lg hover:bg-orange-100 transition-colors"
-        >
-          <span className="text-orange-600 font-medium text-sm leading-none">Revenue uplift</span>
-        </a>
+        <div className="flex-1">
+          <a 
+            href="https://productfruits.com/roi-calculator" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="block w-full px-6 py-3 hover:bg-gray-50 transition-colors text-center"
+          >
+            <span className="text-gray-500 font-medium text-sm">Churn reduction</span>
+          </a>
+        </div>
+        <div className="flex-1">
+          <a 
+            href="https://productfruits.com/roi-calculator" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="block w-full px-6 py-3 hover:bg-gray-50 transition-colors text-center"
+          >
+            <span className="text-gray-500 font-medium text-sm">Support cost reduction</span>
+          </a>
+        </div>
+        <div className="flex-1">
+          <a 
+            href="https://productfruits.com/roi-calculator" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="block w-full px-6 py-3 bg-orange-50 border border-orange-300 rounded-lg hover:bg-orange-100 transition-colors text-center"
+          >
+            <span className="text-orange-600 font-medium text-sm leading-none">Revenue uplift</span>
+          </a>
+        </div>
       </div>
 
       {/* Info box */}
