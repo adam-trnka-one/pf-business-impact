@@ -1,3 +1,4 @@
+
 import React from "react";
 import { formatCurrency, formatNumber } from "@/utils/churnCalculator";
 
@@ -86,6 +87,7 @@ const PDFReport: React.FC<PDFReportProps> = ({
             Clients using Product Fruits see a <strong>30-70% reduction</strong> in customer churn after implementing automated onboarding.
           </p>
         </div>
+        <hr className="border-green-200 mt-3" />
       </div>
 
       {/* Two column layout */}
