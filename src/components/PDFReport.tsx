@@ -47,15 +47,15 @@ const PDFReport: React.FC<PDFReportProps> = ({
       </p>
 
       {/* Tab indicators */}
-      <div className="flex gap-8 mb-10">
+      <div className="flex mb-10">
         <div className="flex-1">
           <a 
             href="https://productfruits.com/roi-calculator" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="block w-full px-6 py-3 bg-orange-50 border border-orange-300 rounded-lg hover:bg-orange-100 transition-colors text-center"
+            className="block w-full px-6 py-3 bg-orange-50 border border-orange-300 rounded-lg hover:bg-orange-100 transition-colors text-center h-12 flex items-center justify-center"
           >
-            <span className="text-orange-600 font-medium text-sm leading-none">Churn reduction</span>
+            <span className="text-orange-600 font-medium text-sm">Churn reduction</span>
           </a>
         </div>
         <div className="flex-1">
@@ -63,7 +63,7 @@ const PDFReport: React.FC<PDFReportProps> = ({
             href="https://productfruits.com/roi-calculator" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="block w-full px-6 py-3 hover:bg-gray-50 transition-colors text-center"
+            className="block w-full px-6 py-3 hover:bg-gray-50 transition-colors text-center h-12 flex items-center justify-center"
           >
             <span className="text-gray-500 font-medium text-sm">Support cost reduction</span>
           </a>
@@ -73,7 +73,7 @@ const PDFReport: React.FC<PDFReportProps> = ({
             href="https://productfruits.com/roi-calculator" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="block w-full px-6 py-3 hover:bg-gray-50 transition-colors text-center"
+            className="block w-full px-6 py-3 hover:bg-gray-50 transition-colors text-center h-12 flex items-center justify-center"
           >
             <span className="text-gray-500 font-medium text-sm">Revenue uplift</span>
           </a>
