@@ -1,3 +1,4 @@
+
 import React from "react";
 
 interface ConversionPDFData {
@@ -102,7 +103,7 @@ const ConversionPDFReport: React.FC<ConversionPDFData> = ({
             Clients using Product Fruits see a <strong>30% improvement</strong> in trial-to-paid conversion rates after implementing automated onboarding.
           </p>
         </div>
-        <div className="mt-2"></div>
+        <div className="mt-3"></div>
       </div>
 
       {/* Two column layout */}
