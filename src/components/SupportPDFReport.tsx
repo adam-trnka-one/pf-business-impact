@@ -1,3 +1,4 @@
+
 import React from "react";
 
 interface SupportPDFReportProps {
@@ -107,7 +108,7 @@ const SupportPDFReport: React.FC<SupportPDFReportProps> = ({
             Clients using Product Fruits see a <strong>20-35% reduction</strong> in support tickets after implementing automated user onboarding.
           </p>
         </div>
-        <div className="mt-2"></div>
+        <div className="mt-3"></div>
       </div>
 
       {/* Two column layout */}
