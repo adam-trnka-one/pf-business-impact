@@ -1,4 +1,3 @@
-
 import React from "react";
 
 interface ConversionPDFData {
@@ -61,43 +60,6 @@ const ConversionPDFReport: React.FC<ConversionPDFData> = ({
       <p className="text-gray-600 text-base mb-12">
         Poor onboarding doesn't just frustrate users. It costs you in churn, conversions, and support overhead.
       </p>
-
-      {/* Tab indicators */}
-      <div className="flex gap-8 mb-10">
-        <div className="flex-1">
-          <a 
-            href="https://productfruits.com/roi-calculator" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="block w-full px-6 py-3 hover:bg-gray-50 transition-colors text-center"
-          >
-            <span className="text-gray-500 font-medium text-sm">Churn reduction</span>
-          </a>
-          <div className="mt-3"></div>
-        </div>
-        <div className="flex-1">
-          <a 
-            href="https://productfruits.com/roi-calculator" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="block w-full px-6 py-3 hover:bg-gray-50 transition-colors text-center"
-          >
-            <span className="text-gray-500 font-medium text-sm">Support cost reduction</span>
-          </a>
-          <div className="mt-3"></div>
-        </div>
-        <div className="flex-1">
-          <a 
-            href="https://productfruits.com/roi-calculator" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="block w-full px-6 py-3 bg-orange-50 border border-orange-300 rounded-lg hover:bg-orange-100 transition-colors text-center"
-          >
-            <span className="text-orange-600 font-medium text-sm leading-none">Revenue uplift</span>
-          </a>
-          <div className="mt-3"></div>
-        </div>
-      </div>
 
       {/* Info box */}
       <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-12">
