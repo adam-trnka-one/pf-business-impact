@@ -1,3 +1,4 @@
+
 import React from "react";
 
 interface SupportPDFReportProps {
@@ -140,7 +141,7 @@ const SupportPDFReport: React.FC<SupportPDFReportProps> = ({
       {/* Footer */}
       <div className="absolute bottom-8 left-0 right-0 text-center">
         <p className="text-sm text-gray-600">
-          Speak with our specialist about your use case today. Reserve demo: https://productfruits.com/demo
+          Speak with our specialist about your use case today. Book your demo: https://productfruits.com/demo
         </p>
       </div>
     </div>
