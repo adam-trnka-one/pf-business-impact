@@ -140,6 +140,7 @@ const PDFReport: React.FC<PDFReportProps> = ({
               <span className="font-medium">{formatCurrency(netMonthlyRevenue)}</span>
             </div>
           </div>
+          <div className="mt-4"></div>
         </div>
       </div>
 
