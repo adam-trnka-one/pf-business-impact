@@ -1,5 +1,4 @@
 
-
 import React from "react";
 import { formatCurrency, formatNumber } from "@/utils/churnCalculator";
 
@@ -103,7 +102,7 @@ const PDFReport: React.FC<PDFReportProps> = ({
               <span className="font-medium text-red-600">-{formatCurrency(productFruitsPlanPrice)}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-gray-700">Incremental net monthly revenue</span>
+              <span className="text-gray-700">Net monthly revenue</span>
               <span className="font-medium">{formatCurrency(netMonthlyRevenue)}</span>
             </div>
           </div>
