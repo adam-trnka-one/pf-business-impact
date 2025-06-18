@@ -54,7 +54,7 @@ const ConversionPDFReport: React.FC<ConversionPDFData> = ({
 
       {/* Main Title */}
       <h1 className="text-3xl font-bold text-black mb-4">
-        Revenue uplift - results
+        Revenue uplift calculator - results
       </h1>
       
       <p className="text-gray-600 text-base mb-12">
