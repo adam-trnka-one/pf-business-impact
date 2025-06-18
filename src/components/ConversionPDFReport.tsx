@@ -1,3 +1,4 @@
+
 import React from "react";
 
 interface ConversionPDFData {
@@ -117,7 +118,7 @@ const ConversionPDFReport: React.FC<ConversionPDFData> = ({
               <span className="font-medium text-red-600">-{formatCurrency(productFruitsPlanPrice)}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-gray-700">Incremental net monthly revenue</span>
+              <span className="text-gray-700">Net monthly revenue increase</span>
               <span className="font-medium">{formatCurrency(netMonthlyRevenue)}</span>
             </div>
           </div>
