@@ -60,7 +60,7 @@ const SupportPDFReport: React.FC<SupportPDFReportProps> = ({
 
       {/* Main Title */}
       <h1 className="text-3xl font-bold text-black mb-4">
-        Business impact calculator - results
+        Support cost reduction calculator - results
       </h1>
       
       <p className="text-gray-600 text-base mb-12">
