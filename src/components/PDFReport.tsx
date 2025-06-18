@@ -86,6 +86,7 @@ const PDFReport: React.FC<PDFReportProps> = ({
             Clients using Product Fruits see a <strong>30-70% reduction</strong> in customer churn after implementing automated onboarding.
           </p>
         </div>
+        <div className="mt-2"></div>
       </div>
 
       {/* Two column layout */}
