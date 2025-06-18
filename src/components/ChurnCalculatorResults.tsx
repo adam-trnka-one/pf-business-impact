@@ -1,3 +1,4 @@
+
 import React from "react";
 import { CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -56,7 +57,7 @@ const ChurnCalculatorResults = ({
               </span>
             </div>
             <div className="flex justify-between items-center border-b pb-2">
-              <span className="text-sm text-gray-600">Incremental net monthly revenue</span>
+              <span className="text-sm text-gray-600">Net monthly revenue</span>
               <span className="font-medium">{formatCurrency(results.monthlySavings - productFruitsPlanPrice)}</span>
             </div>
           </div>
