@@ -57,6 +57,7 @@ const PDFReport: React.FC<PDFReportProps> = ({
           >
             <span className="text-orange-600 font-medium text-sm">Churn reduction</span>
           </a>
+          <div className="mt-3"></div>
         </div>
         <div className="flex-1">
           <a 
@@ -67,6 +68,7 @@ const PDFReport: React.FC<PDFReportProps> = ({
           >
             <span className="text-gray-500 font-medium text-sm">Support cost reduction</span>
           </a>
+          <div className="mt-3"></div>
         </div>
         <div className="flex-1">
           <a 
@@ -77,6 +79,7 @@ const PDFReport: React.FC<PDFReportProps> = ({
           >
             <span className="text-gray-500 font-medium text-sm">Revenue uplift</span>
           </a>
+          <div className="mt-3"></div>
         </div>
       </div>
 
